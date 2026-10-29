@@ -1,0 +1,25 @@
+{
+  "name": "voxfoundry-ui",
+  "version": "0.1.0-dev",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "build": "tsc --noEmit && vite build",
+    "format:check": "prettier --check src index.html tsconfig.json package.json"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "prettier": "3.9.10",
+    "typescript": "7.0.2",
+    "vite": "8.3.5"
+  }
+}
