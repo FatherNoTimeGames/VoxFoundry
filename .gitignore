@@ -1,0 +1,28 @@
+# Local configuration and credentials (commit only deliberate non-secret examples)
+.env
+.env.*
+!.env.example
+
+# Python / Node build and test outputs
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+node_modules/
+frontend/dist/
+/build/
+/dist/
+
+# User libraries, models and generated production data belong outside the checkout
+/local-data/
+/models/
+/audio-cache/
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+*.log
