@@ -3,8 +3,10 @@
 Reviewed 2026-10-29 against primary upstream documentation/source, not installed models.
 **Recommendation: Kokoro first integration candidate; Chatterbox original English and
 Turbo as expressive listening-test alternatives. No production voice selected.**
-Approval of architecture does not approve a model download. User clarified that
-defaults must support commercial use and all reference/source rights must be held. Piper is a potential
+The revised mission is personal use. The earlier commercial-default constraint is
+superseded; commercial/noncommercial restrictions still matter per model and output
+use. Personal use does not waive voice/source rights or checkpoint terms. Every model
+download still requires separate exact-artifact/size/license/purpose approval. Piper is a potential
 low-resource fallback after licensing review. F5-TTS and XTTS are research-only until
 weight terms and intended use are resolved. CosyVoice is a later control-rich candidate.
 
@@ -151,3 +153,15 @@ K1–K3, C1–C3, F1–F3, P1–P3, X1–X2, Y1–Y2.
 | X2 | `1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5` |
 | Y1 | `66436370172c2830ed98aa643b31898c65e16eee14ade68f00828d21fae602e0` |
 | Y2 | `c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4` |
+
+## Revised Sites + Windows worker context
+
+Reuse the primary-source evidence above; do not rerun unrelated downloads. No engine
+ran on RTX 3060 or Windows and no listening trial occurred. Kokoro remains the first
+lightweight candidate, Chatterbox the expressive comparison. F5's noncommercial weights
+may be compatible with the personal-use goal only after exact terms/reference rights
+are checked; no blanket clearance is granted. Piper GPL and per-voice terms, XTTS
+model terms and all redistribution/attribution obligations remain separate gates.
+The new disposable transport POC uses a deterministic tone generator with Python's
+standard library, not a TTS engine; it validates neither narration quality nor GPU
+performance. No model downloads or significant dependency installs were performed.

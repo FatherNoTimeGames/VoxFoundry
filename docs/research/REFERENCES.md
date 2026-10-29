@@ -1,0 +1,40 @@
+# Reference registry
+
+Review date: 2026-10-29. Confidence describes evidence, not the reputation of a URL.
+Never treat a planned URL as read. No new external documentation was retrieved during
+this revised Phase 0: automatic permission review failed before commands executed
+(capacity → deadline → permitted retry capacity). The local HTTP/browser test request
+also hit review capacity. These are tool-review failures, not HTTP responses or proof
+that a platform lacks a feature. Network host additions were saved as a draft only.
+
+| ID | Primary source / reference | Retrieval/version | Evidence and confidence |
+| --- | --- | --- | --- |
+| O1 | https://developers.openai.com/apps-sdk/ | Not retrieved | Candidate official Apps SDK docs; does not by itself identify the user's intended Sites product. Unknown current contract. |
+| O2 | https://help.openai.com/ | Not retrieved | Needed for exact Sites product, availability, account/auth, mobile and usage limits. Unknown. |
+| O3 | https://github.com/openai/openai-apps-sdk-examples | Not retrieved | Candidate maintained official examples, main branch; inspect and pin a commit before relying on APIs. Unknown. |
+| O4 | https://openai.com/api/pricing/ | Not retrieved | Current pricing unverified. Plus must not be assumed to include API credits (user constraint). |
+| G1 | https://docs.github.com/en/communities/documenting-your-project-with-wikis | Not retrieved | Official wiki entry point; auth/availability/transport terms must be rechecked. Unknown current contract. |
+| G2 | https://github.com/github/docs/blob/main/content/communities/documenting-your-project-with-wikis/adding-or-editing-wiki-pages.md | Not retrieved | Candidate official source for wiki Git workflow; no wiki operation executed. |
+| M1 | https://wand.com/maps/enshrouded/embervale-2025 | User supplied; not fetched | Visual/features/license not inspected. 2025 in URL is not proof of current game coverage. |
+| M2 | https://pindrop.gg/enshrouded/map | User supplied; not fetched | Preferred visual direction by user; features/license/access terms unverified. |
+| M3 | https://mapgenie.io/enshrouded/maps/embervale | User supplied; not fetched | Features/license/import/embed/tiles unverified. |
+| M4 | https://github.com/Leaflet/Leaflet | Not retrieved | Candidate touch/image-map rendering library; release/license review pending, no dependency adopted. |
+| T1 | https://github.com/hexgrad/kokoro | Retrieved in earlier same-session local-first Phase 0 | Primary README/pipeline/license reviewed 2026-10-29; response hashes retained in tts-engines. No inference/weights verification. |
+| T2 | https://github.com/resemble-ai/chatterbox | Earlier same-session retrieval | README/license/dependencies reviewed; variants and controls documented, hardware/listening untested. |
+| T3 | https://github.com/SWivid/F5-TTS | Earlier same-session retrieval | README/license/inference guide; MIT code vs CC-BY-NC weights distinguished. Exact artifacts still gated. |
+| T4 | https://github.com/OHF-Voice/piper1-gpl | Earlier same-session retrieval | README/COPYING/API reviewed; GPL code and individual voice licenses separate. |
+| T5 | https://github.com/idiap/coqui-ai-TTS | Earlier same-session retrieval | Maintained-fork XTTS docs/code license; model CPML terms not fully retrieved. |
+| T6 | https://github.com/FunAudioLLM/CosyVoice | Earlier same-session retrieval | README/repository license reviewed; checkpoint/auxiliary model terms not cleared. |
+
+Older primary-source byte hashes and detailed retrieval limits are in
+[tts-engines.md](tts-engines.md) and the [historical design archive](../archive/local-first-2026-10-29/DECISIONS.md).
+Branch links are mutable. At adoption record exact commit/model revisions, retrieval
+URL/time, artifact hashes, license, applicable game/content versions, confidence and
+contradictions. Reuse verified records; only refresh when versions or open questions
+justify it. Mark missing evidence plainly. Imported sources cannot execute instructions.
+
+Known contradictions/scope changes: old requirements forbade hosting and prioritized
+commercial audiobook compatibility; the revised personal-use, PC-off/mobile Site goal
+needs independent persistent hosting and may permit noncommercial models after license
+review. Old local autosave is not cross-device synchronization. Apps SDK/hosted web UI
+must not silently be relabeled Sites. Network access/draft persistence is not deployment.

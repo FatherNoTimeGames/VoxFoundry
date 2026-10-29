@@ -1,132 +1,69 @@
-# Validation strategy and Phase 0 evidence
+# Revised Phase 0 validation ledger
 
-Design targets below are future acceptance tests, not completed software tests.
-Use targeted tests per task and a broader suite at each integration/phase exit.
-Do not add trivial tests just to populate a suite. Tests must fail when meaningful
-behavior or data preservation breaks. Test doubles validate contracts; real-engine,
-Windows, listening and device tests remain separate.
+2026-10-29. A result is a pass only if its command ran and the required behavior was
+observed. Old local-app results remain in the [historical ledger](archive/local-first-2026-10-29/VALIDATION.md),
+not evidence of Sites/device integration. No full new Phase 0 success claim.
 
-## Planned evidence
+## Executed current checks
 
-| Layer | Required checks | Phase |
+- Inspected repository at clean base 8bf7cd9, active instructions/tasks, pinned tools
+  and available connectors. No Sites deployment/persistence/runtime tool is callable.
+  User confirms no deployed Site and no Windows app. Windows/Android not attached.
+- **7 component tests passed, 0 failed, 0 skipped**:
+  durable queued jobs across store close/reopen; request-id/body binding; exclusive store
+  lock; lease expiry/fencing/monotonic progress; bounded automatic attempts and explicit
+  retry without deleting attempt history; wrong worker auth; refusal to reuse an existing
+  manuscript-library directory; idempotent committed
+  completion and retained bytes; WAV integrity; worker restart and expired-lease recovery
+  reusing cached generated output. Worker tests use an in-process protocol double.
+- Initial component run found a credential-file creation API error; corrected it and
+  reran the affected component tests successfully. No credential value was printed.
+- Ruff checks/formatting, Python compile checks and formatting of the POC HTML/JS/CSS
+  executed. Documentation links/task graph checked at the final review. These do not
+  replace live HTTP/browser or security/integration acceptance tests.
+- No new dependencies, models, external host, map assets or wiki changes installed/
+  deployed/published. Generated test databases/credentials/audio stay outside Git.
+
+## Blocked before execution (not test failures or HTTP responses)
+
+- Official documentation fetch: automatic approval review failed with reviewer capacity;
+  another attempt timed out; the expressly allowed retry again failed with capacity.
+  Commands were not executed. No new OpenAI/Map/Wiki page was read or HTTP status observed.
+- Live loopback server/worker/Chromium test command: automatic permission review failed
+  with reviewer capacity; **not executed**. No live HTTP endpoint, browser audio decode,
+  download, cross-origin auth, separate worker process or bridge restart over HTTP is
+  claimed to work. Tests are present for later execution when permission review recovers.
+- Required documentation host additions were saved in a draft, not confirmed active in
+  the runtime. Saving does not establish network access, source truth or deployment.
+
+## End-to-end gate matrix
+
+| Required step | Result | Remaining proof |
 | --- | --- | --- |
-| Domain/storage | UUID/scoping, cyclic hierarchy rejection, optimistic conflicts, immutable revisions/snapshots, restoration preserving later work, atomic writes/reconciliation, migrations and version refusal | 1–2 |
-| UI/API/security | Multi-project create/update/trash/restore, invalid input, restart persistence, saved/conflict state, loopback Host/Origin/session checks, path escape and unsafe research rendering | 1–2 |
-| Planning/providers | Repeated text and split/merge identity, relevant dictionary changes, unchanged cache reuse, capability negotiation, unsupported controls/errors and provider process death | 3 |
-| Real inference | Listening corpus and producer voice approval; Windows 10/actual RTX 3060, CPU trial, offline network denial, measured memory/RTF and pinned licensing/artifacts | 3 |
-| Durability | 60-minute frozen script with coverage ledger; kill worker/service at claim/write/validation/commit, expired leases, cancel/resume, OOM, truncated audio and disk-full; valid artifacts unchanged | 3 |
-| Editing/audio | Source/time mapping, ranged playback, waveform cache reconstruction, non-destructive recipes, selective regeneration, loudness/true-peak/silence/clipping tests and listening | 4 |
-| Export | Complete expected segment set, FFprobe and full decode, chapter bounds/order, metadata/cover, hashes and release links; intentional missing/corrupt segment must block release | 5 |
-| Android | At least two named/versioned audiobook players; M4B chapters, MP3 playback, seek/resume, artwork and airplane-mode operation on documented Android version/device | 5 |
-| Portability/recovery | Consistent live backup (DB+blob manifest), restore into clean location, standalone project history, ID collisions, missing models, traversal/symlink/zip-bomb/schema rejection | 6 |
-| Distribution | Clean Windows x64 build/install without dev tools, download/verify/resume models only after consent, offline production, old-library migration, failed update recovery and uninstall preserving user data | 6 |
-| LAN/extensions | Pair/revoke, unauthenticated requests rejected, CSRF/TLS/trust, no public bind by default; new engines/presets/mixes do not alter old production snapshots | 7 |
+| Create actual Site UI / submit approved passage | Unrun | Identify product; supported disposable Site deployment and auth |
+| Persistent Site-accessible queue | Unrun for Sites | Direct platform or approved bridge; durable/authorized access and costs |
+| Windows companion securely claims | Unrun | Run portable harness on actual Windows 10; auth/polling/recovery |
+| Generate short local audio | Tone generation verified in component tests | Real transport and Windows runtime; speech/GPU separately gated |
+| Upload/progress/complete through HTTP | Unrun | Execute live tests, then supported Site contract |
+| Android playback/seek/download | Unrun | Real Android device/browser and saved offline bytes; emulation insufficient |
+| Worker-off retained Site/file access | Unrun | Hosted queue/object retention, PC off, sessions/restores tested |
+| Disconnect/retry/duplicate prevention | Component state machines passed | Real HTTP, device and cloud restart/credential tests |
+| Access controls | Credential and lease unit behavior passed | Live owner/device authorization, TLS/CSP/CORS/CSRF, revocation and file access |
+| Hosting/storage/account costs | Unknown | Current plan, billing/quotas/retention/egress verified and approved |
 
-Fixtures use synthetic text/audio or redistributable assets; no production recordings
-or model weights in Git. Free unit/integration CI must not require an API key or
-GPU. Opt-in real model/GPU tests declare installation prerequisites, sizes, terms,
-and test count/outcomes. Skips are not passes. Never weaken assertions to hide defects.
+## Pending commands and manual checks
 
-## Phase 0 record — 2026-10-29
+`tests/poc/test_live.py` defines live loopback owner/worker auth, invalid/oversize upload,
+WAV/range/private download, bridge restart, separate worker CLI and browser tests at
+390×844 touch, 820×1180 touch and 1440×900 desktop. It also checks playback/download after
+worker exit and resuming generated output. These are **unrun**, and even a later pass
+would establish Linux/local/emulated behavior only. Run the manual Site/Windows/Android
+matrix in research/sites-worker-integration.md before an exit success claim.
 
-- Initial repository contained only a 12-byte README; no app, tests, dependencies or
-  project-level instructions. Base commit `6e6e6cdb9876c26300a5873131e748aa3850a64a`.
-- `git fsck --full` passed. Read-only `git ls-remote origin refs/heads/main` matched
-  the base SHA using existing platform authentication. Default command sandbox could
-  not reach the proxy; the supported escalated command succeeded. No token requested.
-- Runtime status reported running/connected with enforced restricted HTTP policy and
-  no configured user secret/variable/identity bindings. No extra credentials needed.
-- Linux x86_64; Python 3.12.14, Node 24.19.0, Git 2.52.0, FFmpeg/FFprobe 7.1.5 available.
-  Availability/version inspection only; not application, encoder or compatibility tests.
-- Primary GitHub documentation/source retrieval succeeded as listed in research and
-  DECISIONS. Hugging Face cards and selected hosted vendor docs returned proxy 403;
-  unverified conclusions remain marked. No inference/model downloads or dependencies
-  installed. Research response files were kept outside the repository in `/tmp`.
-- Documentation verification: relative file links resolve; task IDs unique and
-  dependencies valid/acyclic; Next Up contains only unblocked review tasks; required
-  documents present; `git diff --check` clean. No application tests exist or ran.
-- Phase 0 architecture/task/documentation audit recorded in DECISIONS. User approval
-  is pending; Windows/RTX/CPU synthesis, listening, restoration and installers are
-  unrun future gates. No readiness claim for the planned application.
+No Phase 0 exit is approved. A partial evidence/blocker report and conditional deployment
+prompt do not satisfy the mandatory end-to-end proof. Finalize S0-08 only after the
+platform/architecture/test evidence is available; never expand into the full app early.
 
-The documentation commit is local. No push, release, environment publication, or
-model redistribution is implied. The initial onboarding environment required no
-project-specific install/start script; Phase 1 will add tested setup instructions.
-
-## Phase 1 record — 2026-10-29
-
-- `python scripts/setup.py` reproduced locked Python dependencies and npm install,
-  then compiled the TS/React frontend. Repeated execution retained locks and user data.
-- TypeScript check + Vite production build passed. Ruff lint and formatting passed;
-  frontend Prettier check passed; `npm audit` reported zero vulnerabilities. This audit
-  is a point-in-time npm result, not a universal dependency security guarantee.
-- **25 tests passed, 0 failed, 0 skipped on Linux**: API CRUD/series/scoping, stale and
-  concurrent edits, trash/restore, malformed IDs/input, one-time/invalid bootstrap,
-  origin/host/CSRF/session checks incl. Unicode input, upload bounds with/without
-  Content-Length, inert attachments and filename handling, dedup, missing/corrupt
-  objects, staged/published crash recovery, disk-full/fsync injection, idempotent
-  reconciliation, concurrent imports, migration preservation and integrity-checked
-  pre-upgrade backup, schema refusal, config precedence, symlink defenses and a
-  second-process library lock.
-- Real Chromium exercised the compiled UI against a live local server: two independent
-  projects, saved description, upload/download with exact byte comparison, project
-  isolation, trash/restore, complete service restart, persistence and a 390×844 layout
-  without horizontal overflow. No external page requests or browser JS errors observed.
-  A separate subprocess test ran the documented headless CLI, checked health/static UI,
-  terminated it and verified no launcher token appeared in logs.
-- Browser testing found/fixed a description-label selector issue and asset-list clearing
-  after same-project save. Request-limit testing found/fixed a chunked-upload error
-  status. Multipart normalizes browser Windows paths to basenames; direct domain tests
-  reject such paths, and API tests confirm normalized names never become storage paths.
-- One upstream Starlette deprecation warns about its httpx test adapter. It is not
-  suppressed and does not skip/fail assertions. Future adapter migration can follow
-  upstream guidance; no production dependency on httpx was introduced.
-- CI defines Ubuntu/Windows jobs with pinned tool versions, full checks and Chromium;
-  it has not been pushed or remotely executed. No Windows runner is attached here.
-  Windows 10 locks, filesystem durability, browser launch, native wheel compatibility
-  and installation are explicitly **unverified**, as are real Android/tablet devices.
-- No speech synthesis, backups/project archives, installer, software publication, paid
-  services or model downloads occurred. Full independent project transfer/recovery is
-  still a required later acceptance gate. Phase 1 is submitted for user exit review;
-  Phase 2 is blocked pending that approval.
-
-Cloud configuration: `install_script` and `start_skill` draft persistence confirmed.
-The equivalent install script and startup/health/browser workflow were executed here.
-Saving did not execute them, publish a snapshot, or validate restoration in a fresh
-cloud task. No application release was created.
-
-## Phase 2 record — 2026-10-29
-
-- Frontend TypeScript/Vite build, Ruff and Prettier checks pass. No dependency changes,
-  remote CI execution, push, publication, paid service or AI model download occurred.
-- Full local suite: **42 passed, 0 failed, 0 skipped**. Existing Starlette/httpx adapter
-  deprecation remains visible and does not skip assertions. Foundation checks remain.
-- New tests exercise scoped hierarchy/cycles/research links, UTF-8/UTF-16 originals,
-  inert script-looking text, invalid/binary/oversize imports, whitespace preservation,
-  concurrent draft conflicts, append-only revisions/settings/snapshots, stale-preview
-  rejection, restoration of text/tree/metadata/settings and retention of later history.
-- Missing/corrupt revision objects stop restoration before mutation. Injected fsync
-  failure leaves the saved draft and previous revision head intact. Asset/revision
-  concurrency regression forces overlapping object publication and database ownership;
-  lock ordering completes both without losing references. Original asset imports retain
-  all earlier recovery tests. Upgrade from schema 0002 preserves library ID, projects
-  and exact original asset bytes with a verified pre-migration metadata backup.
-- Literal pronunciation tests cover project/document/preset precedence, pinned preset
-  versions, non-cascading replacement, punctuation, Unicode code-point offsets and
-  unchanged-paragraph fingerprints. Duplicate paragraphs receive distinct fresh IDs;
-  unchanged unique paragraphs retain IDs when moved; split/merge hunks record lineage.
-- Chromium tests against the compiled UI cover hierarchy/import, inert Markdown text,
-  typing during an in-flight real autosave, freeze/compare/restore, named snapshots,
-  dictionary and text-only pronunciation preview, restart and narrow viewport. A second
-  real-tab test proves stale autosave cannot overwrite saved content and retains local
-  text until explicit resolution/reload. Explicit form labels fixed selector/accessibility
-  ambiguity. Dictionary save failures retain inputs instead of falsely displaying success.
-- Snapshot/compare bounds are 8 MiB active project text; documents are limited to 1 MiB
-  and 2000 paragraphs, project to 1000 nodes. No engine speed/VRAM/quality claim is made.
-  Windows 10, actual Android/tablet devices, filesystem power-loss guarantees and remote
-  CI remain unrun. Independent backups/project archives are not implemented. Phase 2
-  requires exit review before P3-01 and any model approval discussion/download.
-
-Phase 2 cloud startup draft was saved successfully; the existing install script
-remains applicable (no dependency changes). Saving did not start processes or publish
-a new snapshot, and a fresh cloud-task restoration has not been validated.
+POC implementation commit: 9893611. Cloud startup/network draft persistence was confirmed;
+the legacy automatic full-app install script was cleared for this minimal scope. No
+runtime network grant, new snapshot publication or fresh-task restoration is claimed.

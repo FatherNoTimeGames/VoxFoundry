@@ -1,0 +1,80 @@
+# Disposable audio transport experiment
+
+This is a local prototype, **not a ChatGPT Site, deployed bridge, Windows tray app,
+TTS engine, or verified Android integration**. It uses existing Python dependencies
+and a two-second deterministic tone. No models, cloud services or significant new
+packages were installed. Seven component tests pass; live HTTP/browser tests have been
+written but remain unrun because automatic permission review could not execute them.
+
+## Files and isolation
+
+Code: `backend/voxfoundry/poc/{store,bridge,worker,audio}.py` plus a small phone-first
+HTML/JS/CSS client. Tests: `tests/poc`. POC roots must stay outside the checkout and
+outside existing manuscript libraries. Use fresh disposable directories. Generated
+credentials/SQLite/staging/audio stay there and must never be committed or pasted into
+chat. Existing application library/schema is not touched. The old app is retained.
+
+The bridge creates one private local worker credential file. POSIX file permissions
+are restricted; Windows ACL behavior is unverified and must be checked manually.
+This fixture pairing is not production OAuth/device enrollment/revocation. Only
+loopback is bound; do not expose it or forward a home port. An external bridge would
+need an explicitly approved supported deployment/auth/TLS/storage design.
+
+## Run only after execution is available
+
+Use the existing prepared environment; no frontend/Node build is required for this
+POC. These commands are instructions for pending manual/live validation, not commands
+claimed successful here. New Windows dependency installation requires size/purpose
+review; no installer exists yet.
+
+```sh
+# Terminal 1, repository cwd; launches a local browser with an unlogged one-time token
+.venv/bin/python -m voxfoundry.poc.bridge --data /tmp/voxfoundry-poc-bridge
+
+# Terminal 2, after bridge initialized; credential is passed by path, never printed
+.venv/bin/python -m voxfoundry.poc.worker --bridge http://127.0.0.1:8766 \
+  --credentials /tmp/voxfoundry-poc-bridge/worker-credential.json \
+  --data /tmp/voxfoundry-poc-worker --poll
+```
+
+Windows equivalents use `.venv\Scripts\python.exe` and private directories outside the
+installation, e.g. `$env:LOCALAPPDATA\VoxFoundryPocBridge` / `VoxFoundryPocWorker`.
+They are **unrun examples**, not proof of Windows support. A worker run is a foreground
+portable harness; tray UI/build/distribution comes later. For local Windows testing
+run bridge+worker on that machine; actual Site testing needs the verified approved
+hosted integration, which this loopback-only bridge does not provide.
+
+Submit an approved disposable passage, run the worker, refresh status, play/download
+the tone, stop the worker and confirm retained file access. Tone output is 64044 bytes
+of WAV (2s, mono, 16 kHz PCM), not a narration of the passage. For a headless bridge
+`--no-browser` only exposes health until an authenticated launcher session is established.
+Keep tokens out of logs. Stop only processes you started.
+
+## Checks and limits
+
+```sh
+# Verified seven tests: no network or browser
+.venv/bin/pytest -q tests/poc/test_queue.py tests/poc/test_worker.py
+
+# NOT RUN here: requires functioning permission review/local socket/browser execution
+.venv/bin/pytest -q tests/poc -o faulthandler_timeout=30
+```
+
+State-machine tests use a transport double for worker recovery; they do not verify the
+HTTP implementation. Pending live tests cover a separate worker subprocess, request/
+worker/owner auth, leases, upload limits/WAV/ranges, bridge restart, and browser play/
+download at phone/tablet/desktop sizes after worker exit. Even passing those tests
+would not prove actual Sites/Windows/Android integration.
+
+Queue requests use a unique idempotency ID bound to text digest, three automatic lease
+attempts, explicit retry extension preserving attempt history, monotonically reported
+progress and a fenced completion. Worker SQLite records generated/acknowledged results;
+cache reuse handles restart/lost lease without unnecessary rerendering. No exactly-once
+inference guarantee is claimed. Uploads are capped at 256 KiB and validated before
+success; partial/orphan staging is retained. The worker uses HTTPS for non-loopback
+origins, preserving normal TLS trust and proxies, but no hosted endpoint is configured.
+
+Before production: proper device pairing/revocation, scoped multi-project auth, TLS/
+origin policy for actual Sites, rate limits/quotas, CSRF/streaming URL policy, storage
+backup/retention and monitoring, adversarial upload tests, Windows ACL/durability and
+actual Android playback/download. See research/sites-worker-integration.md manual gates.

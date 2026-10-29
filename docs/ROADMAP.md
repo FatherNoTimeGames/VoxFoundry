@@ -1,30 +1,29 @@
-# Roadmap
+# Revised roadmap — personal Sites-first studio
 
-Status: Phases 0–1 approved; Phase 2 manuscripts/history implemented, exit review pending. No date-based
-release promises. TASKS owns individual progress; DECISIONS owns approvals. Every
-phase exit is a user approval checkpoint before the next phase. Work within a phase
-can proceed in coherent batches after approval. Production content is separate.
+Status: NEW Phase 0 only. Old local-first phases/history are archived; no new full-app
+architecture is approved. Exact task status/dependencies are in TASKS. No date promises.
+All user-facing features require phone-first acceptance, then tablet/desktop, with
+real Android checks for playback/download and major interaction/device gates.
 
-| Phase / target | Deliverables | Exit evidence |
+| Phase | Deliverables | Exit |
 | --- | --- | --- |
-| 0 — design baseline | Repository/environment inspection; requirements/non-goals; current primary TTS research; stack alternatives; component, library/revision/recovery design; operating instructions and dependency-aware tracker | Architecture and prioritized plan documented **and user-approved**. Approved 2026-10-29. |
-| 1 — 0.1 foundation preview | Backend/frontend, local startup/config, migrations, central library, multiple projects, safe CRUD, immutable asset storage, stable IDs and tests | Working local multi-project application; browser/API CRUD and restart checks; no inference required. |
-| 2 — 0.2 manuscripts preview | TXT/Markdown originals/import, parts/chapters/episodes, editing/autosave, revision snapshots, comparison/restoration, script/audio identities and dictionary infrastructure | Organized manuscripts survive edits, conflicts, restart and safe restoration; snapshot provenance and original preservation verified. |
-| 3 — 0.3 narration preview | Approved engine and modular providers, previews/profiles, segmentation, durable queue, cancellation/retry/resume, caching, selective regeneration, checksums, progress and recovery | Producer-approved voice and complete 60-minute generation with interruption recovery on target hardware; no missing segments; CPU/offline checks reported separately. |
-| 4 — 0.4 production preview | Synchronized script/audio, segment playback/review, waveforms, timing/silence, selective edits/regeneration, non-destructive recipes, loudness and quality checks | Producer refines an episode without full regeneration; raw audio retained, export timeline reproducible. |
-| 5 — 0.5 export preview | MP3, chaptered M4B, metadata, artwork, export presets, FFprobe validation, release history and Android player checks | Downloadable files decode/play offline and chapter/seek/resume tests pass in documented Android players. |
-| 6 — 1.0 installable release | Reproducible Windows builds, dependencies, approved first-run model installation, backups, portable archives/import/export, CI/releases, upgrades/restoration | Fresh Windows installation without dev tools, core production offline, tested update/uninstall data preservation and independently restored backups. |
-| 7 — later 1.x increments | Additional engines, narrator roles, advanced pacing/pronunciation, archival reading/dialogue, reusable presets, optional ambience, authenticated LAN and optional GitHub integration | Each feature independently tested without weakening core reliability; authenticated Android/tablet access explicitly opted in. |
+| 0 Feasibility/architecture/POC | Verify Sites/ChatGPT/worker APIs, auth/storage/costs, TTS/wiki/maps; unified data/review/atlas/export design; smallest available audio transport test; actual Site/Windows/Android gates; **final Sites deployment prompt** | Approved architecture supported by actual integration evidence; unknown parts explicitly remain gates |
+| 1 Sites foundation | Supported project/auth/persistence, Android-first navigation/editor shell, autosave/sync/session restoration with PC off | Usable cross-device mobile workspace |
+| 2 Knowledge library | Documents/entities/relationships/provenance, source/original/hybrid workflows, canon states, FTS/nested organization, revisions and portable exports | Interconnected knowledge with independent round-trip recovery |
+| 3 Unified AI workspace | Verified ChatGPT context/tools, incremental retrieval, app sessions, research/co-writing and central Review Queue | Practical AI collaboration on Android/Windows without unsupported session assumptions |
+| 4 GitHub Wiki | Authenticated import/index/provenance, external-change detection/diffs/conflicts and explicitly approved publishing | Reliable bidirectional sync without remote overwrite |
+| 5 Lore Atlas | Rights-cleared maps, touch pan/zoom, markers/layers/search/library links/regions/routes/periods/views; authorized imports/AI proposals | Interconnected mobile lore atlas, not game progress tracker |
+| 6 Narration | Separately approved engines/artifacts, profiles/segmentation, durable jobs/retries/cache/selective regeneration and recovery | Complete validated 60-minute manuscript |
+| 7 Audio editing/export | Script/audio review, waveform/non-destructive edits/mastering, MP3/M4B, metadata/artwork/mobile playback/validation | Finished portable audiobooks |
+| 8 Worker distribution/remote reliability | Production device auth/monitoring/streaming, Windows tray/install/update, full backups/CI/releases and preservation tests | Reliable mobile-controlled Windows production; distribution only separately authorized |
+| 9 Advanced capabilities | Optional providers/roles, map generation/geographic reasoning, sound design/visualization and Android-native exploration | Each approved feature preserves the core workflow/rights/costs |
 
-A preview milestone describes a working slice, not permission to publish an unsafe
-installer or uncleared model. Automated focused CI can begin in Phase 1; full
-Windows packaging/release CI is Phase 6. Backup design starts now; users must be
-warned before real production data is entrusted to previews without verified backups.
+Dependency clarification: basic authenticated remote job/file transport must be proven
+in Phase 0 and available before Phase 6 generation; Phase 8 hardens/packages it rather
+than postponing this prerequisite. Portable project exports begin in Phase 2 so user
+ownership does not wait for distribution. Paid API substitution, significant downloads,
+hosted deployment and platform fallback remain separate consequential decisions.
 
-## First five implementation tasks after approval
-
-P1-01–P1-05 complete/approved; P2-01–P2-04 implemented; P2-05 review pending. Original dependency order:
-P1-01 toolchain/running skeleton;
-P1-02 library bootstrap/migrations; P1-03 multi-project CRUD; P1-04 immutable asset
-storage; P1-05 integrated persistence/restart validation. Their acceptance criteria
-and dependencies are in TASKS. Do not implement all phases in one session.
+The end-of-Phase-0 deployment-prompt deliverable precedes the phase-exit approval.
+It must reference the verified platform/integration, secrets/storage setup, limits,
+manual device checks and rollback; copying it does not authorize costs or deployment.

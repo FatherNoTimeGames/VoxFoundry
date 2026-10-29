@@ -1,67 +1,35 @@
-# Product requirements
+# Revised product requirements
 
-Status: approved baseline, 2026-10-29. Clarifications recorded in DECISIONS.
+2026-10-29 scope reset. Personal-use creative studio; NEW Phase 0 only is authorized.
+Previous local-first architecture approvals do not approve the revised system. Keep
+existing code/history/data; preserve independent exports and non-destructive recovery.
 
-## Mission and scope
+Workflow: Research → Organize → Co-write → Review → Approve → Narrate → Publish.
 
-VoxFoundry is a local audiobook production studio, not a game-specific tool or a
-hosted speech service. The first production, Enshrouded: A History of Embervale,
-exercises reusable documentary narration, fantasy names, research references, and
-chapter organization. Content and voice-reference rights remain the producer's
-responsibility; no game assets or manuscript are included in this repository.
-
-| ID | Required outcome | Delivery phase |
+| Requirement | Outcome / acceptance | Phase |
 | --- | --- | --- |
-| R01 | Central library of independent books/series with parts, chapters, episodes, research, references, notes, and assets | 1–2 |
-| R02 | Autosave, immutable revisions, comparisons, snapshots, safe restoration, independent project history and releases without Git | 2 |
-| R03 | Interchangeable local TTS, voices/profiles, pronunciation, pace, project overrides, shared models/presets | 3, extended 7 |
-| R04 | Durable queues, retry/cancel/resume, selective regeneration, caching, provenance and visible errors; 60-minute recovery validation | 3 |
-| R05 | Script/audio navigation, segment playback/waveforms, timing, silence, non-destructive edits, mastering | 4 |
-| R06 | MP3 and chaptered M4B, metadata/artwork, export validation and immutable release history | 5 |
-| R07 | Independent backups/restoration, portable project archives/import/export, optional GitHub integration | 6, integration 7 |
-| R08 | Responsive desktop browser UI; optional authenticated Android/tablet LAN control | 1, LAN 7 |
-| R09 | Windows installer, model installation, updates through GitHub Releases preserving data | 6 |
-| R10 | Offline core with no subscription, paid API, account, hosted infrastructure, mandatory Docker, or telemetry | all |
+| R01 Sites-first ChatGPT collaboration | Verify actual product, supported persistence/tools/auth; never silently substitute a website/API chatbot | 0, 1, 3 |
+| R02 Android-first | Compact phone navigation/editor/review/atlas; 44px targets, no hover dependence, keyboard/screen reader, phone/tablet/desktop tests | all UI |
+| R03 Cross-device persistence | Site usable with PC off; autosave, sync and session restoration tested separately; conflict handling; app-owned conversations only unless official APIs permit more | 1, 3 |
+| R04 Central knowledge | Projects/source/original/hybrid workflows; stable documents/entities/relationships, provenance, chronology/uncertain dates, nested tags/categories/collections/geography/status/saved filters and FTS | 2 |
+| R05 Canon/Review Queue | Brainstorm/draft/proposed/approved/superseded/rejected/archived states, typed proposals/evidence/diffs, explicit promotions, safe batches/conflicts, local approval separate from publication | 2–3 |
+| R06 Wiki | Optional import/index/revision/auth/conflict-safe bidirectional sync; exact remote changes separately approved | 4 |
+| R07 Atlas | Rights-cleared maps, touch navigation, editable markers/layers/regions/routes/periods/views, linked library/sources/scripts, confidence and placement provenance | 5 |
+| R08 Windows worker | Outbound authenticated jobs, durable local state, interchangeable approved engines, segmentation/voices/pronunciation, retry/cancel/resume/cache/selective regeneration, progress/upload | 0, 6, 8 |
+| R09 Audio | Non-destructive review/mastering, raw retention, MP3/chaptered M4B, artwork/metadata/validation, mobile play/download independent of worker | 0, 7–8 |
+| R10 Ownership | Independent round-trip project archives in Markdown/JSON/standard media, all history/approvals/maps/sources/relationships/audio; no original library DB or proprietary-only access required | 2, 8 |
+| R11 Costs/rights/security | No mandatory paid AI API/cloud GPU/subscription; costs and significant downloads approved; appropriate source/reference/map/model rights; no unsupported session automation | all |
+| R12 Deployment prompt | Final Phase 0 deliverable: copy-ready Sites deployment prompt grounded in verified capabilities and cost/auth/storage decisions; conditional draft is not deployment proof/authority | 0 |
 
-## Quality constraints
+The Site/knowledge store must operate while the worker/PC is off; mandatory offline-only
+central storage is superseded. Local inference/recovery remains local. Hosting/storage
+costs and account limits are unresolved. Personal use supersedes the commercial-product
+goal, not license obligations; Apache-2.0 source grant remains unchanged. Model downloads
+still need separate exact artifacts/sizes/licenses/purposes approval.
 
-- Narration quality outranks peak throughput. Listening approval precedes production
-  engine selection. Quality includes correct words, stable narrator, natural phrasing,
-  pronunciation, and consistent chapter transitions; speed alone cannot pass.
-- Windows 10 x64 target; actual supported Windows build, Python/PyTorch/CUDA/driver
-  combination must be validated. Windows 10 lifecycle/security and modern dependency
-  support are risks, not reasons to silently raise the OS minimum. RTX 3060 variants
-  differ: detect available VRAM rather than assume 12 GB. CPU fallback must be honest
-  about feasibility and speed; no runtime model downloads without consent.
-- Preserve originals and referenced outputs. Crash recovery must reconcile metadata
-  and files without treating partial output as valid. Disk-full is a first-class error.
-- Libraries reside outside install directories and are relocatable. Single local
-  service owns SQLite writes. No shared SQLite file over a LAN/network filesystem.
-- Database/schema/archives/provider contracts are versioned. Upgrades back up first;
-  incompatible versions refuse safely. No destructive automatic downgrade.
-- No silent missing segments, changed seeds/settings, substituted voices, or automatic
-  loss of source material. Explicit stale/failed/missing state and export blockers.
-- Offline operations must not fetch remote fonts/scripts/models, require sign-in,
-  activate licenses, or contact telemetry. Optional updates/downloads require action.
-- UI must preserve unsaved work, show actionable job errors, be keyboard usable,
-  and adapt to small screens. Local API must defend against browser-origin attacks.
-
-## Non-goals for the first release
-
-No model training/fine-tuning, LLM manuscript writing, automated web research,
-commercial cloud narration, real-time voice chat, multi-user collaboration, full DAW,
-Git replacement, arbitrary plugin code from project archives, cloud sync, remote
-Internet access, or mandatory native desktop shell. Revision history is a linear
-production history with named snapshots, not branching/merging Git semantics.
-Ambience, dialogue casting, advanced pacing, LAN, and GitHub integration follow the
-reliable single-narrator offline workflow. Linux cloud checks aid development; they
-do not establish Windows distribution readiness.
-
-## Approved clarifications (2026-10-29)
-
-Commercial and noncommercial productions are supported goals. Default models/voices
-must permit commercial use; producers need rights to manuscripts, assets and reference
-voices. Every AI model download requires separate approval of exact artifacts, sizes,
-licenses and purposes. Project export/backup/restore/transfer must be self-contained
-and work without the original library DB, including resolved shared dependencies.
-Responsive Android/tablet browser access is required; authenticated LAN remains Phase 7.
+Phase 0 must attempt the actual Site → persistent job → Windows worker → uploaded audio
+→ Android play/download → worker-off availability loop. Implement/test available parts;
+record all unavailable parts as unverified, never replace them with mocks and claim full
+success. No full app, atlas, AI workspace, remote wiki publishing or installer is authorized
+now. The Windows companion needed for the initial proof can be a small portable harness;
+a tray/installer is not a prerequisite for protocol tests.

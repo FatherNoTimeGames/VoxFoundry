@@ -1,316 +1,146 @@
-# Architecture
+# Sites + Windows worker architecture proposal
 
-Status: Phase 0 baseline approved 2026-10-29; Phase 1 implementation authorized.
-D06 packaging remains provisional.
-See DECISIONS for alternatives, REQUIREMENTS for scope, VALIDATION for proof gates.
+Status: revised Phase 0, **not approved/verified end to end**. No Site deployed; no
+Windows or Android device attached. Direct Sites integration is unknown. Existing
+local application is preserved, not automatically adopted as the new central store.
+See research/sites-worker-integration.md and VALIDATION for evidence boundaries.
 
-## Runtime and boundaries
-
-A modular monolith keeps application logic and persistence simple. Inference runs
-outside the API process so GPU failures and incompatible model dependencies cannot
-kill editing or corrupt library transactions.
+## Conditional topology and alternatives
 
 ```text
-Desktop browser (later authenticated LAN browser)
-  ↕ same-origin HTTP JSON; SSE for progress; ranged audio reads
-Python FastAPI service + packaged static frontend
-  ├─ application services: projects, revisions, planning, jobs, exports, backups
-  ├─ domain: identity, hierarchy, snapshots, dependency rules, state transitions
-  ├─ storage adapters: SQLite/SQLAlchemy + migrations; immutable file objects
-  ├─ supervisor ↔ isolated provider worker (private framed JSON/pipe protocol)
-  └─ processing adapter ↔ FFmpeg / FFprobe subprocesses
+Android / tablet / Windows
+   ↕ supported ChatGPT Sites UI + unified AI experience (product/contract to verify)
+Site server actions / knowledge services / authenticated durable files
+   ↕ documented authenticated queue/upload API, IF supported
+Windows worker — outbound HTTPS polling only → durable jobs / private audio storage
 ```
 
-React/TypeScript/Vite provides a compiled local UI; Node is a development/build
-requirement only. API schemas generate frontend types when the contract stabilizes.
-UI contains no authoritative invalidation or persistence rules. FastAPI handlers
-validate requests, call application services, and translate errors. Domain logic
-has no web, ORM, or PyTorch dependency. Workers never write SQLite or choose library
-paths; the supervisor validates their output and commits results. No Redis, Celery,
-Docker, or separate database server. A single library instance lock prevents two
-service processes opening the same library for writes; HTTP requests are serialized
-at transactional boundaries, not across long inference operations.
+Evaluate direct Sites-backed persistence/actions first. A worker cannot assume access
+to private platform DBs/files or the user's ChatGPT session. If direct endpoints are
+unavailable, a candidate is one small HTTPS bridge with persistent metadata and private
+objects, called through a supported Site integration. It needs explicit approval before
+adoption/deployment and pricing review. If the Site cannot safely use it, stop and
+propose the smallest mobile web + supported ChatGPT integration alternative; do not
+silently switch platforms. Apps SDK is a research candidate, not proven Sites support.
 
-Future directories: `backend/` with api/application/domain/storage/providers/processing;
-`frontend/`; `tests/` with unit/integration/fixtures; `scripts/` for real build/dev tools;
-`.github/workflows/` for CI/releases. Create these only when implementing relevant work.
+Hosted state is necessary for PC-off availability. Prefer the verified platform's
+supported store; otherwise evaluate one durable personal-use server (SQLite on local
+persistent disk, single writer) versus managed relational DB/object store. No live
+SQLite file over WAN, no ephemeral hosting disk, no direct browser DB admin keys.
+Originals/revisions and uploaded audio live independently of the Windows worker.
+Local-first constraints remain for inference/cache/recovery, not central availability.
 
-## Local configuration and storage
+## Components and authority
 
-Use a platform-specific per-user config path (Windows `%LOCALAPPDATA%/VoxFoundry/`).
-An explicit library picker/config selects a writable local path outside the app's
-installation. Multiple projects live in one selected library; multiple concurrent
-library mounts are deferred. Defaults are documented and relocatable in Phase 1.
+- Site UI: phone-first project/chat/library/atlas/references/review/audio navigation,
+  bottom sheets/collapsible panels and additional desktop panels. No hover-only flows.
+- Knowledge/application services: authoritative graph, revisions, permissions, canon,
+  proposal/review transactions, search, session restoration and export manifests.
+- AI adapter: only verified ChatGPT context/actions; app-managed conversations and
+  session summaries tagged with source revisions. No private-history scraping or
+  paid API assumed by subscription. Provider actions propose rather than approve.
+- Integrations: wiki fetch/diff/approved publication, authorized map references/imports,
+  portable archives. External content is untrusted and source-versioned.
+- Audio bridge: approved immutable script/config requests, device-scoped auth, leases,
+  attempt history, upload validation, progress and durable completion artifacts.
+- Worker: separate Python inference/FFmpeg processes and local SQLite job/cache state;
+  interchangeable capabilities/engines, CPU where supported, RTX 3060 resources detected.
+  Foreground harness for Phase 0; Windows tray/installer/update later.
 
-```text
-<library>/
-  library.sqlite3                  # mutable relational metadata
-  objects/sha256/<prefix>/<digest>  # immutable manuscript, research, audio, artwork
-  staging/<operation-id>/          # incomplete writes, never advertised as valid
-  exports/<release-id>/            # validated deliverables, immutable once released
-  logs/                            # bounded, redacted diagnostic files
-<app-data>/models/<provider>/<revision>/  # shared verified models, outside library
-<app-data>/workers/<provider>/<version>/  # isolated runtime environments
-<backup-destination>/             # separate user-selected location, not history
-```
+Prior local Python/FastAPI/React/SQLite modules may supply domain rules and recovery
+techniques. Do not restructure/delete them to pretend they are a Site. Isolated
+`backend/voxfoundry/poc` uses a separate disposable database/storage/credential path.
+No application-library migration is performed by that experiment.
 
-All library references use object IDs/digests and safe relative paths, never arbitrary
-client paths. Models/presets can be shared across projects; reference recordings are
-project assets unless explicitly shared. Content-addressed objects deduplicate bytes;
-project ownership/references still govern deletion/export. Originals are immutable.
-Caches may be cleaned only if unreferenced; no automatic deletion of history/release
-assets. Retention/garbage collection starts with dry-run reachability and explicit
-confirmation, including staging recovery. Network/sync folders are unsupported for
-live SQLite, though closed archives/backups may be copied there.
-
-## Conceptual relational model
-
-UUIDs assigned by the application are stable, globally unique identities; names and
-positions are mutable metadata. Hashes identify bytes, never replace entity IDs.
-UTC timestamps aid display/auditing; monotonic revision numbers and optimistic
-concurrency tokens order changes. Foreign keys include project scope to prevent
-accidental cross-project links. Exact DDL belongs to Phase 1/2 migrations.
+## Central knowledge model
 
 | Entity | Relationships and invariants |
 | --- | --- |
-| Library / SchemaMigration | Library identity, format/schema versions; one local owner |
-| Series / Project | Optional series groups independent projects; project owns history and lifecycle (active/trashed) |
-| DocumentNode | Project-scoped parent, type (part/chapter/episode/manuscript/research/reference/note), stable ID and ordering; no cycles |
-| Asset / Blob | Project ownership, original name/media type, SHA-256, byte length; many asset records may reference identical immutable bytes |
-| DocumentRevision | Node, immutable UTF-8 text blob, parent revision, author/time/reason; drafts are mutable and separately identified |
-| ProjectSnapshot | Immutable manifest: exact node tree/order, document revision IDs, metadata and settings versions; project head points at one snapshot |
-| PresetVersion / ProjectOverrideVersion | Immutable shared preset and frozen resolved project settings; editing defaults never mutates historical configurations |
-| VoiceProfileVersion / DictionaryVersion | Provider/voice/model identity, reference-asset digest, language/control schema; pronunciation entries and scope |
-| ScriptSegment / SegmentVersion | Stable logical segment ID; version binds document revision, source spans, normalized text and context fingerprint; split/merge lineage explicit |
-| NarrationPlan / PlanEntry | Frozen ordered segment versions plus effective settings; expected complete set for a production run |
-| Job / JobItem / Attempt | Persistent state, lease, priority, retry/diagnostics; item targets one immutable segment/config; attempts append-only |
-| AudioArtifact | Segment version, resolved config/model/runtime fingerprints, digest, media properties, validation result, producing attempt |
-| EditRecipeVersion / ProductionSnapshot | Non-destructive trim/silence/gain/fade/ordering instructions referencing immutable audio and timing map |
-| Export / Release | Exact production snapshot, format/settings, ordered chapter manifest, cover/metadata, FFprobe report, checksum and immutable release record |
-| OperationJournal / AuditEvent | Pending filesystem/DB operation reconciliation; append-only production and restoration events |
+| Project / Collection / SavedView | Source/original/hybrid type; independent permission/history/export; nested composable filters/sorts |
+| Record / Document / Entity | UUID, project, kind, title, version/state; book/part/chapter/episode/manuscript/research or character/faction/location/event/object/concept |
+| Relationship | Typed source/target IDs, project scope, validity/version, provenance; one authoritative record displayed in many views |
+| Source / Citation | Original digest/URL, author/rights, retrieval date, game/world/version applicability, evidence spans/confidence/contradictions |
+| TemporalAssertion | Era/event, uncertain date bounds/calendars, evidence and interpretation flags; no invented exact date |
+| Revision / Snapshot | Immutable content/config/graph manifest; mutable draft/head with expected versions; restoration appends, originals retained |
+| Conversation / ResearchSession | Application-owned turns/context/project/doc/map IDs, sync version, restored workspace; external ChatGPT histories only if supported |
+| Proposal / ReviewDecision | Origin/AI model context, affected IDs/base versions, readable diff, rationale/evidence, accept/reject/revise/defer/batch audit |
+| CanonPublication | Explicit approved record versions and promotion provenance; supersession/history, never automatic on autosave |
+| MapVersion / Geometry / Marker | Background digest/license/dimensions/CRS, historical period, points/regions/routes, library/source links and placement confidence |
+| Job / Attempt / Device | Immutable approved script/settings IDs, lease fencing, retry/cancel, scoped identity, durable worker and central records |
+| AudioArtifact / Production / Release | Exact script/config/model provenance, validated bytes/timing, non-destructive recipes, MP3/M4B/metadata/artwork/export history |
+| WikiBinding / RemoteRevision | Repository/wiki/page/path and baseline SHA, imported provenance, approved diff, expected-head publishing and conflicts |
 
-Series organization does not merge project histories. Research sources retain URLs,
-retrieval dates and attached originals when supplied; the app does not scrape them
-by default. References from manuscripts to research use IDs, not file names.
+Separate content status (brainstorm/draft/proposed/approved/superseded/rejected/archived),
+evidence classification (verified/interpretation/invention/uncertain), and production
+status. A verified source assertion is not automatically approved canon. A manual map
+placement is not automatically verified geography. Imported instructions cannot change
+app permissions, approved canon or publishing policy.
 
-## Drafts, revisions, comparisons, restoration
+## Consistency, sync, retrieval and review
 
-Autosave writes a draft with an expected version token and a visible saved indicator;
-conflicts return the current version instead of overwriting. A revision command
-freezes draft text into an immutable document revision and advances its head within
-a transaction. Named project snapshots capture tree, manuscripts, research references,
-settings and metadata together. Production always uses a frozen snapshot, never a
-moving draft. Compare text diffs plus structural/settings/asset changes.
+Every save uses stable IDs and expected versions; return explicit conflicts and retain
+local edits. Autosave means durable draft acknowledgment. Sync means another authorized
+device sees it. Session restoration means app-managed conversations/project/doc/map/view
+state resumes. Test each independently on real Android/Windows. PC-off Site use cannot
+be implemented with a loopback-only library.
 
-Restore previews changes and creates a new snapshot referencing earlier immutable
-content. It preserves the current snapshot and later outputs; it never rewinds by
-overwriting files. Trashing projects is reversible; physical purge is separate and
-approval-gated. No branch/merge UI, rebase, or Git object graph. Histories belong to
-the project, so standalone archives include all referenced revisions unless the user
-explicitly chooses a limited release-only package with its omissions declared.
+Incremental retrieval starts with scoped metadata/full-text search and follows typed
+relationships/sources. Summaries record dependencies and become stale when authoritative
+records change; they cannot override approved canon. Embeddings are optional, not a
+paid default. Source-based projects distinguish evidence/interpretation/invention;
+original projects respect canon and gameplay; hybrids preserve provenance boundaries.
 
-## Segmentation and selective invalidation
+All AI/atlas/wiki/classification/canon proposals enter one review system. Acceptance
+checks expected versions and conflicts atomically; batch approval is limited to mutually
+compatible proposals. Canon promotion requires an explicit action. Publishing a wiki
+requires a separate explicit action against a re-fetched remote base. Autosave and
+local approval never cause external publication.
 
-Segmentation is versioned, sentence/paragraph aware, bounded by provider limits, and
-retains exact source offsets plus paragraph/heading IDs. Reconcile stable IDs within
-a document using matching text/context; ambiguous repeated text receives new IDs.
-Offsets alone cannot identify a segment after upstream edits. Split/merge creates
-new segment IDs with lineage. Segment-level synchronization is guaranteed initially;
-word alignment is a separate optional capability, never inferred from duration.
+## Job protocol and ownership
 
-A synthesis key hashes a canonical, versioned record of normalized spoken text,
-normalizer/segmenter version, relevant context, language, provider/API version,
-model+voice digests, resolved controls, reference audio digest, effective applicable
-pronunciations, requested seed and output format. Record runtime/device precision
-fingerprints; reproducibility means traceability, not guaranteed identical GPU bytes.
-Audio artifacts remain immutable even when two attempts share a request key.
+Approved requests pin script revision, text digest, provider/model/voice/version,
+pronunciation/settings and generation purpose. Idempotency keys bind the request body.
+Workers authenticate as scoped devices, poll outbound, claim finite leases, heartbeat,
+and upload only to their current fenced attempt. Expired attempts cannot overwrite
+newer results. Upload streams to staging with size/format/hash validation; publish
+immutable bytes before committing success. Handle unknown commit outcomes by querying
+status and idempotent retry; never promise exactly-once inference after every crash.
+Durable cache/input fingerprints prevent avoidable duplicate work. Never omit failed
+segments. Completed files remain in central storage when the worker is off.
 
-- Editing a sentence invalidates that segment and context-dependent neighbors only.
-- A pronunciation change affects segments using its entries. Include matched rule
-  results, not the global dictionary timestamp, in the synthesis key.
-- Voice/model/pacing changes invalidate affected profile assignments. Updating a
-  shared preset offers explicit adoption; existing resolved versions stay frozen.
-- Metadata or cover changes invalidate export only. Chapter reorder reuses audio
-  and rebuilds timeline/export. Trim/silence/mastering changes rebuild production,
-  preserving synthesis. Changing boundary context can require adjacent regeneration.
+The disposable POC implements this shape with one local owner/device and test tones,
+not production OAuth, multi-tenant isolation, speech, Sites or Internet hosting. Credential
+revocation/rotation/pairing, TLS, quotas/rate limits, retention, private streaming URLs
+and safe cross-origin/Sites integration remain production/manual gates. Same-origin
+cookies in a local browser do not prove third-party iframe/mobile cookie behavior.
 
-Invalidation marks derived views stale; it never deletes older valid artifacts.
-Users see current, stale, missing, and failed separately. A job finishes for its
-original frozen plan even if the manuscript changes; its outputs cannot silently
-become the current edition. Export requires every expected segment from the selected
-production snapshot, with no implicit substitution or omission.
+## Atlas, wiki and portability
 
-## Durable jobs and worker contract
+Rights-cleared uploaded maps are the independent option. Inspect the requested map
+services/terms before any embed/import; user preference for Pindrop is recorded, not
+an inspected feature claim. Image coordinates and background version are explicit.
+Labels/markers/regions/routes are separate editable objects; AI placement is proposed
+with evidence/confidence. Timeline views retain uncertain bounds and game versions.
 
-SQLite is the queue source of truth. Job/items transition through queued → leased /
-running → validating → succeeded, with failed, cancel-requested/cancelled and retry
-paths. Claim transactionally with a lease, heartbeat, bounded retries and backoff.
-A crashed worker's expired lease is reconciled before requeueing. Cancellation stops
-new claims, signals the worker, then terminates it after a grace period; validated
-completed items survive. Resume claims unfinished work, not the entire manuscript.
+Wiki import/publish adapter uses only documented transport/auth. Baseline/local/remote
+comparison, re-fetch before commit, expected-head fast-forward checks, independent
+backups and explicit per-diff publishing prevent remote overwrite. Engineering docs
+stay in this repository; project wiki content is an optional integration.
 
-Provider v1 contract: describe capabilities/limits and licenses; list local installed
-models/voices; validate configuration; prepare local resources; synthesize bounded
-text into a supervisor-provided staging location; emit typed progress/errors; cancel;
-close. Unsupported pace/phoneme/cloning controls are reported rather than ignored.
-Protocol has version, attempt ID, input fingerprint, size limits, timeout and a final
-result with PCM format/sample count and digest. Treat worker output as untrusted.
-No implicit downloads during prepare/synthesis. Model installation is a separate
-user-approved action with manifest, download sizes, license, revision and checksums.
+Export each project to versioned JSON manifests plus Markdown and standard images/audio:
+full graph, draft/canon states, sources/citations, maps/geometry, app-owned sessions,
+revisions/approvals, model requirements and audio/release history. Embed resolved shared
+presets/dependencies; cross-project links require explicit export policy/stubs rather
+than silently copying private projects. Import/restore into a new empty store without
+the original DB; verify hashes, schema, path/decompression bounds and round-trip IDs/
+relationships. History is not backup. Do not hardwire essential data to a vendor UI.
 
-One inference worker on the GPU by default; no assumed VRAM capacity. Workers have
-separate pinned Python environments/processes to avoid torch/dependency collisions.
-CPU use is explicit and recorded; OOM offers smaller batches/CPU or retry without
-silently changing voice. Transport uses private inherited pipes, not an unauthenticated
-public inference port. Segment duration bounds limit lost work and memory use.
+## Cost and security limits
 
-## Filesystem consistency, recovery and migrations
-
-Write files to staging on the same volume, flush and verify length/digest/media,
-then atomically rename to immutable object path before committing references in a
-short SQLite transaction. A journal connects operation ID, expected digest and DB
-state. A crash can leave an orphan file, never a successful reference to a partial
-file. Startup reconciliation verifies interrupted operations; quarantines corrupt
-objects and marks missing references, retaining diagnostics. External deletion and
-disk-full must surface actionable errors. Do not hold DB locks while encoding.
-
-Enable foreign keys, use bounded busy timeouts, WAL on supported local storage and
-durable transaction settings; test Windows rename/locking/fsync behavior. Alembic
-migrations are versioned, forward only, with preflight disk space and verified backup.
-Newer schemas refuse to open in older apps. Upgrade failures leave a recoverable
-backup; never assume a reverse migration is safe. Startup runs consistency checks
-appropriate to crash state; full checks are available explicitly.
-
-Backups use SQLite's consistent online backup mechanism plus a frozen reachability
-manifest of immutable objects, verified hashes and a completion marker. A copied
-live DB without WAL is not a backup. Restore into a new location, verify all objects,
-schema and references, then offer explicit switch; never overwrite the only library.
-Each project backup/export must be self-contained: versioned manifest, all portable
-project records/history, referenced blobs and resolved shared preset/series context.
-A fresh library must restore/transfer it without the original library database.
-Project export uses versioned manifest+portable records+referenced blobs; import
-stages and validates schema, checksums, path traversal, symlinks, decompression and
-size limits. Imports default to a new project, remapping IDs and recording provenance
-on collision; do not merge unrelated histories. Models are excluded by default;
-manifest reports required engine/model revisions and their separate installation.
-
-## Audio production and exports
-
-Retain original engine PCM/sample rate; processing recipes declare resampling/channel
-conversion, trim, silence, gain, fades and mastering versions. Production snapshots
-freeze timeline and cumulative segment/chapter offsets. Waveform caches derive from
-PCM and can be rebuilt. Loudness analysis and two-pass normalization use explicit
-presets/true-peak limits; avoid repeated lossy encode cycles. Quality checks flag
-clipping, suspicious silence, truncated/empty output and duration anomalies; they do
-not prove correct speech. Listening and optional ASR checks complement them.
-
-FFmpeg is invoked with argument arrays, bounded output/timeouts and generated safe
-manifests, never shell interpolation from manuscript metadata. Produce per-chapter
-or single MP3 and chaptered AAC-in-MP4 M4B with metadata/artwork. Stage output and
-FFprobe validation before marking an export/release successful. Check decodeability,
-stream formats, positive duration, ordered chapters within duration, metadata/cover,
-expected segment coverage and checksums. Android seek/resume/chapter behavior needs
-real player tests. Defaults for loudness/bitrate are approved through listening tests,
-not hard-coded as universal audiobook requirements.
-
-## Security, distribution and evolution
-
-Bind loopback by default, check Host/Origin, disallow permissive CORS, require a local
-session bootstrap and CSRF protection for mutations, and validate Web/SSE sessions.
-Use a browser-opening one-time bootstrap without persistent secrets in logs. Assets
-are served by scoped IDs with range support; HTML/raw research cannot execute in the
-app origin. Reject active content and unsafe filesystem names, including Windows
-reserved names, junction/symlink escapes and archive traversal.
-
-LAN (Phase 7) is explicit opt-in with device pairing, authenticated sessions, CSRF,
-TLS/pinned local trust guidance, revocation, firewall guidance and restricted routes;
-no public exposure/port forwarding. Android is a browser client; inference stays on
-the host. No unauthenticated network access during early development.
-
-Propose PyInstaller one-folder Python bundle + compiled web assets, then a Windows
-installer (candidate Inno Setup; exact tool/license unresolved). Keep provider runtimes
-and approved models separately installable, versioned and checksummed. Updates are
-user-triggered downloads from GitHub Releases; signed-manifest/checksum policy must
-be designed before auto-apply. Unsigned hashes alone do not authenticate an update.
-No paid signing service is mandatory. Stop running workers before updating binaries;
-back up before migrations; uninstall preserves libraries/models unless explicitly
-chosen otherwise. A native shell (Tauri/pywebview) can follow only if browser UX proves
-insufficient. Compatibility, installer license and Windows security limitations
-remain release gates; Linux development is not packaging evidence.
-
-## Phase 1 implemented slice (2026-10-29)
-
-`backend/voxfoundry` now separates Pydantic API contracts, project application service,
-domain filename/error rules, configuration/launcher and SQLAlchemy/Alembic/file storage.
-The compiled React UI is served same-origin. No provider or audio placeholder code
-has been added. The first two frozen migrations define library/series/projects and
-blobs/assets/import operations. Single-library writes are protected by an OS file
-lock; optimistic project versions reject stale edits.
-
-Imports are limited to 25 MiB, streamed from bounded multipart uploads into same-volume
-staging; journal ready records bind exact digest/size before object publication.
-Publication is serialized within the service. Restart recovers ready operations and
-marks partial writes failed, preserving partial data; it also verifies stored blobs.
-Corrupt/missing files are flagged in metadata rather than silently replaced or deleted.
-Automatic quarantine/GC is deferred; no source object purge exists. Directory fsync
-is used on POSIX; Windows power-loss/rename guarantees require target validation.
-
-Early libraries are developer previews. Migration backups currently protect the SQLite
-metadata before a known schema upgrade; they are NOT full DB+asset library backups or
-standalone project archives. Those remain P6-02. Project IDs/ownership are explicit,
-and no metadata embeds an original-library absolute asset path, preserving portability.
-Portable archives must embed the project graph/resolved dependencies so restoring one
-never needs its original database. Do not market the preview as satisfying that future
-archive acceptance criterion yet.
-
-Browser bootstrap uses a one-time fragment token passed directly by the CLI, consumed
-once and removed from history. A per-process HttpOnly SameSite session and CSRF token
-protect data routes; strict host/port/origin checks and attachment-only media apply.
-Tokens are never logged. The API binds 127.0.0.1 only; a responsive narrow layout is
-verified in Chromium, not a claim of authenticated LAN or real Android device support.
-Node/Vite are build-only; this source-development launcher is not a packaged product.
-
-## Phase 2 implemented slice (2026-10-29)
-
-Migration 0003 adds project-scoped document nodes/drafts/revisions, project snapshots
-and head/generation state, immutable shared preset versions, and versioned project
-overrides. Composite foreign keys enforce document, revision, original-asset and
-snapshot ownership; database triggers forbid update/delete of immutable history.
-Existing 0001/0002 migrations are unchanged; pre-upgrade SQLite backup is retained.
-No inference or fake provider code is included.
-
-Application services run short SQLite `BEGIN IMMEDIATE` commands and consistent read
-transactions. Drafts are bounded mutable SQLite text with optimistic versions; frozen
-revisions reference SHA-256 UTF-8 objects. Text-object fsync/rename precedes DB reference
-commit, so a failed command can leave an unreferenced object, never a successful head
-pointing at partially written text. Both uploads and revisions share an object publish
-lock; publication releases that lock before waiting for SQLite to avoid lock inversion.
-Immutable text is read/verified on comparisons and restore. Originals retain exact
-bytes; import decoding accepts UTF-8/BOM UTF-16 and normalizes editable newlines only.
-
-Project snapshots store a portable logical manifest of tree, immutable revision IDs,
-metadata/series context, asset records/digests/sizes and resolved settings; text is not
-duplicated inline. A snapshot still requires this library's objects/history, so it is
-NOT a standalone backup/archive. Restore verifies target objects, captures later saved
-work in a new snapshot, restores active tree/settings/metadata, creates restored document
-revisions and advances to a new snapshot. Later nodes become inactive, not deleted.
-Asset membership restoration is deliberately additive: newer originals remain in the
-project. Previews expose that policy and compare structure/text/settings/metadata/assets.
-Preview generation and project-version tokens prevent concurrent overwrites.
-
-Text-only script previews expose version-1 paragraph anchors: UUIDs, Unicode code-point
-start/end offsets (not JavaScript UTF-16 offsets or word timestamps), revision IDs and
-explicit changed-hunk lineage. Unique unchanged paragraphs retain identity across
-reordering; ambiguous duplicates receive new IDs. Engine-specific segmentation, audio
-alignment and invalidation/cache records remain Phase 3. Pronunciation uses simultaneous
-case-sensitive whole-term literal replacements, document > project > pinned shared
-preset precedence, and fingerprints only applicable matches per paragraph. It does not
-claim arbitrary IPA/SSML support or implement a TTS provider.
-
-Foundation resource bounds: 1 MiB UTF-8 text and 2000 paragraphs/document; 1000 total
-project nodes; 8 MiB active text for project snapshots/comparison. These conservative
-limits keep previews and diffing bounded; they are not engine input limits. Frontend
-components separate the API client, project shell, manuscript workspace, dictionary
-and typed contracts. Autosave serializes requests, preserves newer typing in flight,
-retains conflicted local text, pauses after errors and protects navigation. Explicit
-form labels and keyboard-accessible controls support narrow-screen browser use.
+No cloud GPU or mandatory paid inference API. Local experiment has no new service fee;
+network/hosting/storage/ChatGPT plan costs remain unknown until verified. Central media
+adds storage/egress and must not rely on free-tier permanence. Pricing approval precedes
+provider selection. Windows 10 lifecycle/dependency compatibility remains a documented
+risk; target validation is required before distribution. Apache source license persists;
+personal use does not clear map/model/voice/reference rights. No deployment/release is
+authorized by a generated deployment prompt or this architecture draft.
