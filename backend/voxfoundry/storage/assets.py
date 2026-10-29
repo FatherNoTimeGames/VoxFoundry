@@ -1,7 +1,6 @@
 import hashlib
 import os
 import re
-import threading
 from pathlib import Path
 from uuid import uuid4
 
@@ -33,7 +32,7 @@ class Assets:
     def __init__(self, library, project_service):
         self.library = library
         self.projects = project_service
-        self.publish_lock = threading.Lock()
+        self.publish_lock = library.object_lock
 
     def object_path(self, digest):
         if not re.fullmatch(r"[0-9a-f]{64}", digest):
@@ -56,6 +55,7 @@ class Assets:
                 "Object integrity mismatch; refusing to overwrite existing bytes", 409
             )
         with self.library.engine.begin() as conn:
+            conn.exec_driver_sql("BEGIN IMMEDIATE")
             existing = conn.execute(select(blobs).where(blobs.c.digest == op["digest"])).first()
             if not existing:
                 conn.execute(
@@ -84,6 +84,15 @@ class Assets:
     def _publish(self, op):
         with self.publish_lock:
             self._publish_locked(op)
+        # Never wait for SQLite while holding the object lock: revision transactions
+        # acquire the database first, then publish text objects.
+        self._record(op)
+        stage = self._stage(op["id"])
+        if stage.exists():
+            try:
+                stage.unlink()
+            except OSError:
+                pass  # committed asset is valid; retain the harmless staging copy
 
     def _publish_locked(self, op):
         stage = self._stage(op["id"])
@@ -97,12 +106,6 @@ class Assets:
                 raise DomainError("Staged asset integrity mismatch", 409)
             os.rename(stage, destination)
             flush_directory(destination.parent)
-        self._record(op)
-        if stage.exists():
-            try:
-                stage.unlink()  # only the duplicate verified staging copy
-            except OSError:
-                pass  # committed asset is valid; retain the harmless staging copy
 
     def import_file(self, project_id, filename, stream):
         self.projects.get(project_id, active=True)

@@ -1,5 +1,6 @@
 import shutil
 import sqlite3
+import threading
 from datetime import UTC, datetime
 from pathlib import Path
 from uuid import uuid4
@@ -11,7 +12,7 @@ from sqlalchemy import URL, create_engine, event, inspect, select
 from voxfoundry.domain.errors import DomainError
 from voxfoundry.storage.schema import libraries
 
-HEAD = "0002"
+HEAD = "0003"
 
 
 def timestamp() -> str:
@@ -35,6 +36,7 @@ class Library:
             raise DomainError("Library lock must not be a link")
         self.lock = FileLock(str(self.root / ".instance.lock"))
         self.engine = None
+        self.object_lock = threading.RLock()
         try:
             self.lock.acquire(timeout=0)
         except Timeout as exc:
@@ -66,7 +68,7 @@ class Library:
                     if "alembic_version" in tables
                     else None
                 )
-                if tables and version not in ("0001", HEAD):
+                if tables and version not in ("0001", "0002", HEAD):
                     raise DomainError("Unknown or newer library schema; no changes made")
             if version and version != HEAD:
                 if shutil.disk_usage(self.root).free < db.stat().st_size * 2 + 16 * 1024 * 1024:

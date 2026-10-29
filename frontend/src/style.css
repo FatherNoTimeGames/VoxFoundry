@@ -212,3 +212,47 @@ footer {
     font-size: 2rem;
   }
 }
+.workbench {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: #142024;
+}
+.workbench form {
+  margin: 1rem 0;
+}
+.workbench h4 {
+  overflow-wrap: anywhere;
+}
+.workbench details {
+  margin: 1rem 0;
+}
+.manuscript-text {
+  min-height: 320px;
+  font-family: ui-monospace, monospace;
+}
+.document-tree {
+  list-style: none;
+  padding: 0;
+}
+.document-tree button {
+  background: transparent;
+  color: #c7e9da;
+  border-color: #597078;
+  text-align: left;
+  width: 100%;
+  overflow-wrap: anywhere;
+}
+.document-tree button[aria-current="true"] {
+  background: #34534d;
+}
+.diff {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 0.8rem;
+  max-height: 28rem;
+  overflow: auto;
+}
+.draft-status {
+  font-size: 0.9rem;
+  color: #b3ddca;
+}

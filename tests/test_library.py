@@ -4,11 +4,11 @@ from pathlib import Path
 import pytest
 from alembic import command
 from alembic.config import Config
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
 from voxfoundry.application.projects import Projects
 from voxfoundry.config import load_settings
 from voxfoundry.domain.errors import DomainError
-from voxfoundry.storage.library import Library
+from voxfoundry.storage.library import HEAD, Library
 from voxfoundry.storage.schema import projects
 
 
@@ -81,9 +81,7 @@ def test_migration_preserves_project_and_verified_backup(tmp_path):
     try:
         assert Projects(library).get("older-project")["name"] == "Before upgrade"
         with library.engine.connect() as conn:
-            assert (
-                conn.exec_driver_sql("SELECT version_num FROM alembic_version").scalar() == "0002"
-            )
+            assert conn.exec_driver_sql("SELECT version_num FROM alembic_version").scalar() == HEAD
         (backup,) = (root / "backups").glob("*.sqlite3")
         with sqlite3.connect(backup) as conn:
             assert conn.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
@@ -164,3 +162,58 @@ def test_database_symlink_and_lock_symlink_refused(tmp_path):
         with pytest.raises(DomainError, match="link"):
             Library(root)
         assert target.read_bytes() == b"preserve these bytes"
+
+
+def test_phase_one_upgrade_retains_original_assets_and_identity(tmp_path):
+    import hashlib
+
+    from voxfoundry.storage.schema import assets, blobs, libraries
+
+    root = tmp_path / "library"
+    root.mkdir()
+    original = b"Existing phase one asset"
+    digest = hashlib.sha256(original).hexdigest()
+    directory = root / "objects" / "sha256" / digest[:2]
+    directory.mkdir(parents=True)
+    (directory / digest).write_bytes(original)
+    engine = create_engine("sqlite:///" + str(root / "library.sqlite3"))
+    cfg = Config()
+    cfg.set_main_option(
+        "script_location", str(Path("backend/voxfoundry/storage/migrations").resolve())
+    )
+    with engine.begin() as conn:
+        cfg.attributes["connection"] = conn
+        command.upgrade(cfg, "0002")
+        conn.execute(libraries.insert().values(id="original-library", created_at="then"))
+        conn.execute(
+            projects.insert().values(
+                id="old-book",
+                name="Old book",
+                description="",
+                version=1,
+                created_at="then",
+                updated_at="then",
+            )
+        )
+        conn.execute(blobs.insert().values(digest=digest, size=len(original), state="valid"))
+        conn.execute(
+            assets.insert().values(
+                id="old-asset",
+                project_id="old-book",
+                digest=digest,
+                filename="original.txt",
+                created_at="then",
+            )
+        )
+    engine.dispose()
+    library = Library(root)
+    try:
+        assert library.id == "original-library"
+        assert (directory / digest).read_bytes() == original
+        assert Projects(library).get("old-book")["name"] == "Old book"
+        with library.engine.connect() as conn:
+            assert conn.execute(select(assets.c.id)).scalar_one() == "old-asset"
+            assert conn.exec_driver_sql("PRAGMA foreign_key_check").first() is None
+        assert len(list((root / "backups").glob("*.sqlite3"))) == 1
+    finally:
+        library.close()

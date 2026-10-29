@@ -140,3 +140,39 @@ def test_concurrent_identical_uploads_deduplicate_without_lost_references(store)
     assert len({r["digest"] for r in results}) == 1
     assert len(store.list(project_id)) == 2
     assert len(list(store.library.root.glob("objects/sha256/*/*"))) == 1
+
+
+def test_asset_publish_and_revision_transaction_do_not_invert_locks(store, monkeypatch):
+    from concurrent.futures import ThreadPoolExecutor
+    from threading import Event
+
+    from voxfoundry.application.manuscripts import Manuscripts
+
+    store, project_id = store
+    manuscripts = Manuscripts(store.library, store)
+    document = manuscripts.create_node(project_id, "Chapter", "manuscript")
+    draft = manuscripts.save_draft(project_id, document["id"], 1, "New revision")
+    published, revision_database_owned = Event(), Event()
+    record, put = store._record, manuscripts.objects.put
+
+    def delayed_record(operation):
+        published.set()
+        assert revision_database_owned.wait(3)
+        record(operation)
+
+    def revision_put(conn, text):
+        revision_database_owned.set()
+        return put(conn, text)
+
+    monkeypatch.setattr(store, "_record", delayed_record)
+    monkeypatch.setattr(manuscripts.objects, "put", revision_put)
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        imported = pool.submit(
+            store.import_file, project_id, "source.txt", BytesIO(b"Original source")
+        )
+        assert published.wait(3)
+        frozen = pool.submit(
+            manuscripts.freeze_document, project_id, document["id"], draft["version"], "Checkpoint"
+        )
+        assert frozen.result(timeout=8)["revision_id"]
+        assert imported.result(timeout=8)["filename"] == "source.txt"

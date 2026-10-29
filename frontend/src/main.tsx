@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./style.css";
+import { api, setCsrf } from "./api";
+import { Workbench } from "./Workbench";
 
 type Project = {
   id: string;
@@ -23,23 +25,6 @@ type Library = {
   path: string;
   failed_imports: { id: string; error: string }[];
 };
-let csrf = "";
-async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const headers = new Headers(init.headers);
-  if (!(init.body instanceof FormData))
-    headers.set("Content-Type", "application/json");
-  if (csrf) headers.set("X-VF-CSRF", csrf);
-  const response = await fetch(`/api${path}`, { ...init, headers });
-  if (!response.ok) {
-    const data = await response.json().catch(() => ({}));
-    throw new Error(
-      typeof data.detail === "string"
-        ? data.detail
-        : `Request failed (${response.status}). Check your input.`,
-    );
-  }
-  return response.json();
-}
 function App() {
   const [ready, setReady] = useState(false),
     [error, setError] = useState(""),
@@ -58,6 +43,7 @@ function App() {
   const [assets, setAssets] = useState<Asset[]>([]),
     [file, setFile] = useState<File | null>(null);
   const [dirty, setDirty] = useState(false);
+  const [manuscriptDirty, setManuscriptDirty] = useState(false);
   async function run(action: () => Promise<void>) {
     setBusy(true);
     setError("");
@@ -92,6 +78,10 @@ function App() {
     }
   }
   function canLeave() {
+    if (manuscriptDirty) {
+      setError("Save or reload the manuscript before switching projects.");
+      return false;
+    }
     return !dirty || window.confirm("Discard unsaved project changes?");
   }
   useEffect(() => {
@@ -106,21 +96,21 @@ function App() {
             body: JSON.stringify({ token }),
           })
         : await api<{ csrf: string }>("/session");
-      csrf = session.csrf;
+      setCsrf(session.csrf);
       await refresh(false);
       setReady(true);
     });
   }, []);
   useEffect(() => {
     const prevent = (e: BeforeUnloadEvent) => {
-      if (dirty) {
+      if (dirty || manuscriptDirty) {
         e.preventDefault();
         e.returnValue = "";
       }
     };
     window.addEventListener("beforeunload", prevent);
     return () => window.removeEventListener("beforeunload", prevent);
-  }, [dirty]);
+  }, [dirty, manuscriptDirty]);
   useEffect(() => {
     let cancelled = false;
     if (selected)
@@ -142,7 +132,7 @@ function App() {
           <p className="eyebrow">Your stories, kept local</p>
           <h1>VoxFoundry</h1>
         </div>
-        <span className="badge">Foundation preview</span>
+        <span className="badge">Manuscript preview</span>
       </header>
       <main>
         {error && (
@@ -165,8 +155,8 @@ function App() {
             <p className="library">Library: {library?.path}</p>
             <p className="hint">
               Project organization and original asset storage are available.
-              Manuscripts, narration and project archives are planned; this
-              preview is not a backup system.
+              Narration and project archives are planned; this preview is not a
+              backup system.
             </p>
             {!!library?.failed_imports.length && (
               <section aria-label="Import recovery">
@@ -254,15 +244,15 @@ function App() {
                       });
                     }}
                   >
-                    <label>
-                      New project name
-                      <input
-                        required
-                        maxLength={200}
-                        value={newName}
-                        onChange={(e) => setNewName(e.target.value)}
-                      />
-                    </label>
+                    <label htmlFor="project-field-1">New project name</label>
+                    <input
+                      id="project-field-1"
+                      required
+                      maxLength={200}
+                      value={newName}
+                      onChange={(e) => setNewName(e.target.value)}
+                    />
+
                     <button disabled={busy}>Create project</button>
                   </form>
                 )}
@@ -287,15 +277,15 @@ function App() {
                       });
                     }}
                   >
-                    <label>
-                      New series name
-                      <input
-                        required
-                        maxLength={200}
-                        value={seriesName}
-                        onChange={(e) => setSeriesName(e.target.value)}
-                      />
-                    </label>
+                    <label htmlFor="project-field-2">New series name</label>
+                    <input
+                      id="project-field-2"
+                      required
+                      maxLength={200}
+                      value={seriesName}
+                      onChange={(e) => setSeriesName(e.target.value)}
+                    />
+
                     <button disabled={busy}>Create series</button>
                   </form>
                 </details>
@@ -335,18 +325,18 @@ function App() {
                       }}
                     >
                       <fieldset disabled={busy || trashed}>
-                        <label>
-                          Project name
-                          <input
-                            required
-                            maxLength={200}
-                            value={name}
-                            onChange={(e) => {
-                              setName(e.target.value);
-                              setDirty(true);
-                            }}
-                          />
-                        </label>
+                        <label htmlFor="project-field-3">Project name</label>
+                        <input
+                          id="project-field-3"
+                          required
+                          maxLength={200}
+                          value={name}
+                          onChange={(e) => {
+                            setName(e.target.value);
+                            setDirty(true);
+                          }}
+                        />
+
                         <label htmlFor="project-description">Description</label>
                         <textarea
                           id="project-description"
@@ -357,23 +347,23 @@ function App() {
                             setDirty(true);
                           }}
                         />
-                        <label>
-                          Series
-                          <select
-                            value={seriesId}
-                            onChange={(e) => {
-                              setSeriesId(e.target.value);
-                              setDirty(true);
-                            }}
-                          >
-                            <option value="">Independent project</option>
-                            {series.map((s) => (
-                              <option key={s.id} value={s.id}>
-                                {s.name}
-                              </option>
-                            ))}
-                          </select>
-                        </label>
+                        <label htmlFor="project-field-4">Series</label>
+                        <select
+                          id="project-field-4"
+                          value={seriesId}
+                          onChange={(e) => {
+                            setSeriesId(e.target.value);
+                            setDirty(true);
+                          }}
+                        >
+                          <option value="">Independent project</option>
+                          {series.map((s) => (
+                            <option key={s.id} value={s.id}>
+                              {s.name}
+                            </option>
+                          ))}
+                        </select>
+
                         <button disabled={!dirty}>Save changes</button>
                         <span className="save-state">
                           {dirty ? "Unsaved changes" : "Saved"}
@@ -422,6 +412,22 @@ function App() {
                         Reload project
                       </button>
                     </div>
+                    <Workbench
+                      key={selected.id}
+                      projectId={selected.id}
+                      readOnly={trashed}
+                      canRestore={!dirty}
+                      onGuardChange={setManuscriptDirty}
+                      onImported={async () =>
+                        setAssets(
+                          await api<Asset[]>(`/projects/${selected.id}/assets`),
+                        )
+                      }
+                      onRestored={async () => {
+                        select(await api<Project>(`/projects/${selected.id}`));
+                        await refresh();
+                      }}
+                    />
                     <h3>Original assets</h3>
                     <p className="hint">
                       Original bytes are preserved. Downloads are attachments;
@@ -468,17 +474,17 @@ function App() {
                           });
                         }}
                       >
-                        <label>
+                        <label htmlFor="project-field-5">
                           Choose original asset
-                          <input
-                            key={selected.id}
-                            type="file"
-                            disabled={busy}
-                            onChange={(e) =>
-                              setFile(e.target.files?.[0] ?? null)
-                            }
-                          />
                         </label>
+                        <input
+                          id="project-field-5"
+                          key={selected.id}
+                          type="file"
+                          disabled={busy}
+                          onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+                        />
+
                         <button disabled={busy || !file}>Store original</button>
                       </form>
                     )}

@@ -7,6 +7,8 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from sqlalchemy.exc import OperationalError
+from voxfoundry.api.manuscripts import router as manuscript_router
+from voxfoundry.application.manuscripts import Manuscripts
 from voxfoundry.application.projects import Projects
 from voxfoundry.config import Settings
 from voxfoundry.domain.assets import MAX_ASSET_BYTES
@@ -136,6 +138,7 @@ def create_app(settings: Settings) -> FastAPI:
             app.state.projects = Projects(library)
             app.state.assets = Assets(library, app.state.projects)
             app.state.assets.reconcile()
+            app.state.manuscripts = Manuscripts(library, app.state.assets)
             yield
         finally:
             library.close()
@@ -249,6 +252,8 @@ def create_app(settings: Settings) -> FastAPI:
             filename=filename,
             content_disposition_type="attachment",
         )
+
+    app.include_router(manuscript_router)
 
     if settings.frontend.is_dir():
         app.mount("/assets", StaticFiles(directory=settings.frontend / "assets"), name="ui-assets")
