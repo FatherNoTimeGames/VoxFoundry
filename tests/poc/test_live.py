@@ -41,14 +41,15 @@ def bridge(root):
             assert not thread.is_alive()
 
 
+@contextlib.contextmanager
 def owner(app, origin):
-    client = httpx.Client(base_url=origin, trust_env=False)
-    response = client.post(
-        "/api/session", json={"token": app.state.bootstrap}, headers={"Origin": origin}
-    )
-    assert response.status_code == 200
-    client.headers.update({"Origin": origin, "X-VF-CSRF": response.json()["csrf"]})
-    return client
+    with httpx.Client(base_url=origin, trust_env=False) as client:
+        response = client.post(
+            "/api/session", json={"token": app.state.bootstrap}, headers={"Origin": origin}
+        )
+        assert response.status_code == 200
+        client.headers.update({"Origin": origin, "X-VF-CSRF": response.json()["csrf"]})
+        yield client
 
 
 def test_http_auth_limits_fencing_upload_ranges_and_restart(tmp_path):
@@ -183,7 +184,7 @@ def test_real_worker_subprocess_and_browser_play_download_without_worker(tmp_pat
         page.get_by_role("button", name="Refresh jobs", exact=True).click()
         expect(page.locator("#jobs")).to_contain_text("succeeded")
         page.get_by_role("button", name="Play test audio", exact=True).click()
-        page.wait_for_function("document.querySelector('audio').currentTime > 0.1")
+        page.wait_for_function("() => document.querySelector('audio').currentTime > 0.1")
         assert page.locator("audio").evaluate("(audio)=>audio.duration") == 2
         with page.expect_download() as download:
             page.get_by_role("link", name="Download test audio", exact=True).click()
