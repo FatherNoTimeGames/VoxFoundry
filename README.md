@@ -4,11 +4,13 @@ A free, local-first AI audiobook production studio for commercial and noncommerc
 productions. The first production is **Enshrouded: A History of Embervale**; the core
 remains reusable for other projects.
 
-**Status: Phase 1 foundation implemented; phase-exit review pending.** This development
-preview manages independent projects/series and preserves original asset files. It
-has no manuscript editor, narration engine, audio editor, audiobook exporter, project
-archive/backup UI, installer or updater yet. Do not entrust your only copy of production
-material to a preview. Keep originals and independent backups.
+**Status: Phase 2 manuscripts and history implemented; phase-exit review pending.**
+This development preview manages projects/series, original assets, manuscript hierarchy,
+autosaved text, immutable revisions, comparisons, safe restoration, project snapshots
+and pronunciation presets. There is no installed narration engine, audio editor,
+audiobook exporter, standalone project archive/backup UI, installer or updater yet.
+Keep originals and independent backups; history does not replace them.
+
 
 Core workflows require no account, paid API, subscription, Docker or cloud service.
 The compiled responsive UI and local Python service run without Internet access after
@@ -69,7 +71,7 @@ is implemented yet. Live SQLite libraries must reside on a local disk, not a net
 share or a live sync folder. Close the service before manually moving a complete
 library directory, preserve the original, then select the new absolute path.
 
-## Use the foundation
+## Use projects and original assets
 
 Create a project, select it, edit its name/description, optionally create and assign
 a series, then save. Updates carry a version token; a conflict preserves your local
@@ -84,6 +86,51 @@ imports retain partial staging with visible diagnostics. Retry by uploading the
 original again after addressing disk/permission problems. Missing/corrupt objects
 are flagged and downloads fail rather than delivering unverified bytes. Do not
 manually modify object files. No automatic cleanup/purge is performed.
+
+## Manuscripts, revisions and snapshots
+
+Select a project and expand **Add or import document**. Create parts, chapters,
+episodes, manuscripts, research, references or notes. Import `.txt`, `.md` or
+`.markdown` as UTF-8 (optional BOM) or BOM-marked UTF-16. The original bytes remain
+an asset; editable text normalizes line endings to LF. Invalid encodings, binary
+control characters and oversized inputs produce errors without changing originals.
+The preview limits text to 1 MiB/2000 paragraphs per document, 1000 total nodes per
+project, and 8 MiB of active text for project snapshot/comparison operations.
+
+The tree has stable identities. **Structure and research references** changes titles,
+parents, ordering and source links; cycles and links to other projects are rejected.
+Structure changes require **Save structure**. Text autosaves after a short idle period;
+watch **Draft saved locally** before leaving. Concurrent saves are serialized. A stale
+tab retains its local text and stops autosaving after a conflict. Copy that text,
+resolve against the current version and reload deliberately; never assume a failed
+save succeeded. **Save draft now** retries; switching projects is blocked while a draft
+or structure edit needs attention. Closing the page prompts for unsaved changes.
+
+**Freeze revision** creates immutable history of the saved text. Compare a selected
+revision to the current saved draft, then explicitly restore it. Restoration first
+preserves any newer saved text and appends a new revision; it never rewrites the
+selected historical revision. Unchanged text reuses its existing immutable revision.
+Markdown is edited as inert text, not rendered as executable HTML.
+
+**Project snapshots** freezes current drafts, tree/order, research links, metadata,
+resolved settings and asset references under a name. Preview restoration before
+confirming it. Stale previews are rejected if another edit occurred. Restoring creates
+a **Before snapshot restore** snapshot of later saved work, appends restored revisions
+and a new snapshot, and hides later nodes from the active tree. Those nodes and their
+revisions remain reachable through history. Newer asset originals remain available;
+no restore operation purges them. Missing/corrupt referenced objects stop the operation.
+
+**Pronunciation dictionary and presets** supports case-sensitive literal terms with
+whole-project/document scopes. Document rules override project rules, which override
+a selected shared preset version. Replacements do not cascade or modify manuscript
+text. Preview a **frozen** script to inspect spoken replacements; no speech is generated.
+New shared preset versions do not alter projects pinned to earlier versions. Settings
+changes retain version history and snapshots capture resolved values. Language/pace
+intentions are stored in the configuration API; actual engine control support is Phase 3.
+
+Snapshots still depend on this library's immutable objects. Independent project
+archives/backup/transfer into a fresh library without the original DB remain required
+Phase 6 capabilities. No AI model downloads are authorized by using this preview.
 
 ## Verify
 
@@ -101,7 +148,7 @@ Browser tests require Chromium: the suite uses an existing `chromium` executable
 Playwright's browser install. If absent, run `uv run --locked playwright install
 --with-deps chromium` explicitly (a browser download, not an AI model). CI defines
 Linux and Windows jobs; it has not been run remotely in this session. Current local
-result: **25 passed**, no skips; real compiled-UI/restart tests included. One upstream
+result: **42 passed**, no skips; real compiled-UI/restart tests included. One upstream
 Starlette warning deprecates its httpx test adapter; assertions still execute. Windows
 10, GPU, Android devices, installers, backups and speech quality are **not verified**.
 See [validation evidence](docs/VALIDATION.md) for limits and failure-injection coverage.

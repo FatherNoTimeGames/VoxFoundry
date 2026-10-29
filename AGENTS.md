@@ -27,7 +27,7 @@ do not maintain a duplicate GitHub Wiki.
 In a fresh conversation read this file and TASKS first, then only relevant code and
 documents. Inspect Git status and preserve existing work. Use the existing checkout;
 cloud tasks are already isolated, so do not create worktrees without user instruction.
-Phase 0 is approved; Phase 1 is authorized. Record phase-exit approvals in DECISIONS.
+Phases 0 and 1 are approved; Phase 2 is authorized. Record phase-exit approvals in DECISIONS.
 After approval, explicit “continue”, “go ahead”, or equivalent authorizes a coherent
 batch of the highest-priority unblocked tasks. Casual discussion does not authorize
 coding. Complete the batch, run targeted checks, update tasks/docs/decisions, commit

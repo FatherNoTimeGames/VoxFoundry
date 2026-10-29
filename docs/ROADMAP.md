@@ -1,6 +1,6 @@
 # Roadmap
 
-Status: Phase 0 approved; Phase 1 foundation implemented, exit review pending. No date-based
+Status: Phases 0–1 approved; Phase 2 manuscripts/history implemented, exit review pending. No date-based
 release promises. TASKS owns individual progress; DECISIONS owns approvals. Every
 phase exit is a user approval checkpoint before the next phase. Work within a phase
 can proceed in coherent batches after approval. Production content is separate.
@@ -23,7 +23,7 @@ warned before real production data is entrusted to previews without verified bac
 
 ## First five implementation tasks after approval
 
-Implemented P1-01–P1-04; P1-05 review pending. Original dependency order:
+P1-01–P1-05 complete/approved; P2-01–P2-04 implemented; P2-05 review pending. Original dependency order:
 P1-01 toolchain/running skeleton;
 P1-02 library bootstrap/migrations; P1-03 multi-project CRUD; P1-04 immutable asset
 storage; P1-05 integrated persistence/restart validation. Their acceptance criteria

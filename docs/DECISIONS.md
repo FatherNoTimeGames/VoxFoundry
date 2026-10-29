@@ -1,8 +1,8 @@
 # Decisions and approval register
 
 2026-10-29. D01–D07 and the prioritized plan are user-approved. D06 remains
-provisional until packaging validation. Phase 1 is authorized; subsequent phase
-exits retain their review gates. Silence never supplies approval.
+provisional until packaging validation. Phases 0–1 are approved and Phase 2 is
+authorized; phase exits retain their review gates. Silence never supplies approval.
 
 ## D01 — Modular Python service and responsive local web UI
 
@@ -170,8 +170,8 @@ judgments, not performance measurements.
   or production source material downloaded. No paid services or distribution performed.
 - Next audit: Phase 2 boundary or ten further development commits from the Phase 1
   audit documentation commit, whichever is earlier (count through Git log).
-- Phase 1 exit: **review pending (P1-05)**. Implementation P1-01–P1-04 complete; user
-  approval required before Phase 2. No new architecture choice needs a separate gate.
+- At the Phase 1 audit, P1-05 review was pending; it was subsequently approved by
+  user Continue as recorded below. No new architecture choice needed a separate gate.
 
 - Cloud environment draft saved successfully with `install_script` and `start_skill`.
   Install repeats `scripts/setup.py`; startup documents existing checkout, isolated
@@ -179,3 +179,43 @@ judgments, not performance measurements.
   No environment snapshot has been published. Review/save in environment settings
   then publish the cloud environment to retain the snapshot; this is separate from
   application software distribution, which remains unauthorized.
+
+## Phase 1 exit approval and Phase 2 plan
+
+The user's explicit “Continue” following the P1-05 review request approves the Phase 1
+exit and authorizes Phase 2. Target Windows/Android/device checks remain unverified;
+no model/paid/distribution authorization is inferred. P2-01–P2-04 proceed, then P2-05
+requires review. Original imports remain assets; editor drafts use bounded SQLite
+text, immutable revisions use verified UTF-8 objects. Project snapshots freeze tree,
+revision IDs, metadata, asset references and resolved settings; restore appends history.
+Paragraph anchors establish identity contracts only; engine segmentation is Phase 3.
+
+## Phase 2 decisions and boundary audit
+
+- P1-05 approved by user “Continue”; P2-01–P2-04 implemented, P2-05 review pending.
+  This does not approve Phase 3 engine artifacts or downloads.
+- History uses verified text objects and append-only DB records; active drafts/heads
+  remain mutable. Empty/unchanged text does not create redundant revisions, except
+  an explicit restoration appends a revision with restoration provenance.
+- Snapshot restore first captures later saved work. Newer nodes are hidden from the
+  active tree, not purged; their text and IDs remain in history. Newer originals
+  remain project assets (additive asset restoration). Previews explicitly report this
+  non-destructive policy. Independent project transfer still requires P6-02 archives.
+- Phase 2 uses literal text pronunciation replacement only, never assumes provider
+  phoneme/SSML support. Presets pin immutable versions; scoped overrides retain history.
+  Paragraph anchors use Unicode code-point offsets and conservative duplicate handling;
+  generation/engine segmentation remains Phase 3.
+- Conservative limits: 1 MiB/2000 paragraphs per document, 1000 project nodes, 8 MiB
+  active project text for snapshot/compare. Originals are retained as received.
+- Last audit: Phase 2 boundary (implementation `77a2165`; this documentation audit commit). Reviewed
+  snapshot/revision ownership, immutable data, rollback and lock ordering, autosave and
+  cross-tab conflicts, existing-library upgrade, UI/API boundaries and phase/model gates.
+  Tests and limitations are in VALIDATION; no new dependencies or model downloads.
+- Next audit: Phase 3 boundary or ten development commits after the Phase 2 audit
+  documentation commit, whichever comes first. Phase 2 exit needs user approval.
+
+- Reusable cloud `start_skill` draft updated for the manuscript/browser checks and
+  authoritative phase/model gates; install script remains unchanged and tested from
+  Phase 1. Persistence confirmed, no snapshot publication/fresh-task restore claimed.
+  Review/save in environment settings then publish the cloud environment snapshot
+  separately from any software release.

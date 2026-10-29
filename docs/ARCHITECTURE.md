@@ -269,3 +269,48 @@ protect data routes; strict host/port/origin checks and attachment-only media ap
 Tokens are never logged. The API binds 127.0.0.1 only; a responsive narrow layout is
 verified in Chromium, not a claim of authenticated LAN or real Android device support.
 Node/Vite are build-only; this source-development launcher is not a packaged product.
+
+## Phase 2 implemented slice (2026-10-29)
+
+Migration 0003 adds project-scoped document nodes/drafts/revisions, project snapshots
+and head/generation state, immutable shared preset versions, and versioned project
+overrides. Composite foreign keys enforce document, revision, original-asset and
+snapshot ownership; database triggers forbid update/delete of immutable history.
+Existing 0001/0002 migrations are unchanged; pre-upgrade SQLite backup is retained.
+No inference or fake provider code is included.
+
+Application services run short SQLite `BEGIN IMMEDIATE` commands and consistent read
+transactions. Drafts are bounded mutable SQLite text with optimistic versions; frozen
+revisions reference SHA-256 UTF-8 objects. Text-object fsync/rename precedes DB reference
+commit, so a failed command can leave an unreferenced object, never a successful head
+pointing at partially written text. Both uploads and revisions share an object publish
+lock; publication releases that lock before waiting for SQLite to avoid lock inversion.
+Immutable text is read/verified on comparisons and restore. Originals retain exact
+bytes; import decoding accepts UTF-8/BOM UTF-16 and normalizes editable newlines only.
+
+Project snapshots store a portable logical manifest of tree, immutable revision IDs,
+metadata/series context, asset records/digests/sizes and resolved settings; text is not
+duplicated inline. A snapshot still requires this library's objects/history, so it is
+NOT a standalone backup/archive. Restore verifies target objects, captures later saved
+work in a new snapshot, restores active tree/settings/metadata, creates restored document
+revisions and advances to a new snapshot. Later nodes become inactive, not deleted.
+Asset membership restoration is deliberately additive: newer originals remain in the
+project. Previews expose that policy and compare structure/text/settings/metadata/assets.
+Preview generation and project-version tokens prevent concurrent overwrites.
+
+Text-only script previews expose version-1 paragraph anchors: UUIDs, Unicode code-point
+start/end offsets (not JavaScript UTF-16 offsets or word timestamps), revision IDs and
+explicit changed-hunk lineage. Unique unchanged paragraphs retain identity across
+reordering; ambiguous duplicates receive new IDs. Engine-specific segmentation, audio
+alignment and invalidation/cache records remain Phase 3. Pronunciation uses simultaneous
+case-sensitive whole-term literal replacements, document > project > pinned shared
+preset precedence, and fingerprints only applicable matches per paragraph. It does not
+claim arbitrary IPA/SSML support or implement a TTS provider.
+
+Foundation resource bounds: 1 MiB UTF-8 text and 2000 paragraphs/document; 1000 total
+project nodes; 8 MiB active text for project snapshots/comparison. These conservative
+limits keep previews and diffing bounded; they are not engine input limits. Frontend
+components separate the API client, project shell, manuscript workspace, dictionary
+and typed contracts. Autosave serializes requests, preserves newer typing in flight,
+retains conflicted local text, pauses after errors and protects navigation. Explicit
+form labels and keyboard-accessible controls support narrow-screen browser use.

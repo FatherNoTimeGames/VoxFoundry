@@ -94,3 +94,39 @@ Cloud configuration: `install_script` and `start_skill` draft persistence confir
 The equivalent install script and startup/health/browser workflow were executed here.
 Saving did not execute them, publish a snapshot, or validate restoration in a fresh
 cloud task. No application release was created.
+
+## Phase 2 record — 2026-10-29
+
+- Frontend TypeScript/Vite build, Ruff and Prettier checks pass. No dependency changes,
+  remote CI execution, push, publication, paid service or AI model download occurred.
+- Full local suite: **42 passed, 0 failed, 0 skipped**. Existing Starlette/httpx adapter
+  deprecation remains visible and does not skip assertions. Foundation checks remain.
+- New tests exercise scoped hierarchy/cycles/research links, UTF-8/UTF-16 originals,
+  inert script-looking text, invalid/binary/oversize imports, whitespace preservation,
+  concurrent draft conflicts, append-only revisions/settings/snapshots, stale-preview
+  rejection, restoration of text/tree/metadata/settings and retention of later history.
+- Missing/corrupt revision objects stop restoration before mutation. Injected fsync
+  failure leaves the saved draft and previous revision head intact. Asset/revision
+  concurrency regression forces overlapping object publication and database ownership;
+  lock ordering completes both without losing references. Original asset imports retain
+  all earlier recovery tests. Upgrade from schema 0002 preserves library ID, projects
+  and exact original asset bytes with a verified pre-migration metadata backup.
+- Literal pronunciation tests cover project/document/preset precedence, pinned preset
+  versions, non-cascading replacement, punctuation, Unicode code-point offsets and
+  unchanged-paragraph fingerprints. Duplicate paragraphs receive distinct fresh IDs;
+  unchanged unique paragraphs retain IDs when moved; split/merge hunks record lineage.
+- Chromium tests against the compiled UI cover hierarchy/import, inert Markdown text,
+  typing during an in-flight real autosave, freeze/compare/restore, named snapshots,
+  dictionary and text-only pronunciation preview, restart and narrow viewport. A second
+  real-tab test proves stale autosave cannot overwrite saved content and retains local
+  text until explicit resolution/reload. Explicit form labels fixed selector/accessibility
+  ambiguity. Dictionary save failures retain inputs instead of falsely displaying success.
+- Snapshot/compare bounds are 8 MiB active project text; documents are limited to 1 MiB
+  and 2000 paragraphs, project to 1000 nodes. No engine speed/VRAM/quality claim is made.
+  Windows 10, actual Android/tablet devices, filesystem power-loss guarantees and remote
+  CI remain unrun. Independent backups/project archives are not implemented. Phase 2
+  requires exit review before P3-01 and any model approval discussion/download.
+
+Phase 2 cloud startup draft was saved successfully; the existing install script
+remains applicable (no dependency changes). Saving did not start processes or publish
+a new snapshot, and a fresh cloud-task restoration has not been validated.

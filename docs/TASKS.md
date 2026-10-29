@@ -2,19 +2,18 @@
 
 Updated 2026-10-29. Status vocabulary: `todo`, `in-progress`, `blocked`, `review`,
 `done`. Priorities: P0 critical/gate; P1 required; P2 enhancement. Dependencies require
-`done`, including explicit user gates. Phase 0 is approved; Phase 1 implementation
-is complete pending P1-05 review. Phases 2 onward remain blocked.
+`done`, including explicit user gates. Phases 0–1 are approved; Phase 2 implementation
+is complete pending P2-05 review. Phases 3 onward remain blocked.
 Approval never follows from silence. Update status as dependencies clear. IDs persist.
 
 ## Next Up (unblocked; maximum five)
 
-1. **P1-05** — Review the working foundation and approve Phase 1 exit (review).
+1. **P2-05** — Review manuscript/history validation and approve Phase 2 exit (review).
 
-Windows 10 execution remains unverified; Linux/browser evidence is in VALIDATION.
-No Phase 2 work starts before this exit approval. After approval, P2-01 is the next
-unblocked implementation task. Models, paid services and distribution remain separately
-gated. Independent project archives/backup/restore/transfer remain P6-02, with a fresh
-library restore that cannot depend on the original library database.
+After approval, P3-01 is next: recheck commercial-use licenses and prepare exact model
+artifact sizes/purposes for separate approval **before** downloading anything. No speech
+engine/weights or paid/distribution authority is implied. Windows/Android-device checks
+remain unverified; standalone project transfer/backup remains a required P6-02 gate.
 
 ## Active and planned work
 
@@ -25,12 +24,7 @@ those tests have run. An engine/model approval covers exact artifacts, not a fam
 
 | ID | Phase | Priority | Status | Description | Dependencies | Acceptance criteria |
 | --- | --- | --- | --- | --- | --- | --- |
-| P1-05 | 1 | P0 | review | Validate foundation and phase approval | P1-04 | UI/API multi-project workflow survives restart; integration/security checks pass; targeted Windows check or explicit unresolved gate documented; user approves Phase 1 exit. |
-| P2-01 | 2 | P1 | blocked | Hierarchy and TXT/Markdown import | P1-05 | Parts/chapters/episodes/research/notes with acyclic ordering; original bytes retained; encoding/size/path errors explicit; references project-scoped. |
-| P2-02 | 2 | P0 | blocked | Editor drafts, autosave and revisions | P2-01 | Visible save state; conflict-safe autosave; immutable revisions and snapshots freeze tree/settings/assets; restart/data-preservation tests. |
-| P2-03 | 2 | P0 | blocked | Compare and safe restore | P2-02 | Text/structure/settings differences displayed; preview restore creates new head without removing subsequent work; project histories independent. |
-| P2-04 | 2 | P1 | blocked | Script identities and dictionary infrastructure | P2-03 | Stable node/segment lineage contracts, scoped pronunciation rules, versioned shared presets/project overrides, deterministic applicable-rule resolution; no inference required. |
-| P2-05 | 2 | P0 | blocked | Validate manuscript phase and approval | P2-04 | Import/edit/conflict/restart/snapshot/restore scenarios pass; user approves Phase 2 exit. |
+| P2-05 | 2 | P0 | review | Validate manuscript phase and approval | P2-04 | Import/edit/conflict/restart/snapshot/restore scenarios pass; user approves Phase 2 exit. |
 | P3-01 | 3 | P0 | blocked | Exact model/license/download approval and listening trial | P2-05 | Artifact sizes/revisions/checksums/terms/purpose and voice-reference rights reviewed; explicit approval before downloads; documented blinded listening/hardware results; chosen baseline or actionable blocker, no invented winner. |
 | P3-02 | 3 | P1 | blocked | Provider protocol, isolated runtime, previews/profiles | P3-01 | Versioned capabilities/errors/cancel contract; fake provider tests and approved real provider previews; unsupported controls visible; exact runtime/model/voice provenance; CPU/Windows results recorded. |
 | P3-03 | 3 | P0 | blocked | Segmentation, cache and dependency planning | P3-02 | Frozen narration plans, stable reconciliation incl. repeated text/split/merge; canonical fingerprints; only affected segments invalidate; stale artifacts preserved. |
@@ -59,7 +53,8 @@ those tests have run. An engine/model approval covers exact artifacts, not a fam
 Acceptance evidence below distinguishes documentation approval from tested foundation
 behavior. Phase 0 documentation: `379a502`; approvals/license: `1deb001`; foundation
 implementation: `9eff8e1`; Phase 1 audit: this documentation commit (see Git log). Original base:
-`6e6e6cd`. Phase-exit approval for Phase 1 is not yet granted.
+`6e6e6cd`. Phase 2 implementation: `77a2165`. Phase 1 approved by Continue;
+Phase 2 exit approval remains pending.
 
 | ID | Phase | Priority | Status | Description | Dependencies | Acceptance and evidence |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -74,3 +69,8 @@ implementation: `9eff8e1`; Phase 1 audit: this documentation commit (see Git log
 | P1-02 | 1 | P0 | done | Library location/config/bootstrap and migrations | P1-01 | Central UUID library, two Alembic migrations, config/location rules, FK/WAL/durable settings, cross-process lock, reopen/version refusal and verified migration backup tests pass. |
 | P1-03 | 1 | P1 | done | Safe multiple-project CRUD and series | P1-02 | Real UI/API multi-project CRUD/series, optimistic conflict incl. concurrent edits, reversible trash/restore and project isolation verified. |
 | P1-04 | 1 | P0 | done | Immutable asset store and staged-write recovery | P1-03 | Streamed immutable asset imports, hash dedup/project references, journal reconciliation, partial/fsync/disk-full/crash/corrupt/missing/no-overwrite/concurrent upload tests pass. |
+| P1-05 | 1 | P0 | done | Validate foundation and phase approval | P1-04 | 25 Phase 1 tests and local browser/restart workflow passed; Windows gate disclosed. User Continue approved phase exit; see DECISIONS. |
+| P2-01 | 2 | P1 | done | Hierarchy and TXT/Markdown import | P1-05 | Typed hierarchy/import UI/API with cycle and project-scope constraints, ordering/references; original UTF-8/UTF-16 bytes retained; binary/encoding/size validation tested. |
+| P2-02 | 2 | P0 | done | Editor drafts, autosave and revisions | P2-01 | Serialized conflict-safe autosave and visible saved state, immutable revision objects/DB triggers, snapshots freezing tree/revisions/settings/assets; browser in-flight typing and restart tests pass. |
+| P2-03 | 2 | P0 | done | Compare and safe restore | P2-02 | Text and structural/settings/metadata/asset previews; stale previews rejected; restoring appends history and preserves later drafts/nodes/originals; corrupt-reference rollback tests pass. |
+| P2-04 | 2 | P1 | done | Script identities and dictionary infrastructure | P2-03 | Version-1 paragraph IDs/offsets/lineage with conservative duplicate handling; immutable shared presets and versioned scoped overrides; literal pronunciation resolution/applicable fingerprints tested; no inference. |
