@@ -79,5 +79,5 @@ The final Phase 0 task is a [Sites deployment prompt](docs/SITES-DEPLOYMENT-PROM
 its current conditional draft is not a verified deployment recipe or deployment approval.
 
 Project-owned source remains [Apache 2.0](LICENSE). Third-party dependencies, weights,
-voices, maps and source material have independent terms. No software was pushed or
-released by this scope-reset work.
+voices, maps and source material have independent terms. The user has authorized synchronizing the committed source to GitHub. No Site or
+software Release has been deployed/published; feasibility limitations remain unchanged.

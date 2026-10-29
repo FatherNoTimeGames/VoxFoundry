@@ -110,3 +110,12 @@ separately if retaining it; no environment/Site/software publication was perform
 Continuation checkpoint: test correction commit bfd755a; source/evidence/tracker updates
 are in the following documentation commit. Cloud startup draft updated successfully;
 network/runtime changes and snapshot publication remain unconfirmed/unperformed.
+
+## GitHub source synchronization authorization
+
+The user explicitly authorized pushing all committed work to FatherNoTimeGames/VoxFoundry
+after being told commits were local only. Origin main was fetched and confirmed an
+ancestor of the local work; use a normal fast-forward push, never force. This authorizes
+source synchronization for this batch, not a Site deployment, software Release, Wiki
+publication, paid hosting or model downloads. Phase 0 limitations remain unchanged.
+The push result is verified separately after this authorization record is committed.
