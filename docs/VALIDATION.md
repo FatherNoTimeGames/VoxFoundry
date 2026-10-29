@@ -4,7 +4,7 @@
 observed. Old local-app results remain in the [historical ledger](archive/local-first-2026-10-29/VALIDATION.md),
 not evidence of Sites/device integration. No full new Phase 0 success claim.
 
-## Executed current checks
+## Initial reset checks (continuation results below)
 
 - Inspected repository at clean base 8bf7cd9, active instructions/tasks, pinned tools
   and available connectors. No Sites deployment/persistence/runtime tool is callable.
@@ -24,7 +24,7 @@ not evidence of Sites/device integration. No full new Phase 0 success claim.
 - No new dependencies, models, external host, map assets or wiki changes installed/
   deployed/published. Generated test databases/credentials/audio stay outside Git.
 
-## Blocked before execution (not test failures or HTTP responses)
+## Initial blocked attempts (historical; later execution below supersedes some items)
 
 - Official documentation fetch: automatic approval review failed with reviewer capacity;
   another attempt timed out; the expressly allowed retry again failed with capacity.
@@ -67,3 +67,39 @@ platform/architecture/test evidence is available; never expand into the full app
 POC implementation commit: 9893611. Cloud startup/network draft persistence was confirmed;
 the legacy automatic full-app install script was cleared for this minimal scope. No
 runtime network grant, new snapshot publication or fresh-task restoration is claimed.
+
+## Continuation: execution and source recovery
+
+- The first `pytest -q tests/poc` command executed: **7 passed, 5 failed, 0 skipped**.
+  Two failures were fixture lifecycle errors: the owner helper made a request and then
+  entered the same already-open httpx client again. Three viewport failures occurred in
+  the Playwright polling expression: its string eval was rejected by the page's CSP.
+  The application CSP was not relaxed. The helper now opens/closes its client in a
+  contextmanager; polling uses a function. Those test corrections are not claimed to
+  have passed live re-verification yet.
+- Before the three browser assertion failures, phone/tablet/desktop cases submitted
+  jobs, ran a separate Linux worker subprocess with exit 0, and observed succeeded
+  uploaded-audio status after worker exit. Playback decode/download final assertions
+  remain unverified; no actual Android/Windows/Sites evidence is inferred.
+- Corrected reruns did not execute: automatic approval review timed out twice, and a
+  later attempt after a successful documentation read hit reviewer capacity. This is
+  an execution-review outage, not a code test result or unsafe-action determination.
+- **7 component tests passed again**, no skips. Ruff/format/compile passed. The corrected
+  owner fixture lifecycle was independently exercised with a mock transport and closed
+  cleanly; that check does not replace live HTTP tests. FFprobe identified mono 16 kHz
+  signed 16-bit PCM and FFmpeg decoded all 32000 samples (64000 raw bytes, 2 seconds)
+  from the generated WAV. No browser/device playback is inferred from this decode.
+- Successful primary reads: official OpenAI Apps SDK examples README, GitHub wiki Git
+  documentation, Leaflet LICENSE. SHA-256/source URLs are in REFERENCES. Apps SDK
+  documentation evidence supports MCP widgets/tools and server-side persistence, not
+  Sites equivalence or an included hosted database. Wiki Git and Leaflet BSD 2-Clause
+  are documented, not live integration/renderer tests.
+- Full OpenAI Apps SDK docs and Pindrop returned proxy CONNECT 403. Runtime custom host
+  list is still empty; prior draft additions are not active evidence. Other requested
+  map pages/terms, Wiki auth/plan limits, hosting prices and exact Sites product remain
+  unresolved. No new dependency/model/install/deployment/publication occurred.
+
+Test fixture corrections are committed as bfd755a. Updated cloud start_skill draft
+persistence is confirmed; this neither runs tests nor activates host access/publishes
+a snapshot. Review/save environment settings and publish the cloud snapshot separately
+if retaining the updated runtime state; no Site or software publication was performed.

@@ -18,11 +18,18 @@ tool is not proof that the platform lacks a capability.
 | Cross-device auth, ChatGPT context/tools | Unverified | Same project on Android/Windows; supported app-owned sessions/context/actions |
 | Costs/quotas/hosting while PC off | Unverified | Current terms/pricing, file limits, egress, sleep/retention/inactivity policy |
 
-Official OpenAI/API and map documentation retrieval was attempted through the supported
-permission flow. Automatic approval review failed (capacity, then deadline; the allowed
-retry also hit capacity). Those commands **did not execute**; this is not a source's
-HTTP response or proof of unsupported APIs. Required host additions are saved in the
-environment draft; runtime access/application remains unverified. See REFERENCES.
+Earlier source commands were blocked before execution by review failures. On continuation,
+OpenAI's official Apps SDK examples README was successfully read; it documents ChatGPT
+widgets/tools backed by MCP servers and says production state requires server-side
+persistence. This is a documented candidate integration, not Sites equivalence or a
+working connected app. Full OpenAI docs and Pindrop requests returned proxy CONNECT 403;
+custom documentation host additions are still not active in runtime. No TLS/policy bypass.
+See REFERENCES for precise sources/hashes and remaining unread pages.
+
+Local execution also ran once: all three browser viewports submitted jobs and a separate
+Linux worker returned success/uploaded tone audio, but playback assertion code hit CSP
+and two HTTP fixtures failed on client reopening. Fixes are in tests; completed reruns
+were prevented by review timeouts/capacity. No passing complete local suite yet.
 
 ## Preferred direct route (conditional)
 

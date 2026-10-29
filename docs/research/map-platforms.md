@@ -1,8 +1,9 @@
 # Lore atlas / map platform research
 
-Status: requested pages and current terms **not retrieved** because automatic permission
-review blocked command execution. No images, tiles, marker datasets or screenshots
-were downloaded. Do not claim to have inspected their visual designs or usable APIs.
+Status: map pages/current terms remain **unread**. A new Pindrop request reached
+the proxy and returned CONNECT 403; other page reads have not executed. Leaflet
+LICENSE was retrieved from the primary repository and confirms BSD 2-Clause.
+No images, tiles, marker datasets or screenshots were downloaded. Do not claim to have inspected their visual designs or usable APIs.
 See REFERENCES M1–M4 and the saved network host additions.
 
 | Reference | Confirmed evidence | Investigate before adoption/import |
@@ -34,9 +35,10 @@ Timelines represent uncertain bounds rather than fake exact dates. Saved views p
 map version, filters/layers and period. AI placement is a proposal with evidence and
 confidence, never an automatic fact or canon promotion.
 
-Evaluate a maintained image-map/touch library such as Leaflet after reading the current
-license/release/docs. No dependency selected or installed in Phase 0. For original
-worlds, upload rights-cleared backgrounds first; AI image generation is a later opt-in
+Leaflet is a candidate whose BSD 2-Clause code license is now verified; preserve its
+notices/disclaimer if adopted. Its feature/release docs still need review, and its
+code license does not license backgrounds/tiles/marker data. No dependency was selected
+or installed in Phase 0. For original worlds, upload rights-cleared backgrounds first; AI image generation is a later opt-in
 capability with cost/license approval. Labels, markers, borders and regions remain
 editable regardless of the background generation method. Geographic reasoning must
 use recorded map scale/uncertainty and version, not infer unsupported distances.

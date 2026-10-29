@@ -3,8 +3,9 @@
 This is a local prototype, **not a ChatGPT Site, deployed bridge, Windows tray app,
 TTS engine, or verified Android integration**. It uses existing Python dependencies
 and a two-second deterministic tone. No models, cloud services or significant new
-packages were installed. Seven component tests pass; live HTTP/browser tests have been
-written but remain unrun because automatic permission review could not execute them.
+packages were installed. Seven component tests pass. The first live run executed
+(7 passed, 5 fixture failures); fixture corrections await a permitted rerun. Separate Linux worker upload/completion
+was observed; final browser playback/download assertions remain unverified.
 
 ## Files and isolation
 
@@ -23,9 +24,9 @@ need an explicitly approved supported deployment/auth/TLS/storage design.
 ## Run only after execution is available
 
 Use the existing prepared environment; no frontend/Node build is required for this
-POC. These commands are instructions for pending manual/live validation, not commands
-claimed successful here. New Windows dependency installation requires size/purpose
-review; no installer exists yet.
+POC. The standalone launcher/manual commands remain instructions to verify; the live
+test observed the worker subprocess but did not complete the full playback/download
+suite. New Windows dependency installation requires size/purpose review; no installer exists yet.
 
 ```sh
 # Terminal 1, repository cwd; launches a local browser with an unlogged one-time token
@@ -56,15 +57,16 @@ Keep tokens out of logs. Stop only processes you started.
 # Verified seven tests: no network or browser
 .venv/bin/pytest -q tests/poc/test_queue.py tests/poc/test_worker.py
 
-# NOT RUN here: requires functioning permission review/local socket/browser execution
+# First run had 5 fixture failures; corrected full rerun still needed
 .venv/bin/pytest -q tests/poc -o faulthandler_timeout=30
 ```
 
-State-machine tests use a transport double for worker recovery; they do not verify the
-HTTP implementation. Pending live tests cover a separate worker subprocess, request/
-worker/owner auth, leases, upload limits/WAV/ranges, bridge restart, and browser play/
-download at phone/tablet/desktop sizes after worker exit. Even passing those tests
-would not prove actual Sites/Windows/Android integration.
+State-machine tests use a transport double. The initial live run observed worker-process
+claim/render/upload/completion in three viewports, then failed in CSP-incompatible test
+polling; the HTTP fixture also reopened a client incorrectly. Those fixes retain CSP
+and were checked by lint/compile and a mock-transport lifecycle check. Live re-verification
+of auth/limits/ranges/restart and browser play/download remains pending. No local test
+can establish actual Sites/Windows/Android integration.
 
 Queue requests use a unique idempotency ID bound to text digest, three automatic lease
 attempts, explicit retry extension preserving attempt history, monotonically reported

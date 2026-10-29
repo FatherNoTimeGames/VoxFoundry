@@ -60,3 +60,9 @@ GitHub Wiki push, full app expansion, paid hosting or public software release is
 Stop at the Phase 0 approval checkpoint. If required endpoints/platform/device access are
 unavailable, deliver the concrete blockers and next steps instead of claiming success.
 ```
+
+Verified preflight update: OpenAI's Apps SDK example README documents MCP widgets/tools
+and server-side persistence. If the intended builder is Apps SDK, identify it explicitly
+and use its current official auth/runtime docs; do not relabel that app as a different
+Sites product or assume storage is included. Direct Site APIs and actual Android/Windows
+proof are still unresolved, so S0-08 is not final.

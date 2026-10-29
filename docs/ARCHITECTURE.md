@@ -144,3 +144,13 @@ provider selection. Windows 10 lifecycle/dependency compatibility remains a docu
 risk; target validation is required before distribution. Apache source license persists;
 personal use does not clear map/model/voice/reference rights. No deployment/release is
 authorized by a generated deployment prompt or this architecture draft.
+
+## Documented candidate clarified on continuation
+
+OpenAI's official Apps SDK examples now verify a documented ChatGPT MCP/widget model
+and explicitly require server-side production persistence. If the user identifies or
+approves that product, one hosted MCP/application service sharing a durable knowledge
+store, job API and private audio storage could minimize bridge components. This is not
+a claim of Sites-managed DB/file access or a selected fallback. Full official docs,
+account access/authentication, costs and real-device/runtime tests still gate adoption.
+No browser protections were disabled and no public tunnel or server was created.

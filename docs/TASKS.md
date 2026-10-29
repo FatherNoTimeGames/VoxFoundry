@@ -14,10 +14,11 @@ saved/conflict state. Real Android verification is distinct from browser emulati
 ## Next Up (unblocked input/recovery tasks; maximum five)
 
 1. **S0-I1** — Identify the intended Sites product and official contract (review).
-2. **S0-I2** — Restore permission-review execution and review/save documentation host access (review).
+2. **S0-I2** — Unblock corrected local test re-verification (review).
+3. **S0-I3** — Review/save official documentation host additions (review).
 
-No implementation task can complete its remaining checks until these external blockers
-clear. Final Phase 0 deliverable **S0-08** is the requested Sites deployment prompt;
+Local experiment completion requires execution access only; platform identification
+and documentation access independently gate the Sites/hosting research. Final Phase 0 deliverable **S0-08** is the requested Sites deployment prompt;
 its conditional draft is not marked complete or represented as deployable evidence.
 
 ## Phase 0 — active
@@ -25,10 +26,11 @@ its conditional draft is not marked complete or represented as deployable eviden
 | ID | Phase | Priority | Status | Description | Dependencies | Acceptance criteria |
 | --- | --- | --- | --- | --- | --- | --- |
 | S0-I1 | 0 | P0 | review | Identify Sites interface/product | S0-01 | User/product evidence names intended builder/runtime or official docs; no deployed Site required. |
-| S0-I2 | 0 | P0 | review | Recover executable research/live-test permissions | S0-01 | Automatic permission review available; requested docs host additions reviewed/saved; affected operation retried and actual result recorded. Draft save alone is insufficient. |
-| S0-02 | 0 | P0 | blocked | Verify Sites/ChatGPT/auth/storage/file APIs and direct worker integration | S0-I1, S0-I2 | Primary versioned documentation plus disposable supported endpoint tests; direct support/limits, app-owned vs external chat, mobile auth, PC-off persistence and quotas explicit. |
-| S0-03 | 0 | P0 | blocked | Complete local disposable audio protocol experiment | S0-I2 | Persistent/authenticated queue, outbound harness, validated upload, idempotency/leases/retries/disconnects and live HTTP/browser play/download at M tested; Windows/Android absence disclosed. Seven state-machine tests pass, live checks unrun. |
-| S0-04 | 0 | P1 | blocked | Verify AI/wiki/maps/TTS/hosting primary research | S0-I2 | REFERENCES records retrieval/version/confidence/contradictions; actual map features/rights, Wiki auth/transport, TTS artifacts/hardware limits and host costs verified or concrete external blocker. Reuse earlier TTS evidence. |
+| S0-I2 | 0 | P0 | review | Recover executable research/live-test permissions | S0-01 | Initial live tests and primary reads executed; later review timeouts/capacity prevented corrected live reruns. Complete supported execution of post-fix verification; no bypass. |
+| S0-I3 | 0 | P0 | review | Enable official documentation destinations | S0-01 | Review/save requested host additions and verify actual runtime access; draft persistence alone is insufficient. Package-manager GitHub sources may be read under existing presets. |
+| S0-02 | 0 | P0 | blocked | Verify Sites/ChatGPT/auth/storage/file APIs and direct worker integration | S0-I1, S0-I2, S0-I3 | Primary versioned documentation plus disposable supported endpoint tests; direct support/limits, app-owned vs external chat, mobile auth, PC-off persistence and quotas explicit. |
+| S0-03 | 0 | P0 | blocked | Complete local disposable audio protocol experiment | S0-I2 | Persistent/authenticated queue, outbound harness, validated upload, idempotency/leases/retries/disconnects and live HTTP/browser play/download at M tested; Windows/Android absence disclosed. Seven component tests pass; initial live run 7 passed/5 fixture failures; corrections awaiting rerun. Linux worker uploads observed; no final playback/download pass. |
+| S0-04 | 0 | P1 | blocked | Verify AI/wiki/maps/TTS/hosting primary research | S0-I2, S0-I3 | REFERENCES records retrieval/version/confidence/contradictions; actual map features/rights, Wiki auth/transport, TTS artifacts/hardware limits and host costs verified or concrete external blocker. OpenAI example README, Wiki Git docs and Leaflet license now read; full platform/map/auth/cost checks remain. Reuse earlier TTS evidence. |
 | S0-D1 | 0 | P0 | blocked | Approve any bridge/fallback and hosting/cost decision | S0-02, S0-04, S0-05 | Evidence determines direct route first; exact smallest bridge/fallback/costs presented; explicit approval before platform change, paid deployment or exposure. If direct works, record bridge unnecessary. |
 | S0-06 | 0 | P0 | blocked | Actual Site → Windows → Site → Android proof | S0-02, S0-03, S0-D1 | Deployed disposable Site approved passage reaches Windows harness, audio upload/status survives disconnection/retry; real Android plays/seeks/downloads/opens offline; file accessible with PC off; auth and retention/costs tested. No emulation substitute. |
 | S0-07 | 0 | P0 | blocked | Feasibility evidence and architecture checkpoint report | S0-02, S0-03, S0-04, S0-05, S0-06 | Report actual proof, support/limits, costs/security, unresolved decisions and recommended topology; no full-success claim with unrun gates. Partial blocker report is not exit completion. |
@@ -74,3 +76,7 @@ its conditional draft is not marked complete or represented as deployable eviden
 | --- | --- | --- | --- | --- | --- | --- |
 | S0-01 | 0 | P0 | done | Inspect/reconcile scope and available environment | none | Clean base 8bf7cd9; no Sites tool, Site/Windows app/deployed device supplied; user clarifications recorded; previous docs/source/history preserved. |
 | S0-05 | 0 | P1 | done | Document conditional unified architecture and plan | S0-01 | ARCHITECTURE/REQUIREMENTS cover knowledge/AI/canon/review/wiki/atlas/exports and worker boundaries; direct/bridge/fallback gates and revised roadmap explicit. This is design completeness, not feasibility approval. |
+
+Continuation history: S0-I2 briefly recovered for the initial live run and primary
+source reads, then was reopened because fixed-test reruns were blocked by later
+review deadlines/capacity. Test failures are recorded separately from review failures.

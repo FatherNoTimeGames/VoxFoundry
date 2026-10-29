@@ -85,3 +85,28 @@ full local-app install script was cleared to avoid unnecessary installs in Phase
 Existing dependencies remain on disk; no new installation is needed for the verified
 component tests. Review/save environment settings and publish the cloud snapshot
 separately if retaining it; no environment/Site/software publication was performed.
+
+## Continuation evidence and limits
+
+- Execution recovered enough to run the initial live POC suite and primary source
+  fetch. Test run: 7 passed/5 fixture failures, not an integration pass. Corrected
+  httpx context lifecycle and CSP-compatible polling; kept the CSP intact. Reruns
+  blocked by renewed review timeouts/capacity; S0-I2 reopened, S0-03 remains incomplete.
+- Browser cases observed real separate Linux worker completion/upload before polling
+  assertion failures. Independent FFmpeg decode succeeds. Neither result proves actual
+  Windows, Android playback/download, ChatGPT runtime or Sites integration.
+- Official OpenAI examples document MCP tool/widget servers and production server-side
+  persistence. This is a supported-documentation candidate, not Sites identification
+  or platform-change approval. A single hosted MCP/application service could share
+  knowledge/queue/private files with a scoped outbound worker API if explicitly chosen
+  and verified; no server/SDK dependency or hosting was adopted.
+- GitHub's official wiki source verifies the separate wiki Git workflow and initial
+  page prerequisite; no wiki auth/read/write operation was performed. Leaflet's code
+  license is BSD 2-Clause, separate from map imagery/tiles/marker rights. Pindrop/full
+  OpenAI docs remain proxy-blocked and unread; price/account/device limits unverified.
+- No new approvals, downloads or publication. Final S0-08 deployment prompt remains
+  conditional until platform and required evidence are available.
+
+Continuation checkpoint: test correction commit bfd755a; source/evidence/tracker updates
+are in the following documentation commit. Cloud startup draft updated successfully;
+network/runtime changes and snapshot publication remain unconfirmed/unperformed.

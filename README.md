@@ -22,11 +22,14 @@ persistent job queue, portable outbound worker harness, lease fencing/idempotenc
 progress and validated stored WAV results. It generates a two-second **tone**, not
 speech. It never reads the existing manuscript library or downloads models.
 
-**Verified:** seven component tests for queue durability, auth, retries, duplicate/fenced
-completion and worker recovery/cache reuse using a transport double. **Unrun:** actual
-HTTP, subprocess/browser playback/download, Sites, Windows, Android and hosted retention.
-Automatic permission review rejected execution of the live-test/research commands
-because its reviewer was unavailable; no remote request or live test ran.
+**Verified:** seven component tests, independent FFmpeg decode of the two-second WAV,
+and primary-source reads for OpenAI Apps SDK examples, GitHub Wiki Git workflow and
+Leaflet's BSD 2-Clause license. An initial live run executed: seven passed and five
+failed due to test-fixture/client lifecycle and CSP polling issues. The three browser
+cases did reach a separate Linux worker and upload completed tone audio. Those fixture
+issues are corrected; successful full rerun, playback/download assertions, Windows,
+real Android and actual Sites integration remain unverified. Execution review blocked
+the corrected reruns; full docs/Pindrop requests returned proxy CONNECT 403.
 
 See [POC instructions and limits](docs/POC.md). The current environment already has the
 needed Python dependencies. No new package/model installation is required for the
@@ -38,8 +41,8 @@ for this Phase 0 without review.
 .venv/bin/pytest -q tests/poc/test_queue.py tests/poc/test_worker.py
 ```
 
-The pending real loopback checks are in `tests/poc/test_live.py`, covering phone/tablet/
-desktop browser playback/download after the worker exits. Passing those would still
+The corrected loopback checks are in `tests/poc/test_live.py`, covering phone/tablet/
+desktop browser playback/download after the worker exits. A passing rerun would still
 not establish actual Sites/Windows/Android integration. A foreground harness is enough
 for the first Windows test; no tray application/installer is assumed to exist yet.
 

@@ -1,17 +1,20 @@
 # GitHub Wiki integration feasibility
 
-Current official wiki docs (REFERENCES G1–G2) and a specific wiki remote have **not**
-been accessed in this revised Phase 0; automatic permission review prevented the
-read commands. Earlier read-only access to this code repository does not prove wiki
-Git access, GitHub API scope, write rights or a wiki's existence. No wiki was created,
-cloned or pushed. Do not request a token merely because GH_TOKEN is absent.
+Official wiki documentation G2 was retrieved/read on continuation. It verifies that
+wiki pages may be edited locally through Git, with a separate HTTPS `.wiki.git` clone
+URL after an initial page is created on GitHub. Only changes pushed to its default
+branch are published. The default branch must be discovered, not assumed by name.
+The documented forbidden filename characters are `\ / : * ? " < > |`, relevant to
+Windows-safe page export/import.
 
-Candidate workflow to validate against official documentation: GitHub wiki content is
-handled through its documented wiki Git transport, commonly a separate `.wiki.git`
-remote; do not invent a REST page-write API. Availability, initialization requirements,
-private-repository plan limits and accepted credential scopes need current verification.
-Test the intended read-only operation with existing proxy auth first. If insufficient,
-request the minimum supported secure binding; never ask for credentials in chat.
+No specific wiki remote or credential scope has been tested. Earlier code-repository
+read access does not prove wiki existence/access or write permission. No wiki was
+created, cloned or pushed. Do not request a token merely because GH_TOKEN is absent.
+Current private-repository/plan eligibility and accepted credential scopes still need
+verification from full official docs (G1) and intended read-only operations.
+Use the documented Git workflow rather than inventing a REST page-write API. Test
+native Git with existing proxy authentication first; if insufficient, request only
+an appropriate secure binding, never secret values in chat.
 
 ## Safe bidirectional design
 
