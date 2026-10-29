@@ -52,3 +52,45 @@ and test count/outcomes. Skips are not passes. Never weaken assertions to hide d
 The documentation commit is local. No push, release, environment publication, or
 model redistribution is implied. The initial onboarding environment required no
 project-specific install/start script; Phase 1 will add tested setup instructions.
+
+## Phase 1 record — 2026-10-29
+
+- `python scripts/setup.py` reproduced locked Python dependencies and npm install,
+  then compiled the TS/React frontend. Repeated execution retained locks and user data.
+- TypeScript check + Vite production build passed. Ruff lint and formatting passed;
+  frontend Prettier check passed; `npm audit` reported zero vulnerabilities. This audit
+  is a point-in-time npm result, not a universal dependency security guarantee.
+- **25 tests passed, 0 failed, 0 skipped on Linux**: API CRUD/series/scoping, stale and
+  concurrent edits, trash/restore, malformed IDs/input, one-time/invalid bootstrap,
+  origin/host/CSRF/session checks incl. Unicode input, upload bounds with/without
+  Content-Length, inert attachments and filename handling, dedup, missing/corrupt
+  objects, staged/published crash recovery, disk-full/fsync injection, idempotent
+  reconciliation, concurrent imports, migration preservation and integrity-checked
+  pre-upgrade backup, schema refusal, config precedence, symlink defenses and a
+  second-process library lock.
+- Real Chromium exercised the compiled UI against a live local server: two independent
+  projects, saved description, upload/download with exact byte comparison, project
+  isolation, trash/restore, complete service restart, persistence and a 390×844 layout
+  without horizontal overflow. No external page requests or browser JS errors observed.
+  A separate subprocess test ran the documented headless CLI, checked health/static UI,
+  terminated it and verified no launcher token appeared in logs.
+- Browser testing found/fixed a description-label selector issue and asset-list clearing
+  after same-project save. Request-limit testing found/fixed a chunked-upload error
+  status. Multipart normalizes browser Windows paths to basenames; direct domain tests
+  reject such paths, and API tests confirm normalized names never become storage paths.
+- One upstream Starlette deprecation warns about its httpx test adapter. It is not
+  suppressed and does not skip/fail assertions. Future adapter migration can follow
+  upstream guidance; no production dependency on httpx was introduced.
+- CI defines Ubuntu/Windows jobs with pinned tool versions, full checks and Chromium;
+  it has not been pushed or remotely executed. No Windows runner is attached here.
+  Windows 10 locks, filesystem durability, browser launch, native wheel compatibility
+  and installation are explicitly **unverified**, as are real Android/tablet devices.
+- No speech synthesis, backups/project archives, installer, software publication, paid
+  services or model downloads occurred. Full independent project transfer/recovery is
+  still a required later acceptance gate. Phase 1 is submitted for user exit review;
+  Phase 2 is blocked pending that approval.
+
+Cloud configuration: `install_script` and `start_skill` draft persistence confirmed.
+The equivalent install script and startup/health/browser workflow were executed here.
+Saving did not execute them, publish a snapshot, or validate restoration in a fresh
+cloud task. No application release was created.

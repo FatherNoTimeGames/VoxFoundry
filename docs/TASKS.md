@@ -2,18 +2,19 @@
 
 Updated 2026-10-29. Status vocabulary: `todo`, `in-progress`, `blocked`, `review`,
 `done`. Priorities: P0 critical/gate; P1 required; P2 enhancement. Dependencies require
-`done`, including explicit user gates. All later-phase work is currently `blocked`.
+`done`, including explicit user gates. Phase 0 is approved; Phase 1 implementation
+is complete pending P1-05 review. Phases 2 onward remain blocked.
 Approval never follows from silence. Update status as dependencies clear. IDs persist.
 
 ## Next Up (unblocked; maximum five)
 
-1. **P0-06** — User review of Phase 0 architecture and plan (review).
-2. **P0-07** — User choice of project source license (review; independent of A01).
+1. **P1-05** — Review the working foundation and approve Phase 1 exit (review).
 
-P0-06 is the sole gate to foundation implementation. No coding task is unblocked
-before it. P0-07 blocks public software distribution, not Phase 1 private development.
-The first five post-approval tasks are P1-01 through P1-05 in dependency order; do not
-list blocked tasks as ready to start.
+Windows 10 execution remains unverified; Linux/browser evidence is in VALIDATION.
+No Phase 2 work starts before this exit approval. After approval, P2-01 is the next
+unblocked implementation task. Models, paid services and distribution remain separately
+gated. Independent project archives/backup/restore/transfer remain P6-02, with a fresh
+library restore that cannot depend on the original library database.
 
 ## Active and planned work
 
@@ -24,13 +25,7 @@ those tests have run. An engine/model approval covers exact artifacts, not a fam
 
 | ID | Phase | Priority | Status | Description | Dependencies | Acceptance criteria |
 | --- | --- | --- | --- | --- | --- | --- |
-| P0-06 | 0 | P0 | review | Approve architecture/prioritized plan (A01) | P0-01…P0-05 | Explicit user decision recorded with scope; resolve consequential objections before Phase 1. |
-| P0-07 | 0 | P1 | review | Select source license (A02) | P0-03 | User choice recorded; matching LICENSE and README applied and checked; no blanket third-party clearance. |
-| P1-01 | 1 | P0 | blocked | Pin toolchain and running local skeleton | P0-06 | Locked Python/FastAPI and TS/React setup; separate domain/app/storage boundaries; compiled UI and health request work; tested dev commands and focused CI; loopback/session/origin safeguards; no weights. |
-| P1-02 | 1 | P0 | blocked | Library location/config/bootstrap and migrations | P1-01 | UUID library, versioned migrations, foreign keys, instance lock, local data outside installation, reopen persistence and incompatible schema refusal tests. |
-| P1-03 | 1 | P1 | blocked | Safe multiple-project CRUD and series | P1-02 | Create/list/update/trash/restore two independent projects through UI/API; stable IDs, validation, optimistic conflicts and project-scope tests. |
-| P1-04 | 1 | P0 | blocked | Immutable asset store and staged-write recovery | P1-03 | Copy and hash originals, safe paths, dedup references, operation journal/reconciliation; disk-full/partial-write/corruption tests; no unsafe overwrite or deletion. |
-| P1-05 | 1 | P0 | blocked | Validate foundation and phase approval | P1-04 | UI/API multi-project workflow survives restart; integration/security checks pass; targeted Windows check or explicit unresolved gate documented; user approves Phase 1 exit. |
+| P1-05 | 1 | P0 | review | Validate foundation and phase approval | P1-04 | UI/API multi-project workflow survives restart; integration/security checks pass; targeted Windows check or explicit unresolved gate documented; user approves Phase 1 exit. |
 | P2-01 | 2 | P1 | blocked | Hierarchy and TXT/Markdown import | P1-05 | Parts/chapters/episodes/research/notes with acyclic ordering; original bytes retained; encoding/size/path errors explicit; references project-scoped. |
 | P2-02 | 2 | P0 | blocked | Editor drafts, autosave and revisions | P2-01 | Visible save state; conflict-safe autosave; immutable revisions and snapshots freeze tree/settings/assets; restart/data-preservation tests. |
 | P2-03 | 2 | P0 | blocked | Compare and safe restore | P2-02 | Text/structure/settings differences displayed; preview restore creates new head without removing subsequent work; project histories independent. |
@@ -49,7 +44,7 @@ those tests have run. An engine/model approval covers exact artifacts, not a fam
 | P5-02 | 5 | P0 | blocked | Export validation and immutable release history | P5-01 | FFprobe/decode/coverage/checksum tests, ordered chapters and expected metadata/artwork; failed exports never released; reproducible provenance and release retention. |
 | P5-03 | 5 | P0 | blocked | Android offline compatibility and phase approval | P5-02 | Two documented Android audiobook players tested for offline load/play/seek/chapters/resume; defects tracked; user approves Phase 5 exit. |
 | P6-01 | 6 | P0 | blocked | Finalize packaging/license/update trust design | P5-03, P0-07 | Installer/toolchain/license BOM settled, FFmpeg/phonemizer/model rights cleared, Windows 10 support matrix and free signing/trust limitations documented; user approval for consequential tradeoffs/costs. |
-| P6-02 | 6 | P0 | blocked | Backups, standalone project archives and restoration | P6-01 | Consistent DB+blob backup, checksummed versioned project archive, new-location restore/import with collision remapping and traversal/bomb/schema rejection; history complete; models declared separately. |
+| P6-02 | 6 | P0 | blocked | Backups, standalone project archives and restoration | P6-01 | Consistent DB+blob backup, checksummed versioned project archive, new-location restore/import with collision remapping and traversal/bomb/schema rejection; history and resolved shared dependencies complete; restore/transfer into fresh library without original DB; models declared separately. |
 | P6-03 | 6 | P1 | blocked | Reproducible Windows builds and model installer | P6-02 | Clean Windows build manifest and pinned tools/artifacts; installer without dev tools; approved first-run sizes/licenses/offline import; interrupted install recovery; third-party notices. |
 | P6-04 | 6 | P0 | blocked | Release CI, updates and data-preservation tests | P6-03 | Build reproducibility comparison, release artifacts/checksums and trust path; explicitly authorized GitHub publication only; migration backup/restore and failed-update/uninstall preservation tested. |
 | P6-05 | 6 | P0 | blocked | Fresh-install/offline acceptance and 1.0 approval | P6-04 | Windows 10 end-to-end production without dev tools/account/network after explicit model install; independently restored library; upgrade failure recovery; user approves Phase 6 exit before publication. |
@@ -61,9 +56,10 @@ those tests have run. An engine/model approval covers exact artifacts, not a fam
 
 ## Completed task archive
 
-Acceptance satisfied for documentation tasks only; this is not approval or runtime
-validation. The Phase 0 documentation commit contains these results; check Git log
-for its exact hash. Original base: `6e6e6cd` (Initial commit).
+Acceptance evidence below distinguishes documentation approval from tested foundation
+behavior. Phase 0 documentation: `379a502`; approvals/license: `1deb001`; foundation
+implementation: `9eff8e1`; Phase 1 audit: this documentation commit (see Git log). Original base:
+`6e6e6cd`. Phase-exit approval for Phase 1 is not yet granted.
 
 | ID | Phase | Priority | Status | Description | Dependencies | Acceptance and evidence |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -72,3 +68,9 @@ for its exact hash. Original base: `6e6e6cd` (Initial commit).
 | P0-03 | 0 | P0 | done | Define requirements and evaluate stack | P0-01, P0-02 | REQUIREMENTS and DECISIONS cover offline/Windows constraints, non-goals, meaningful framework/storage/packaging alternatives and approval questions. |
 | P0-04 | 0 | P0 | done | Design complete library/production system | P0-03 | ARCHITECTURE covers identities, relationships, immutable history, dependency invalidation, workers/jobs, crash recovery, backup/archives, audio/export, security and distribution. |
 | P0-05 | 0 | P0 | done | Establish operating docs, roadmap/tracker and audit | P0-04 | AGENTS/README/ROADMAP/TASKS/VALIDATION and minimal ignore rules committed; local links, task IDs/dependencies, whitespace checked; phase-boundary audit recorded. |
+| P0-06 | 0 | P0 | done | Approve architecture/prioritized plan (A01) | P0-01…P0-05 | Explicit user approval of D01–D07/plan recorded in DECISIONS; D06 provisional; no download/paid/distribution authority. |
+| P0-07 | 0 | P1 | done | Select source license (A02) | P0-03 | User chose Apache-2.0; full LICENSE committed in 1deb001, README updated; third-party terms remain separate. |
+| P1-01 | 1 | P0 | done | Pin toolchain and running local skeleton | P0-06 | Pinned Python/Node dependencies and locks; compiled same-origin React UI/FastAPI launcher; repeatable setup, CI definition, health and session/origin/CSRF tests pass locally. Remote CI unrun. |
+| P1-02 | 1 | P0 | done | Library location/config/bootstrap and migrations | P1-01 | Central UUID library, two Alembic migrations, config/location rules, FK/WAL/durable settings, cross-process lock, reopen/version refusal and verified migration backup tests pass. |
+| P1-03 | 1 | P1 | done | Safe multiple-project CRUD and series | P1-02 | Real UI/API multi-project CRUD/series, optimistic conflict incl. concurrent edits, reversible trash/restore and project isolation verified. |
+| P1-04 | 1 | P0 | done | Immutable asset store and staged-write recovery | P1-03 | Streamed immutable asset imports, hash dedup/project references, journal reconciliation, partial/fsync/disk-full/crash/corrupt/missing/no-overwrite/concurrent upload tests pass. |

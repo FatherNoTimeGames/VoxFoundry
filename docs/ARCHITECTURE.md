@@ -237,3 +237,35 @@ back up before migrations; uninstall preserves libraries/models unless explicitl
 chosen otherwise. A native shell (Tauri/pywebview) can follow only if browser UX proves
 insufficient. Compatibility, installer license and Windows security limitations
 remain release gates; Linux development is not packaging evidence.
+
+## Phase 1 implemented slice (2026-10-29)
+
+`backend/voxfoundry` now separates Pydantic API contracts, project application service,
+domain filename/error rules, configuration/launcher and SQLAlchemy/Alembic/file storage.
+The compiled React UI is served same-origin. No provider or audio placeholder code
+has been added. The first two frozen migrations define library/series/projects and
+blobs/assets/import operations. Single-library writes are protected by an OS file
+lock; optimistic project versions reject stale edits.
+
+Imports are limited to 25 MiB, streamed from bounded multipart uploads into same-volume
+staging; journal ready records bind exact digest/size before object publication.
+Publication is serialized within the service. Restart recovers ready operations and
+marks partial writes failed, preserving partial data; it also verifies stored blobs.
+Corrupt/missing files are flagged in metadata rather than silently replaced or deleted.
+Automatic quarantine/GC is deferred; no source object purge exists. Directory fsync
+is used on POSIX; Windows power-loss/rename guarantees require target validation.
+
+Early libraries are developer previews. Migration backups currently protect the SQLite
+metadata before a known schema upgrade; they are NOT full DB+asset library backups or
+standalone project archives. Those remain P6-02. Project IDs/ownership are explicit,
+and no metadata embeds an original-library absolute asset path, preserving portability.
+Portable archives must embed the project graph/resolved dependencies so restoring one
+never needs its original database. Do not market the preview as satisfying that future
+archive acceptance criterion yet.
+
+Browser bootstrap uses a one-time fragment token passed directly by the CLI, consumed
+once and removed from history. A per-process HttpOnly SameSite session and CSRF token
+protect data routes; strict host/port/origin checks and attachment-only media apply.
+Tokens are never logged. The API binds 127.0.0.1 only; a responsive narrow layout is
+verified in Chromium, not a claim of authenticated LAN or real Android device support.
+Node/Vite are build-only; this source-development launcher is not a packaged product.

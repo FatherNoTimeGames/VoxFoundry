@@ -3,7 +3,8 @@
 Reviewed 2026-10-29 against primary upstream documentation/source, not installed models.
 **Recommendation: Kokoro first integration candidate; Chatterbox original English and
 Turbo as expressive listening-test alternatives. No production voice selected.**
-Approval of architecture does not approve a model download. Piper is a potential
+Approval of architecture does not approve a model download. User clarified that
+defaults must support commercial use and all reference/source rights must be held. Piper is a potential
 low-resource fallback after licensing review. F5-TTS and XTTS are research-only until
 weight terms and intended use are resolved. CosyVoice is a later control-rich candidate.
 

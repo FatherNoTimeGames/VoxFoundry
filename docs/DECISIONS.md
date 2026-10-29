@@ -95,10 +95,10 @@ must be verified before distribution.
 
 | ID | Decision requested | Recommendation / impact |
 | --- | --- | --- |
-| A01 | Approve Phase 0 architecture and prioritized plan? | Approve D01–D05/D07 as baseline and D06 as packaging direction; unlock P1-01, not model downloads or distribution. |
-| A02 | What source license should VoxFoundry use? | Prefer a permissive license (MIT or Apache-2.0) for project-owned code; dependency obligations remain. Do not add LICENSE until chosen. P1 foundations can proceed after A01; public software distribution cannot. |
+| A01 | Approved 2026-10-29 | D01–D07/plan accepted; D06 provisional; Phase 1 authorized, not model downloads or distribution. |
+| A02 | Apache-2.0 selected 2026-10-29 | LICENSE added for project-owned code; third-party obligations remain; no distribution authorization. |
 | A03 | Which exact models/voices may be downloaded for listening tests? | Defer until P3-01 provides artifact sizes, terms and purpose. Prefer Kokoro plus Chatterbox comparison. No request for blanket permission now. |
-| A04 | Can produced audiobooks be commercial, and what reference-voice rights apply? | Design for unrestricted general-purpose use; exclude NC/unclear weights from default. Resolve before adopting restricted models. No need to disclose private recordings now. |
+| A04 | Resolved 2026-10-29 | Commercial and noncommercial productions required; defaults must allow commercial use; appropriate rights required for all reference voices/source material. |
 
 Open technical validation: actual RTX 3060 variant/VRAM and driver; supported Windows
 10 build/toolchain; measured narration quality/CPU RTF; packaged offline dependency
@@ -148,3 +148,34 @@ judgments, not performance measurements.
   Phase 7. No desktop-only API or UI assumption may prevent that future client.
 - A01/A02/A04 resolved by this approval (Apache-2.0 and commercial-compatible defaults).
   A03 remains a separate future per-artifact approval; no downloads authorized.
+
+## Phase 1 implementation and audit (2026-10-29)
+
+- D01 baseline now implemented with Python 3.12.14, uv 0.12.23, FastAPI 0.162.0,
+  SQLAlchemy 2.1.6/Alembic 1.20.1, React 19.3.1/TypeScript 7.0.2/Vite 8.3.5 and
+  Node 24.19.0. Exact transitive versions are in uv.lock/frontend/package-lock.json.
+  These are development pins verified on Linux, not a Windows 10 support claim.
+- Chose filelock for the OS-backed single-owner library lock, platformdirs for user
+  locations, and a compiled same-origin UI rather than an extra frontend dev service.
+  Bounded upload is 25 MiB for the foundation; raise only with streamed resource tests.
+  Session bootstrap is one-time and local; no unauthenticated library routes.
+- Asset recovery conservatively retains failed staging and corrupt objects. There is
+  no cleanup/purge or automatic replacement. SQLite migration backup is metadata-only;
+  full independent project/library recovery remains P6-02 and is not advertised yet.
+- Last audit: Phase 1 boundary, after `1deb001` and foundation implementation `9eff8e1`.
+  Reviewed module boundaries, project ownership/portability invariants, immutable object
+  handling, security/session limits, failure injection, dependencies and docs/tasks.
+  25 local tests passed including real browser and launcher checks; Windows 10, Android
+  devices, remote CI and power-loss behavior remain unrun. No models/inference packages
+  or production source material downloaded. No paid services or distribution performed.
+- Next audit: Phase 2 boundary or ten further development commits from the Phase 1
+  audit documentation commit, whichever is earlier (count through Git log).
+- Phase 1 exit: **review pending (P1-05)**. Implementation P1-01–P1-04 complete; user
+  approval required before Phase 2. No new architecture choice needs a separate gate.
+
+- Cloud environment draft saved successfully with `install_script` and `start_skill`.
+  Install repeats `scripts/setup.py`; startup documents existing checkout, isolated
+  library location, session/health/browser testing and phase/model/distribution gates.
+  No environment snapshot has been published. Review/save in environment settings
+  then publish the cloud environment to retain the snapshot; this is separate from
+  application software distribution, which remains unauthorized.
