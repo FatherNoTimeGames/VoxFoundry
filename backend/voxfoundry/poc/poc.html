@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>VoxFoundry integration lab</title>
+    <link rel="stylesheet" href="/poc.css" />
+    <script src="/poc.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>VoxFoundry integration lab</h1>
+      <p>Local proof of concept — not a ChatGPT Site.</p>
+    </header>
+    <main>
+      <p class="warning">
+        Test tones only. This checks file transport, not narration quality. No
+        model, ChatGPT session, hosted Site or Android integration is connected.
+      </p>
+      <p id="status" role="status">Connecting to local session…</p>
+      <p id="error" role="alert" hidden></p>
+      <form id="request">
+        <label for="text">Test passage</label
+        ><textarea id="text" maxlength="1000" required>
+This is a VoxFoundry connection test.</textarea
+        ><label class="consent"
+          ><input id="approved" type="checkbox" required />I approve this test
+          passage for the disposable audio test.</label
+        ><button id="submit" disabled>Queue test audio</button>
+        <p id="pending" hidden>
+          A request is pending. Retry uses the same request ID to prevent
+          duplicates.
+        </p>
+      </form>
+      <section aria-label="Jobs">
+        <h2>Jobs</h2>
+        <button id="refresh" disabled>Refresh jobs</button>
+        <p id="worker-contact">Worker contact has not been checked.</p>
+        <ul id="jobs"></ul>
+      </section>
+    </main>
+  </body>
+</html>
