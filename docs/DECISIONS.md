@@ -1,8 +1,8 @@
 # Decisions and approval register
 
-2026-10-29. All architecture choices below are **proposed**, pending Phase 0 user
-approval. User-imposed constraints remain binding now. Approval must be explicit;
-no response or elapsed time is approval. No application implementation yet.
+2026-10-29. D01–D07 and the prioritized plan are user-approved. D06 remains
+provisional until packaging validation. Phase 1 is authorized; subsequent phase
+exits retain their review gates. Silence never supplies approval.
 
 ## D01 — Modular Python service and responsive local web UI
 
@@ -130,4 +130,21 @@ judgments, not performance measurements.
 - Audit cadence: next audit after ten further development commits from the Phase 0
   documentation commit, or Phase 1 boundary, whichever comes first. Determine the
   count with `git log` at resume time.
-- User approvals: none yet. Record date, scope and exclusions when received.
+- 2026-10-29 user approval: D01–D07 and the prioritized implementation plan approved;
+  D06 provisional pending packaging validation. Phase 1 authorized autonomously through
+  its established checkpoint. Project-owned source is Apache-2.0 (LICENSE).
+- Clarifications: commercial AND noncommercial audiobook production are required;
+  default models/voices must support commercial use and producers must hold appropriate
+  rights to source material and reference voices. No model download without separate
+  approval of exact artifacts, sizes, licenses and purposes. No paid services or software
+  distribution authorized. Keep interchangeable providers, non-destructive editing,
+  local-first operation and all existing safety constraints.
+- Portability is a hard architecture requirement: each project must be independently
+  exported, backed up, restored and transferred into a fresh library without the
+  original library database. Archives must embed all project records/history and
+  referenced assets, resolved shared presets/series context and required model manifests.
+  A library-relative manifest alone cannot pass P6-02.
+- Responsive Android/tablet browser access remains required; authenticated LAN is still
+  Phase 7. No desktop-only API or UI assumption may prevent that future client.
+- A01/A02/A04 resolved by this approval (Apache-2.0 and commercial-compatible defaults).
+  A03 remains a separate future per-artifact approval; no downloads authorized.

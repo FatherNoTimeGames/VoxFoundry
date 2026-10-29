@@ -1,6 +1,6 @@
 # Product requirements
 
-Status: proposed Phase 0 baseline, 2026-10-29. Approval recorded in DECISIONS.
+Status: approved baseline, 2026-10-29. Clarifications recorded in DECISIONS.
 
 ## Mission and scope
 
@@ -56,3 +56,12 @@ production history with named snapshots, not branching/merging Git semantics.
 Ambience, dialogue casting, advanced pacing, LAN, and GitHub integration follow the
 reliable single-narrator offline workflow. Linux cloud checks aid development; they
 do not establish Windows distribution readiness.
+
+## Approved clarifications (2026-10-29)
+
+Commercial and noncommercial productions are supported goals. Default models/voices
+must permit commercial use; producers need rights to manuscripts, assets and reference
+voices. Every AI model download requires separate approval of exact artifacts, sizes,
+licenses and purposes. Project export/backup/restore/transfer must be self-contained
+and work without the original library DB, including resolved shared dependencies.
+Responsive Android/tablet browser access is required; authenticated LAN remains Phase 7.

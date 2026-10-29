@@ -39,5 +39,6 @@ No GitHub account will be needed by end users for local production.
 - [Local narration engine research](docs/research/tts-engines.md)
 - [Validation strategy](docs/VALIDATION.md)
 
-No project license has been selected yet; public visibility alone does not grant an
-open-source license. License selection and third-party notices are release gates.
+Project-owned source is licensed under [Apache 2.0](LICENSE). Third-party dependencies,
+models and voices retain their own terms. Default models/voices must permit commercial
+audiobook production. Distribution and model downloads require separate authorization.

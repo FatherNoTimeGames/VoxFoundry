@@ -1,6 +1,7 @@
 # Architecture
 
-Status: complete system design proposal; no implementation. Approval gate: P0-06.
+Status: Phase 0 baseline approved 2026-10-29; Phase 1 implementation authorized.
+D06 packaging remains provisional.
 See DECISIONS for alternatives, REQUIREMENTS for scope, VALIDATION for proof gates.
 
 ## Runtime and boundaries
@@ -184,6 +185,9 @@ Backups use SQLite's consistent online backup mechanism plus a frozen reachabili
 manifest of immutable objects, verified hashes and a completion marker. A copied
 live DB without WAL is not a backup. Restore into a new location, verify all objects,
 schema and references, then offer explicit switch; never overwrite the only library.
+Each project backup/export must be self-contained: versioned manifest, all portable
+project records/history, referenced blobs and resolved shared preset/series context.
+A fresh library must restore/transfer it without the original library database.
 Project export uses versioned manifest+portable records+referenced blobs; import
 stages and validates schema, checksums, path traversal, symlinks, decompression and
 size limits. Imports default to a new project, remapping IDs and recording provenance
