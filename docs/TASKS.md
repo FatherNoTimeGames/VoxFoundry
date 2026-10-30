@@ -1,5 +1,61 @@
 # Authoritative tracker — revised Sites-first scope
 
+## Recovery review checkpoint — 2026-10-30
+
+Recovered the exact checksum-verified three-chunk patch on a separate branch based
+on `9a0c8213719d626c84658105e8febcb4f6cdca3c`. Original source provenance:
+`e5b1ea245bd12ae5c0de28e1438013557f72f948`; local patch-import commit:
+`48deb9c10026008433be08bc292ad639bff96a1a`. Prior branch/work preserved.
+See [actual recovery evidence](VALIDATION.md#recovered-patch-and-independent-review--2026-10-30).
+
+- **S0-03, component portion only:** independently reproduced 16 JS/SQL + 9 Python
+  passes before edits. Reviewed and fixed request-ID type coercion and insecure
+  existing POSIX worker-cache permissions. Final checks: **19 JS/SQL + 10 Python
+  passed**, 0 failed, 0 skipped; ESM build passed. The new POSIX-specific test is
+  intentionally skipped when run on Windows; its NTFS ACL gate remains manual.
+- **S0-02 / S0-06:** hosted Site/D1/R2/private dispatch, actual Windows and actual
+  Android remain unverified; no task is upgraded to hosted end-to-end completion.
+- **S0-07 / S0-08 / S0-09:** still incomplete; no Phase 0 exit or full-app work.
+- User authorized only committing/publishing the separate review branch, never a
+  merge/main update, force push, deployment, paid resources, models or significant
+  dependency installs. Git transport remains unavailable; use supported GitHub
+  operations and verify the published head/tree before claiming branch publication.
+
+Current Next Up remains the five direct-Sites gates in the continuation section
+below: account cost/budget, exact binding/migration configuration, private disposable
+runtime verification after those gates, Windows/Android checks, evidence/exit review.
+
+## Direct Sites continuation (2026-10-29)
+
+User authorized the smallest direct-Sites Phase 0 proof only, preserving the pinned
+`9a0c8213719d626c84658105e8febcb4f6cdca3c` work. See
+[implementation, exact sources, costs and manual gates](../sites/phase0/README.md).
+The historical tracker below is preserved; these notes supersede its claims that
+Sites tools/documentation are unavailable in this conversation.
+
+- **S0-I1:** Intended product identified as the installed OpenAI Sites plugin. Its
+  storage, identity/service-access, MCP and Worker ESM references were accessed.
+  A published runtime/build version is not supplied; runtime proof remains pending.
+- **S0-02:** Partial documentation evidence now supports D1/R2, authenticated MCP and
+  Site service ingress. Scoped/revocable device auth is implemented separately.
+  No private dispatch or hosted binding/API test; task remains incomplete.
+- **S0-03:** New isolated `sites/phase0` component tests pass (16 JS/SQL + 9 Python).
+  Original POC remains untouched; its old live suite was not rerun. Tests do not prove
+  actual cloud persistence, Windows, Android or hosted HTTP integration.
+- **S0-D1 / S0-06:** No external bridge adopted. No Site/resource provisioned or
+  deployed. Account pricing/budget and exact ESM binding/migration configuration
+  remain gates before hosting. Actual Windows/Android steps are documented and unrun.
+- **S0-07 / S0-08 / S0-09:** No end-to-end pass, final deployable prompt or Phase 0 exit.
+
+Current Next Up (maximum five):
+1. Establish Sites account pricing/allowances and an approved bounded budget.
+2. Verify exact D1/R2 binding and migration integration for the dependency-free Worker.
+3. After those gates, deploy one private disposable Site and test service ingress plus
+   independent worker identity. Do not generate/rotate a bypass token without the
+   explicitly requested native operation.
+4. Run the supplied Windows and real Android matrix, including PC-off playback.
+5. Record evidence and remaining failures before any Phase 0 exit decision.
+
 2026-10-29. New phase/task IDs use **S**. Old P tasks/acceptance history are retained
 unchanged in [the historical tracker](archive/local-first-2026-10-29/TASKS.md) and Git;
 they do not establish any Site, Windows worker or Android integration. Full new product

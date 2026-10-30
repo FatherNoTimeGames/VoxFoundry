@@ -1,5 +1,40 @@
 # Revised Phase 0 decisions, approvals and audit
 
+## Recovery provenance and review — 2026-10-30
+
+The user authorized checksum-gated patch recovery, narrow Phase 0 defect fixes,
+independent component checks and publication to `phase0-direct-sites-recovered` only.
+The original `phase0-direct-sites` branch and existing work remain preserved.
+Verified source provenance: `e5b1ea245bd12ae5c0de28e1438013557f72f948`; base:
+`9a0c8213719d626c84658105e8febcb4f6cdca3c`; checksum-exact local patch import:
+`48deb9c10026008433be08bc292ad639bff96a1a`. VALIDATION records the complete patch hash
+and independent before/after results. Review fixed request-ID type coercion and
+insecure existing POSIX worker-cache modes, and added cross-device/concurrent-upload
+checks. No credentials/media/models or runtime data belong in the source publication.
+Supported GitHub API publication may create different commit metadata/SHA; require
+the published tree to match the tested local tree and record original provenance.
+No merge, force push, deployment, hosting spend or Phase 0 exit is authorized.
+
+## Direct Sites continuation — 2026-10-29
+
+The user identified the Sites plugin and exact base commit
+`9a0c8213719d626c84658105e8febcb4f6cdca3c`, then authorized only a smallest direct
+Phase 0 proof and tests, with no new costs, significant dependencies, models, bridge
+or public release absent separate approval. Source changes are isolated under
+`sites/phase0`; legacy application/POC code is preserved. No remote push authorized
+by this continuation and none performed.
+
+Installed Sites primary references now document D1/R2, identity/service ingress and
+authenticated MCP. This supersedes earlier session-specific absence statements below
+at the documentation level only. Implemented a dependency-free native Worker and
+standard-library outbound client reusing the original tone generator. Site ingress,
+revocable per-owner device identity and expiring per-job leases remain separate.
+
+No deployment/resource creation: account-specific rates/allowances and exact custom
+Worker binding/migration integration remain unknown. No alternative bridge or paid
+provider was selected. Tests/evidence/manual device matrix are recorded in VALIDATION
+and sites/phase0/README. No full-app architecture or Phase 0 exit is approved.
+
 2026-10-29. The user replaced the previous local-first audiobook-only mission with a
 personal Sites-first creative studio and explicitly requested Phase 0 only. Old source,
 LICENSE and Git history are preserved; old plans/task outcomes are archived in

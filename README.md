@@ -1,5 +1,11 @@
 # VoxFoundry
 
+Direct Sites continuation: [disposable Phase 0 proof](sites/phase0/README.md) contains
+Sites-native Worker routes, D1 queue SQL, R2 audio handling, a portable tone-worker
+adapter and manual device tests. Component tests pass; nothing is deployed and
+private dispatch/Windows/Android remain unverified. Cost and hosting-configuration
+gates remain open. Historical status statements below describe the pinned base.
+
 A personal AI-assisted research, writing, worldbuilding, knowledge-library, lore-atlas
 and audiobook studio. Workflow: **Research → Organize → Co-write → Review → Approve
 → Narrate → Publish**. Initial projects include Enshrouded: A History of Embervale and

@@ -1,0 +1,4 @@
+dist/
+.sites-runtime/
+*.credentials.json
+*.wav

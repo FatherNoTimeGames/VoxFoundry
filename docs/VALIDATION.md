@@ -1,5 +1,118 @@
 # Revised Phase 0 validation ledger
 
+## Recovered patch and independent review — 2026-10-30
+
+The checkout was clean on `phase0-direct-sites`; existing branches and source were
+preserved. Read AGENTS and TASKS before recovery. Rejoined the retained byte-exact
+text corresponding to the three previously supplied chunks, using their 1–500,
+501–1000 and 1001–1499 line boundaries, without headings or normalization.
+
+- Patch: `voxfoundry-phase0-e5b1ea2.patch`, **87,420 bytes / 1,499 LF lines**,
+  no CR bytes, trailing patch separator space and final blank line preserved.
+- SHA-256: `dc33e36b01fce120d3b499cb92fcf5bce332750f10b1938c92f60fe3377a41a1`.
+- Base: `9a0c8213719d626c84658105e8febcb4f6cdca3c`.
+- Original source commit (provenance): `e5b1ea245bd12ae5c0de28e1438013557f72f948`.
+- Applied using `git am` on separate branch `phase0-direct-sites-recovered` as
+  `48deb9c10026008433be08bc292ad639bff96a1a`; the resulting tree was verified identical
+  to the original source commit before review fixes. Original branch unchanged.
+
+Independently ran the three requested commands from `sites/phase0` using existing
+Node v24.19.0 and Python 3.12.14. **Before edits: 16 JS/SQL + 9 Python tests passed,
+0 failures, 0 skips; ESM build/parse check passed.** This independently reproduces
+the originating session's 25 component results, not its hosted/device claims.
+
+Review examined owner identity/origin checks, Site-versus-device authority, device
+revocation, assignment-specific leases, claim/attempt atomicity, body-bound
+idempotency, WAV bounds/hash validation, R2-before-D1 commit order, orphan handling,
+local SQLite locking and durable output/lost-ack/cache recovery. Two concrete defects
+were reproduced with failing tests, then fixed within the disposable proof:
+
+1. JavaScript regex coercion admitted an array containing a valid request ID and
+   caused a database error/HTTP 500. Request IDs must now be strings; malformed IDs
+   return 400 without creating a job.
+2. An existing POSIX cache directory could be shared/readable despite containing
+   lease credentials in SQLite. Worker startup now requires it to be owned by the
+   current user with no group/other permissions, before creating the ledger. It does
+   not silently change permissions. Windows NTFS ACL enforcement remains manual.
+
+**After fixes: 19 JS/SQL + 10 Python tests passed, 0 failures, 0 skips; ESM build/parse
+check passed.** New cases cover malformed request-ID types, another enrolled device
+using a copied lease, simultaneous differing uploads and unsafe existing cache modes.
+The competing-upload case verifies exactly one committed result and readable winning
+bytes; the losing valid upload remains a documented orphan. The new POSIX permission
+test will be explicitly skipped on Windows, where real ACL validation is required.
+
+Commands executed:
+
+```sh
+node --test --test-isolation=none tests/routes.test.mjs
+python -m unittest discover -s tests -p test_worker.py -v
+node scripts/build.mjs
+```
+
+These use a local real-SQLite D1 adapter, in-memory R2 and Python transport doubles.
+They are **not hosted Sites authentication/D1/R2/private-dispatch tests, Windows
+execution or actual Android playback/download**. Those remain unrun and unverified.
+No additional browser/device/FFmpeg test was run during this recovery. No deployment,
+resource provisioning, models or dependency installation occurred. Phase 0 is incomplete.
+
+Git transport could not connect to its configured proxy. The supported GitHub connector
+could read the pinned base and confirmed the requested review branch did not exist.
+Publish only to that separate branch; verify its head and source tree before reporting
+success. API-created commit metadata can yield a different SHA from the local reviewed
+commit; original source/patch provenance above remains authoritative. No force or main
+update is authorized. Final remote publication evidence is reported separately.
+
+## Direct Sites component proof — 2026-10-29
+
+Based on exact commit `9a0c8213719d626c84658105e8febcb4f6cdca3c`. All six requested
+files were read from that Git snapshot: README, AGENTS, TASKS, ARCHITECTURE, POC and
+SITES-DEPLOYMENT-PROMPT. New implementation is isolated in `sites/phase0`.
+
+- **16 JS/SQL tests passed, 0 failed, 0 skipped** using Node v24.19.0:
+  `node --test --test-isolation=none tests/routes.test.mjs` in `sites/phase0`.
+  Tests use actual SQLite SQL through a D1-shaped local adapter and in-memory R2.
+  Approval/body-bound idempotency, owner/origin checks, wrong worker credentials,
+  competing claims, attempt audit, monotonic progress, lease fencing, revocation
+  during upload, WAV bounds/format/hash, idempotent lost-ack completion, immutable
+  results, authorized ranges/download, handler restart, storage failure/recovery,
+  expired upload orphan handling, attempt/retry/job caps and fail-closed setup pass.
+  Static UI/script/CSP checks pass; these are not browser accessibility/audio tests.
+- **9 Python tests passed, 0 failed, 0 skipped** using Python 3.12.14:
+  `python -m unittest discover -s tests -p test_worker.py -v` in `sites/phase0`.
+  Reuses original tone generator/verifier; tests durable render-before-upload ledger,
+  restart/cache/lost-ack/expired-lease handling, process exclusion, path protection,
+  separate Site/device transport headers, redirect refusal and HTTPS/origin binding.
+  Worker network tests use protocol doubles, not actual HTTP or private dispatch.
+- **Worker ESM build/parse check passed:** `node scripts/build.mjs`. Copies one ESM
+  entrypoint with `default.fetch` to ignored `dist/server/index.js`; explicitly not a
+  deployable archive without verified hosting bindings/migrations/Site identity.
+- **Independent local decode passed:** original Python generator produced 64,044-byte
+  WAV; system FFprobe reported `pcm_s16le`, 16,000 Hz, mono, duration 2 seconds;
+  system FFmpeg fully decoded 64,000 PCM bytes with exit 0. No new software installed.
+  This ran on Linux, not Windows, Android or a Site Worker.
+- Initial route run exposed a missing-owner configuration binding error (14/15 pass);
+  fixed by rejecting worker access before binding absent owner configuration. Final
+  successful test run supersedes this failure. Node's subprocess-isolated test launcher
+  also returned an opaque file-level failure; using its supported in-process isolation
+  option ran the complete suite. No browser protections or TLS checks were disabled.
+
+No new dependencies/models, secrets, outside bridge, hosting resources, remote push,
+public release or Site deployment. No generated data/credentials/audio in Git.
+Existing POC full tests are **unrun here** (`filelock` absent); original evidence below
+is historical. No `sites-preview` command or `cua_repl.js` was found; browser QA was
+not attempted via a substitute server/browser. Cloud status reports unrestricted
+enforced networking, no configured secrets/identities; this is not provider API proof.
+
+**UNVERIFIED:** actual D1/R2 persistence and migration provisioning, exact Worker ESM
+hosting binding JSON/migration plumbing, account pricing/quotas/retention/egress,
+private dispatch service credential acceptance and forwarding of independent worker
+Authorization, trusted hosted visitor identity, hosted HTTP recovery, real Windows
+ACL/runtime/3060, real Android sign-in/play/seek/download/offline/PC-off use, MCP calls.
+MCP is documented but intentionally not added to this minimal transport experiment.
+Manual steps and exact sources are in [the proof README](../sites/phase0/README.md).
+Phase 0 remains incomplete; none of this upgrades the old end-to-end matrix to pass.
+
 2026-10-29. A result is a pass only if its command ran and the required behavior was
 observed. Old local-app results remain in the [historical ledger](archive/local-first-2026-10-29/VALIDATION.md),
 not evidence of Sites/device integration. No full new Phase 0 success claim.
