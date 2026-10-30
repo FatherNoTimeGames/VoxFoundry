@@ -1,5 +1,31 @@
 # Revised Phase 0 validation ledger
 
+## Scope change: Windows audio is planned — 2026-10-30
+
+The user deferred the Windows audio connection until Site functionality is complete.
+Updated only documentation/operating instructions: active tasks/dependencies,
+requirements, roadmap, architecture, Site foundation prompt, planned-feature list
+and prototype status labels. Source, tests, existing libraries and history are
+preserved. Neither audio proof is the current Site entrypoint.
+
+Validated document links and the active dependency change: S0-07 excludes the
+deferred S0-03/S0-06 audio proof; Site phases 1–5 do not depend on a worker, service
+credential, audio job schema or Windows narration. Site auth, durable data, exports,
+costs and actual Android Site usability remain acceptance requirements. General
+Site backup/restore stays required before Site completion.
+
+No implementation tests were rerun for this documentation-only change. The prior
+25 original and 29 reviewed component results below are retained as previously
+executed evidence, not new tests or hosted proof. No live Site, D1/R2, private
+dispatch, Windows, Android, browser or deployment checks ran in this scope update.
+Hosted Site behavior and real Android Site use remain unverified. Windows execution,
+audio transport and actual Android playback/download remain unverified and deferred.
+No cost/installation/resource/public-release change occurred; Phase 0 is incomplete.
+
+Earlier sections retain the old audio-first acceptance and historical session
+constraints. The active acceptance in TASKS/PLANNED-FEATURES supersedes that scope;
+deferral does not upgrade any unrun test to a pass.
+
 ## Recovered patch and independent review — 2026-10-30
 
 The checkout was clean on `phase0-direct-sites`; existing branches and source were

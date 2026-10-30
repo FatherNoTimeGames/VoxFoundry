@@ -1,5 +1,29 @@
 # Revised Phase 0 decisions, approvals and audit
 
+## Site first; Windows audio deferred — 2026-10-30
+
+The user explicitly asked to take the Windows audio connection out for now, list it
+as a planned feature, and get Site functionality working and complete first.
+This supersedes the earlier mandatory Phase 0 Site → Windows → audio → Android loop.
+S0-03, S0-06 and audio phases 6–8 are deferred, not passed or deleted. They no longer
+block Site foundation or Site completion. Updated the active task dependency view,
+requirements, roadmap, architecture, Site foundation prompt and operating instructions.
+PLANNED-FEATURES records the preserved prototype paths and later resume criteria.
+
+The Site remains independent of any companion: identity, projects/documents, durable
+saves/sync, library/search/sources, revisions/export/restore, supported ChatGPT tools
+and review/canon, enabled Wiki and atlas are the Site feature path. Actual Android
+Site usability and private hosted identity/storage remain required. Windows worker
+execution and Android audio play/download are deferred to the future audio feature.
+General Site backup/restore is not postponed along with worker distribution.
+
+No prototype/code/data was removed or deployed. Do not use the audio proof as the
+active Site entrypoint or add worker setup, service credentials or audio-job schema
+to the foundation. Historical component tests remain truthful evidence only. This
+scope change does not approve paid resources, models, significant dependencies,
+public release, main merge or force push. Phase 0 remains incomplete under its
+revised Site-only acceptance, pending actual Site evidence.
+
 ## Recovery provenance and review — 2026-10-30
 
 The user authorized checksum-gated patch recovery, narrow Phase 0 defect fixes,

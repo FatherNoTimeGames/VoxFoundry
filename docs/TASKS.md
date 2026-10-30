@@ -1,5 +1,58 @@
 # Authoritative tracker — revised Sites-first scope
 
+## Active scope — Site first, Windows audio planned (2026-10-30)
+
+The user's latest direction supersedes the older audio-first gates below. Finish
+Site functionality before resuming the Windows audio connection. Preserve all task
+IDs, source and evidence; **deferred** means removed from the current critical path,
+not completed. [Planned feature and resume criteria](PLANNED-FEATURES.md).
+
+### Next Up (active; maximum five)
+
+1. **S0-02** — Verify owner sign-in, D1/R2 persistence, supported ChatGPT tools and
+   exact Site binding/migration configuration. External worker/service access is deferred.
+2. **S0-D1** — Establish actual Sites account limits/costs and the approved hosting
+   configuration/budget before resource creation. No external audio bridge is needed
+   in the active design.
+3. **S0-07** — Produce the Site-only feasibility/architecture checkpoint with honest
+   runtime/auth/persistence/mobile evidence. No Windows audio round trip is required.
+4. **S0-08 / S0-09** — Finalize the Site foundation prompt and review the Site-only
+   preflight. Existing deployment/spend restrictions continue to apply.
+5. **S1-01** — Implement and validate private owner/project/document persistence and
+   Android-first navigation/editor as the first Site feature slice after preflight.
+
+### Active dependency changes
+
+| ID | Status | Current scope / dependencies |
+| --- | --- | --- |
+| S0-I1 | done | Intended product identified as the installed OpenAI Sites plugin; this does not prove runtime integration. |
+| S0-I2 | deferred | Corrected legacy audio live-test reruns are preserved, but do not block Site work. |
+| S0-I3 | review | Verify only documentation access actually needed for the Site; old access failures are historical. |
+| S0-02 | review | Site identity, durable records/files and supported ChatGPT tool contract; depends on S0-I1. Hosted behavior remains unverified. |
+| S0-03 | deferred | Existing audio transport experiments/tests preserved; no new audio implementation required now. |
+| S0-04 | review | Site/ChatGPT, enabled Wiki/maps, rights and hosting research; TTS/model/worker research deferred. |
+| S0-D1 | review | Site hosting/cost decision; depends on S0-02 and relevant S0-04 findings. |
+| S0-05 | review | Architecture revised for Site-only operation and planned audio; remains a design, not hosted verification. |
+| S0-06 | deferred | Actual Site → Windows → audio → Android proof moves to the planned audio feature; no Site-phase dependency. |
+| S0-07 | blocked | Site-only evidence checkpoint; depends on S0-02, S0-04, S0-05 and S0-D1; excludes S0-03 and S0-06. |
+| S0-08 | blocked | Site foundation deployment prompt; depends on S0-07; no worker/audio acceptance requirements. |
+| S0-09 | blocked | Site-only preflight review; depends on S0-08. Deferred audio is not a failed Site exit gate. |
+| S1-01–S5-03 | planned | Site foundation, writing/library, AI/review, enabled Wiki and atlas; preserve existing feature IDs and evidence-based exits. |
+| S5-04 | planned | Site completion checkpoint after active Site slices: sign-in, project/document CRUD, saves/sync/conflicts, library/search/sources, revisions/export/restore, supported ChatGPT tools/review, atlas and enabled Wiki. Private access, costs and real Android usability verified; PC/worker not required. |
+| S6-01–S8-04 | deferred | Narration, audio editing/export, Windows companion/distribution and audio-specific reliability. Resume after S5-04 and explicit scope/cost/model review. General Site backups, access control and restore stay required in phases 1–5. |
+
+The Site has not been built/deployed or declared complete by this scope change.
+Hosted identity/D1/R2/ChatGPT and actual Android Site use remain unverified. Desktop
+web testing remains relevant; Windows companion execution is not a current Site gate.
+No worker credentials, pairing, queue schema or tone player are required in the
+active Site. Existing audio prototypes remain unshipped research.
+
+## Historical checkpoints and superseded tracker
+
+The following records retain the prior scope, task IDs and test history. Their old
+Next Up lists, audio prerequisites and Phase 0 exit wording are superseded by the
+active scope above; do not restart the worker/audio proof to unblock Site work.
+
 ## Recovery review checkpoint — 2026-10-30
 
 Recovered the exact checksum-verified three-chunk patch on a separate branch based

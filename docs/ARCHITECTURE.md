@@ -1,21 +1,31 @@
-# Sites + Windows worker architecture proposal
+# Sites-first architecture; Windows audio planned
 
-Status: revised Phase 0, **not approved/verified end to end**. No Site deployed; no
-Windows or Android device attached. Direct Sites integration is unknown. Existing
+Status (2026-10-30): Site-only preflight, **not verified end to end**. The user
+deferred the Windows audio connection until Site functionality is complete. No Site
+deployed; no Windows or Android device attached. Existing
 local application is preserved, not automatically adopted as the new central store.
 See research/sites-worker-integration.md and VALIDATION for evidence boundaries.
 
 ## Conditional topology and alternatives
 
 ```text
-Android / tablet / Windows
-   ↕ supported ChatGPT Sites UI + unified AI experience (product/contract to verify)
-Site server actions / knowledge services / authenticated durable files
-   ↕ documented authenticated queue/upload API, IF supported
-Windows worker — outbound HTTPS polling only → durable jobs / private audio storage
+Android / tablet / desktop web
+   ↕ private Sites UI + supported ChatGPT tools (hosted behavior to verify)
+Sites-native server routes / knowledge services / owner authorization
+   ↕ documented D1 and R2 bindings (exact setup/runtime tests pending)
+Persistent projects, documents, revisions, sources, atlas and exports
+
+PLANNED AFTER SITE COMPLETION (not required or deployed now):
+Windows worker → outbound authenticated jobs/uploads → private retained audio
 ```
 
-Evaluate direct Sites-backed persistence/actions first. A worker cannot assume access
+Evaluate direct Sites-backed persistence/actions first. The installed Sites references
+document D1/R2, ChatGPT sign-in and authenticated Site MCP tools; documentation is not
+hosted runtime proof. The active Site has no external worker, queue or audio bridge
+dependency. Do not add worker setup controls, service credentials or audio-job tables
+to the Site foundation. See PLANNED-FEATURES.md for the deferred connection.
+
+When the audio feature is separately resumed, a worker cannot assume access
 to private platform DBs/files or the user's ChatGPT session. If direct endpoints are
 unavailable, a candidate is one small HTTPS bridge with persistent metadata and private
 objects, called through a supported Site integration. It needs explicit approval before
@@ -27,12 +37,13 @@ Hosted state is necessary for PC-off availability. Prefer the verified platform'
 supported store; otherwise evaluate one durable personal-use server (SQLite on local
 persistent disk, single writer) versus managed relational DB/object store. No live
 SQLite file over WAN, no ephemeral hosting disk, no direct browser DB admin keys.
-Originals/revisions and uploaded audio live independently of the Windows worker.
-Local-first constraints remain for inference/cache/recovery, not central availability.
+Project originals/revisions/files live independently of any Windows machine. Future
+uploaded audio must also remain independent of its worker. Local-first constraints
+apply to future inference/cache/recovery, not central Site availability.
 
 ## Components and authority
 
-- Site UI: phone-first project/chat/library/atlas/references/review/audio navigation,
+- Site UI: phone-first project/chat/library/atlas/references/review navigation,
   bottom sheets/collapsible panels and additional desktop panels. No hover-only flows.
 - Knowledge/application services: authoritative graph, revisions, permissions, canon,
   proposal/review transactions, search, session restoration and export manifests.
@@ -41,11 +52,11 @@ Local-first constraints remain for inference/cache/recovery, not central availab
   paid API assumed by subscription. Provider actions propose rather than approve.
 - Integrations: wiki fetch/diff/approved publication, authorized map references/imports,
   portable archives. External content is untrusted and source-versioned.
-- Audio bridge: approved immutable script/config requests, device-scoped auth, leases,
+- Planned audio transport, after Site completion: approved immutable script/config requests, device-scoped auth, leases,
   attempt history, upload validation, progress and durable completion artifacts.
-- Worker: separate Python inference/FFmpeg processes and local SQLite job/cache state;
+- Planned worker, after Site completion: separate Python inference/FFmpeg processes and local SQLite job/cache state;
   interchangeable capabilities/engines, CPU where supported, RTX 3060 resources detected.
-  Foreground harness for Phase 0; Windows tray/installer/update later.
+  Foreground harness only when audio work resumes; Windows tray/installer/update later.
 
 Prior local Python/FastAPI/React/SQLite modules may supply domain rules and recovery
 techniques. Do not restructure/delete them to pretend they are a Site. Isolated
@@ -66,8 +77,8 @@ No application-library migration is performed by that experiment.
 | Proposal / ReviewDecision | Origin/AI model context, affected IDs/base versions, readable diff, rationale/evidence, accept/reject/revise/defer/batch audit |
 | CanonPublication | Explicit approved record versions and promotion provenance; supersession/history, never automatic on autosave |
 | MapVersion / Geometry / Marker | Background digest/license/dimensions/CRS, historical period, points/regions/routes, library/source links and placement confidence |
-| Job / Attempt / Device | Immutable approved script/settings IDs, lease fencing, retry/cancel, scoped identity, durable worker and central records |
-| AudioArtifact / Production / Release | Exact script/config/model provenance, validated bytes/timing, non-destructive recipes, MP3/M4B/metadata/artwork/export history |
+| Planned: Job / Attempt / Device | Future audio scope only; do not create these as a Site foundation prerequisite. Immutable approved requests, leases, scoped identity and durable recovery when resumed. |
+| Planned: AudioArtifact / Production / Release | Future audio scope only; exact script/config/model provenance, validated bytes/timing and immutable release history when resumed. |
 | WikiBinding / RemoteRevision | Repository/wiki/page/path and baseline SHA, imported provenance, approved diff, expected-head publishing and conflicts |
 
 Separate content status (brainstorm/draft/proposed/approved/superseded/rejected/archived),
@@ -81,7 +92,8 @@ app permissions, approved canon or publishing policy.
 Every save uses stable IDs and expected versions; return explicit conflicts and retain
 local edits. Autosave means durable draft acknowledgment. Sync means another authorized
 device sees it. Session restoration means app-managed conversations/project/doc/map/view
-state resumes. Test each independently on real Android/Windows. PC-off Site use cannot
+state resumes. Test each independently on real Android and desktop web; Windows
+companion execution is deferred. PC-off Site use cannot
 be implemented with a loopback-only library.
 
 Incremental retrieval starts with scoped metadata/full-text search and follows typed
@@ -96,7 +108,11 @@ compatible proposals. Canon promotion requires an explicit action. Publishing a 
 requires a separate explicit action against a re-fetched remote base. Autosave and
 local approval never cause external publication.
 
-## Job protocol and ownership
+## Planned audio job protocol and ownership (deferred)
+
+This section preserves the future connection contract. It is excluded from current
+Site preflight/completion and does not authorize adding a worker, audio bridge or
+service credential. Resume only after the Site checkpoint and explicit feature review.
 
 Approved requests pin script revision, text digest, provider/model/voice/version,
 pronunciation/settings and generation purpose. Idempotency keys bind the request body.
@@ -145,7 +161,11 @@ risk; target validation is required before distribution. Apache source license p
 personal use does not clear map/model/voice/reference rights. No deployment/release is
 authorized by a generated deployment prompt or this architecture draft.
 
-## Documented candidate clarified on continuation
+## Historical Apps SDK candidate (preserved research, not an active platform change)
+
+The installed Sites plugin is the identified target. The older candidate below is
+retained for provenance only; it does not select a bridge or substitute Apps SDK for
+Sites in the active Site-first plan.
 
 OpenAI's official Apps SDK examples now verify a documented ChatGPT MCP/widget model
 and explicitly require server-side production persistence. If the user identifies or

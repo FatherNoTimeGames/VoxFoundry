@@ -1,5 +1,9 @@
 # Disposable audio transport experiment
 
+**Deferred 2026-10-30:** the Windows audio connection is a planned feature after
+Site completion. This experiment is preserved research and is not an active Site
+prerequisite or deployment entrypoint. See [planned features](PLANNED-FEATURES.md).
+
 This is a local prototype, **not a ChatGPT Site, deployed bridge, Windows tray app,
 TTS engine, or verified Android integration**. It uses existing Python dependencies
 and a two-second deterministic tone. No models, cloud services or significant new

@@ -1,68 +1,76 @@
-# Sites deployment prompt — conditional draft
+# Site foundation prompt — conditional preflight
 
-User-requested final Phase 0 task: **S0-08**. This is a preflight/template, not the final
-platform-specific deployment prompt: the Sites product/APIs, hosting and real integration
-are not verified. Finalize only after S0-07 evidence; never copy unsupported assumptions
-into a deployment. Do not enter secrets into the prompt. Deployment/cost approval remains
-separate. No Site or Windows app is assumed to exist.
-
-Copy-ready preflight text for the intended supported builder:
+Updated 2026-10-30 for the user's direction: complete Site functionality first;
+Windows audio is a planned feature. This replaces the earlier audio-transport
+preflight. Preserved prototypes and their validation remain in the repository.
+S0-08 remains conditional until Site-only S0-07 evidence is available. This file
+neither deploys a Site nor approves costs, a public launch or model downloads.
 
 ```text
-Create only a disposable VoxFoundry audio-transport proof of concept, not the full app.
+Build VoxFoundry's private Site foundation as the first slice of the Site-first plan.
 
-First identify this Sites product/runtime/version and cite its current official supported
-capabilities for ChatGPT collaboration, authenticated persistent storage, external
-worker APIs, private file upload/stream/download, Android access and deployment costs.
-Do not invent internal endpoints, direct DB/file access or access to ChatGPT history.
-If a capability is unavailable or undocumented, report the gap and stop for a decision.
-Do not silently substitute a different product or a paid AI API.
+Read AGENTS.md and the active scope in docs/TASKS.md, then REQUIREMENTS, ARCHITECTURE,
+ROADMAP, VALIDATION and PLANNED-FEATURES. Preserve existing application/library data,
+source, history and the deferred audio prototypes. Follow the Sites plugin workflow.
 
-Use the verified configuration below only after the feasibility report is approved:
-- Sites product/build: {{verified product/build and docs}}
-- Direct supported job/file APIs OR explicitly approved bridge: {{decision and contract}}
-- Authorized disposable environment/project: {{identifier}}
-- Hosting/storage/retention/quotas/expected costs: {{verified values and approval}}
-- Owner login and scoped worker device auth: {{supported scheme; secret references only}}
+Verify the installed Sites runtime and current supported owner sign-in, D1 records,
+R2 private files, migrations, authenticated MCP tools and account cost/limit contract.
+Use only verified binding/migration configuration and the real registered Site ID.
+Keep owner access private and verify permissions on every data operation. No browser
+DB/admin credentials or assumed access to external ChatGPT conversation history.
+No mandatory paid AI API or claim that a ChatGPT subscription supplies API credits.
 
-Implement a phone-first interface with a short test passage, explicit approval checkbox,
-submit/progress/retry controls, last-worker-contact indicator, completed audio player and
-explicit download. Use 44px tap targets, readable compact 360–390px layouts, keyboard/
-screen-reader support, no hover-only controls; enhance tablet/desktop. Clearly label
-synthetic test tones as non-speech. Do not implement unrelated app features.
+Before provisioning or introducing charges, report actual account pricing, allowances,
+quotas, retention and backup/restore limits and the approved budget. If these remain
+unknown, complete safe local preparation and report the precise hosting blocker.
+Do not deploy or change audience without the authorization that applies to that step.
 
-Persist requests/results on approved central storage independently of the Windows PC.
-Bind idempotency IDs to immutable approved text/config hashes; keep attempts/finite
-leases/heartbeats and reject stale completions. Worker communication is outbound HTTPS,
-not an exposed home port or browser-session automation. Do not give worker credentials,
-DB admin keys or long-lived private audio URLs to client code.
+Verified configuration to complete before publication:
+- Sites product/runtime and source references: {{verified contract}}
+- Site ID/audience: {{real ID; owner-private}}
+- D1/R2 bindings and migration workflow: {{verified configuration}}
+- Hosting/storage/retention/quotas/costs/budget: {{verified values and approval}}
+- Owner sign-in and per-record authorization: {{supported identity contract}}
 
-Use the repository's portable test-worker contract only after adapting it to supported
-platform auth/endpoints. The current local harness is not a deployed Sites adapter.
-Use a lightweight tone generator or an already approved local engine; no model or
-significant dependency download without exact purpose/size/license approval.
+First working slice: Android-first navigation, owner sign-in, project/document CRUD,
+editor, acknowledged durable saves and reload recovery. Use stable IDs and expected
+versions; show conflicts and preserve unsaved edits. Add only the files/storage needed
+for this slice. Keep the existing local app separate; do not migrate its library by
+accident or use localStorage as the cross-device authority.
 
-Validate bounded staged uploads and format/hash before atomic success; support private
-ranged playback/download after worker disconnection. Retain queue/files across restarts.
-Use TLS, owner/project authorization, scoped/revocable device identity and appropriate
-CSRF/CORS/CSP rules for the actual Sites runtime; do not assume loopback cookies work
-inside a cross-origin widget. No public read bucket or wildcard credentialed CORS.
+Then complete scoped Site features in the documented order: writing/library/search,
+linked records and sources, revisions and independently restorable exports, supported
+ChatGPT context/tools and proposal/review/canon workflows, enabled Wiki integration
+and the lore atlas. AI output/autosave never approves canon or publishes a Wiki.
+External Wiki writes require explicit reviewed changes and authorization. Inspect
+map/provider terms before imports; use rights-cleared uploaded maps where appropriate.
 
-Test request persistence, wrong/expired credentials, duplicate submit/upload, lost
-acknowledgment, worker/bridge restart, lease expiry/reclaim, retry budget, corrupt/truncated
-WAV, unauthorized file reads and limits. On real Windows 10 run the companion; on real
-Android play/seek/download/open offline, then confirm hosted access while the PC is off.
-Phone emulation and Linux execution must remain labeled as such.
+Design for 360–390px phones, 44px tap targets, readable layouts, no hover dependence,
+keyboard/screen-reader use, then tablet and desktop. Test actual Android sign-in,
+editing/save/reopen, cross-device visibility and enabled feature interactions. Keep
+browser emulation, unit checks and real-device evidence distinct. The Site must remain
+usable with the Windows PC off and without any companion application.
 
-Report exact verified results, unrun/manual steps, account/hosting/storage/egress costs,
-security limitations and rollback/cleanup for the disposable project. No canon promotion,
-GitHub Wiki push, full app expansion, paid hosting or public software release is implied.
-Stop at the Phase 0 approval checkpoint. If required endpoints/platform/device access are
-unavailable, deliver the concrete blockers and next steps instead of claiming success.
+Exclude the planned Windows audio connection from the current Site: do not add worker
+pairing, service credentials, job/attempt/lease schema, tone generation, narration
+controls or worker-playback acceptance gates. Do not deploy sites/phase0 as the Site
+entrypoint. Preserve those experiments for the planned feature instead of deleting
+or silently repurposing them. No model/voice downloads, cloud GPU or external bridge.
+
+Test authentication/authorization, project/document persistence, retry/duplicate-save
+behavior, version conflicts, refresh/session boundaries, file bounds/permissions as
+applicable, export/restore and mobile interaction. Run checks appropriate to each
+slice without installing significant dependencies. Report actual passes, failures,
+unavailable tests and remaining feature gaps; a build or mock pass is not hosted proof.
+
+Before declaring the Site complete, verify the active feature acceptance at S5-04,
+private hosted access/storage and real Android usability, independently restorable
+exports and remaining costs/limits. Do not require a Windows narration/audio loop;
+resume that planned feature only after the Site checkpoint and a separate scope review.
+No main merge, force push, public release, paid resources or automatic Wiki publication.
 ```
 
-Verified preflight update: OpenAI's Apps SDK example README documents MCP widgets/tools
-and server-side persistence. If the intended builder is Apps SDK, identify it explicitly
-and use its current official auth/runtime docs; do not relabel that app as a different
-Sites product or assume storage is included. Direct Site APIs and actual Android/Windows
-proof are still unresolved, so S0-08 is not final.
+The Site-only preflight remains incomplete; reprioritizing the work is not evidence
+of a hosted Site. Actual Windows execution, private worker dispatch and Android audio
+playback/download remain unverified and deferred, rather than successful or required
+for the active Site phase.

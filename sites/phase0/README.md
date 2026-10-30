@@ -1,5 +1,11 @@
 # Direct Sites Phase 0 audio-transport proof
 
+**Planned feature / deferred 2026-10-30:** the user moved the Windows audio
+connection out of active Site work until Site functionality is complete. Preserve
+this experiment and evidence for later; do not deploy it as the Site entrypoint or
+require its worker setup, service credential, jobs or playback to unblock the Site.
+See `docs/PLANNED-FEATURES.md` and the active scope in `docs/TASKS.md`.
+
 Recovery review (2026-10-30): the exact original patch was imported on a separate
 review branch and its source tree verified against original commit
 `e5b1ea245bd12ae5c0de28e1438013557f72f948`. The original 25 component tests were

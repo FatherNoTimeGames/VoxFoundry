@@ -1,89 +1,55 @@
 # VoxFoundry
 
-Direct Sites continuation: [disposable Phase 0 proof](sites/phase0/README.md) contains
-Sites-native Worker routes, D1 queue SQL, R2 audio handling, a portable tone-worker
-adapter and manual device tests. Component tests pass; nothing is deployed and
-private dispatch/Windows/Android remain unverified. Cost and hosting-configuration
-gates remain open. Historical status statements below describe the pinned base.
+A personal AI-assisted research, writing, worldbuilding, knowledge-library and
+lore-atlas studio, with audiobook production planned for a later stage. Initial
+projects include Enshrouded: A History of Embervale and original game narratives;
+the design remains general-purpose.
 
-A personal AI-assisted research, writing, worldbuilding, knowledge-library, lore-atlas
-and audiobook studio. Workflow: **Research → Organize → Co-write → Review → Approve
-→ Narrate → Publish**. Initial projects include Enshrouded: A History of Embervale and
-original game narratives; the design remains general-purpose.
+**Current priority (2026-10-30): get the Site working and complete first.** The user
+removed the Windows audio connection from current work and listed it as a planned
+feature. Site sign-in, persistent projects/documents, writing/library/search, sources,
+review/canon, supported ChatGPT tools, atlas and portable exports take priority.
+Enabled Wiki integration retains explicit approval for remote writes.
 
-**Status: revised Phase 0, feasibility incomplete.** The preferred architecture is a
-supported ChatGPT Sites experience plus an outbound Windows audio worker. No Site or
-Windows companion has been deployed, the exact Sites product/API contract is not yet
-identified, and no Windows/Android device is attached. Direct Sites integration and
-bridge necessity remain **unverified**. No full-app platform change is approved.
+The Site must work independently of a Windows companion or a powered-on PC. No
+worker pairing, service credential, narration queue, model, FFmpeg or test-tone
+playback is required for Site preflight or completion. Real Android Site usability
+remains required; Android audio playback/download is part of the deferred feature.
 
-Existing local project/manuscript/revision code and its prior test evidence are
-preserved under backend/frontend; they are not a deployed Site or cross-device store.
-The former plan is in [the historical archive](docs/archive/local-first-2026-10-29/TASKS.md).
+**Status:** no Site is deployed or declared complete. Sites documentation establishes
+D1/R2, ChatGPT sign-in and authenticated MCP support; actual hosted behavior, exact
+binding/migration setup, costs and real Android use still require verification.
+The active preflight and feature order are in [TASKS](docs/TASKS.md) and
+[ROADMAP](docs/ROADMAP.md). The scope change does not authorize paid resources,
+model downloads, significant installs, public release or unsupported AI APIs.
 
-## Available proof-of-concept work
+## Planned Windows audio connection
 
-A separate disposable experiment in `backend/voxfoundry/poc` implements a loopback UI,
-persistent job queue, portable outbound worker harness, lease fencing/idempotency,
-progress and validated stored WAV results. It generates a two-second **tone**, not
-speech. It never reads the existing manuscript library or downloads models.
+[Planned features](docs/PLANNED-FEATURES.md) preserves the Windows job/auth/upload,
+local inference/FFmpeg, narration, editing and audiobook export goals for after
+Site completion. Existing source and evidence remain available:
 
-**Verified:** seven component tests, independent FFmpeg decode of the two-second WAV,
-and primary-source reads for OpenAI Apps SDK examples, GitHub Wiki Git workflow and
-Leaflet's BSD 2-Clause license. An initial live run executed: seven passed and five
-failed due to test-fixture/client lifecycle and CSP polling issues. The three browser
-cases did reach a separate Linux worker and upload completed tone audio. Those fixture
-issues are corrected; successful full rerun, playback/download assertions, Windows,
-real Android and actual Sites integration remain unverified. Execution review blocked
-the corrected reruns; full docs/Pindrop requests returned proxy CONNECT 403.
+- [Direct Sites transport experiment](sites/phase0/README.md): 25 original component
+  tests independently reproduced; 29 reviewed component tests passed after fixes.
+- [Local transport experiment](docs/POC.md): older component/live-test evidence is
+  retained with its original limits.
 
-See [POC instructions and limits](docs/POC.md). The current environment already has the
-needed Python dependencies. No new package/model installation is required for the
-component tests; do not run the legacy full setup or install significant dependencies
-for this Phase 0 without review.
-
-```sh
-# Repository cwd; no socket, browser, model or service dependency
-.venv/bin/pytest -q tests/poc/test_queue.py tests/poc/test_worker.py
-```
-
-The corrected loopback checks are in `tests/poc/test_live.py`, covering phone/tablet/
-desktop browser playback/download after the worker exits. A passing rerun would still
-not establish actual Sites/Windows/Android integration. A foreground harness is enough
-for the first Windows test; no tray application/installer is assumed to exist yet.
-
-## Product and safety gates
-
-- Preserve supported ChatGPT collaboration and Android-first use. Do not silently
-  replace Sites with an ordinary website or paid API chatbot.
-- Central projects/files must remain accessible with the PC off. Autosave, sync and
-  app-session restoration need distinct tests; external ChatGPT history is not assumed.
-- Canon/review approvals and wiki publication are explicit; autosave never approves or
-  publishes. Personal use does not waive source, voice, map or model rights.
-- Every model download requires separate exact artifacts/sizes/licenses/purposes approval.
-  No new hosting costs, significant installs, external deployment or remote publication
-  have been authorized.
-- Independent Markdown/JSON/media project exports and restoration without the original
-  database remain architectural requirements. History is not a backup.
-
-Official documentation hosts were added to an environment configuration **draft**;
-review/save settings before retrying after permission review is available. Draft saving
-neither grants runtime evidence nor publishes a Site/environment/software release.
+Neither experiment is the active Site entrypoint. Component test passes do not
+prove hosted authentication/D1/R2, Windows execution or actual Android behavior.
+Existing `backend`/`frontend` application code, libraries and Git history are preserved;
+none is automatically adopted as the hosted Site or migrated by this scope change.
 
 ## Documentation
 
-Resume with [AGENTS.md](AGENTS.md) and [TASKS](docs/TASKS.md). Current sources of truth:
+Start with [AGENTS.md](AGENTS.md) and [TASKS](docs/TASKS.md). Current sources of truth:
 [requirements](docs/REQUIREMENTS.md), [architecture](docs/ARCHITECTURE.md),
-[decisions](docs/DECISIONS.md), [roadmap](docs/ROADMAP.md), [validation](docs/VALIDATION.md).
+[decisions](docs/DECISIONS.md), [roadmap](docs/ROADMAP.md), [validation](docs/VALIDATION.md),
+[planned features](docs/PLANNED-FEATURES.md) and the conditional
+[Site foundation prompt](docs/SITES-DEPLOYMENT-PROMPT.md).
 
-Research: [references](docs/research/REFERENCES.md),
-[Sites/worker](docs/research/sites-worker-integration.md),
-[AI integration](docs/research/ai-integration.md),
-[mapping](docs/research/map-platforms.md),
-[Wiki](docs/research/github-wiki.md), [costs](docs/research/costs.md), and [TTS](docs/research/tts-engines.md).
-The final Phase 0 task is a [Sites deployment prompt](docs/SITES-DEPLOYMENT-PROMPT.md);
-its current conditional draft is not a verified deployment recipe or deployment approval.
+Research and historical plans remain in `docs/research` and `docs/archive`. Originals,
+revisions, provenance, explicit canon/review decisions and independent Markdown/JSON/
+media export and restoration remain requirements. History is not a backup.
 
-Project-owned source remains [Apache 2.0](LICENSE). Third-party dependencies, weights,
-voices, maps and source material have independent terms. The user has authorized synchronizing the committed source to GitHub. No Site or
-software Release has been deployed/published; feasibility limitations remain unchanged.
+Project-owned source remains [Apache 2.0](LICENSE). Third-party dependencies, maps,
+references, model weights and voices have independent rights and license terms.
