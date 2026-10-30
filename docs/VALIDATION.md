@@ -1,5 +1,56 @@
 # Revised Phase 0 validation ledger
 
+## Site foundation local slice — 2026-10-30
+
+Prepared `sites/studio` independently of `sites/phase0` and the local application.
+No worker/audio code or existing libraries were changed. This is first-slice source
+preparation while Site-only hosting/preflight gates remain unresolved, not a phase exit.
+
+**Executed with existing Node v24.19.0, no install:**
+
+```sh
+cd sites/studio
+node --test --test-isolation=none tests/foundation.test.mjs
+node scripts/build.mjs
+```
+
+**19 tests passed, 0 failed, 0 skipped; single-file ESM/browser-script validation passed.**
+Actual SQLite SQL ran through a local D1-shaped adapter. Coverage: missing/wrong owner,
+same-origin writes/no CORS, owner-scoped records/history/exports, atomic duplicate
+creation and payload-bound durable receipts, version-conflicting concurrent saves,
+immutable revisions, replay after later edits, injected SQL rollback/lost commit-ack
+recovery, non-destructive archives, strict type/Unicode/body/content validation, caps,
+complete bounded export semantics, and file-backed SQLite close/reopen persistence.
+UI/script/CSP checks are structural/syntax checks, not browser or accessibility proof.
+
+Re-read installed Sites references:
+- `skill://plugin_connector_1p_689987207de08191979cf68eca2941c6/sites/references/storage.md`:
+  D1 records, R2 files, schema-only migrations, deployment-time migration application,
+  one statement per prepare and batch for multiple statements.
+- `skill://plugin_connector_1p_689987207de08191979cf68eca2941c6/sites/templates/vinext-starter/README.md`:
+  platform-owned sign-in, Site-scoped IDs, top-level navigation, separate local/hosted
+  storage and migration workflow. No self-hosted OAuth replacement is implemented.
+
+These sources did not establish the exact Worker ESM hosting binding/migration JSON
+or account-specific prices/allowances. The skill's lifecycle helper is not present in
+the executor; a skill-resource read of `scripts/project-setup.mjs` failed. Referenced
+example/config/auth source-file reads also failed; no contents are claimed accessed.
+The storage and template README reads did succeed. No price or manifest schema was
+invented. D1 `env.DB` and owner configuration are required; R2 is unused in this slice.
+
+No Site/resource was registered or deployed. No model, package or significant
+dependency was installed. No preview/controller or `sites-preview` was available,
+so no preview server, substitute browser or screenshot was attempted. No audio tests
+were rerun: source is isolated and the feature remains deferred.
+
+**UNVERIFIED:** platform sign-in/header trust and access policies, hosted D1/migrations,
+any R2/file behavior, MCP/ChatGPT tools, real browser interactions/accessibility,
+actual Android and cross-device/PC-off behavior, hosting costs/limits/retention/backups,
+independent import/restore. Manual checks and first-slice limits are in
+[sites/studio/README.md](../sites/studio/README.md). Manual Save is not autosave or
+crash-safe draft/session restoration. Exports fail explicitly above their size budget;
+history is never silently truncated. Phase 0 and Site completion remain incomplete.
+
 ## Scope change: Windows audio is planned — 2026-10-30
 
 The user deferred the Windows audio connection until Site functionality is complete.

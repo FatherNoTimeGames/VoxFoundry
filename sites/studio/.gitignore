@@ -1,0 +1,6 @@
+dist/
+.sites-runtime/
+.wrangler/
+*.sqlite3*
+.dev.vars*
+.env*

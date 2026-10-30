@@ -18,8 +18,18 @@ not completed. [Planned feature and resume criteria](PLANNED-FEATURES.md).
    runtime/auth/persistence/mobile evidence. No Windows audio round trip is required.
 4. **S0-08 / S0-09** — Finalize the Site foundation prompt and review the Site-only
    preflight. Existing deployment/spend restrictions continue to apply.
-5. **S1-01** — Implement and validate private owner/project/document persistence and
-   Android-first navigation/editor as the first Site feature slice after preflight.
+5. **S1-01** — Validate the prepared owner/project/document foundation and Android-first
+   navigation/editor on private Sites after preflight; complete the remaining slice gaps.
+
+Foundation preparation update (2026-10-30): `sites/studio` contains the isolated,
+dependency-free local Site slice; **19 component tests and ESM validation pass**.
+S1-01 remains incomplete pending private hosted auth/D1 and real mobile verification.
+This is safe local preparation, not completion of S0-09 or a live phase exit.
+Manual saves are implemented; S1-02 autosave/durable draft/session restoration is
+not complete. No R2 upload, MCP tools, Wiki, atlas or audio capability was added.
+Next unblocked work is to resolve exact supported lifecycle/binding tooling and the
+account cost/configuration gate before provisioning; then validate this concrete slice
+on private Sites and real Android. See [foundation evidence](VALIDATION.md#site-foundation-local-slice--2026-10-30).
 
 ### Active dependency changes
 
@@ -41,7 +51,7 @@ not completed. [Planned feature and resume criteria](PLANNED-FEATURES.md).
 | S5-04 | planned | Site completion checkpoint after active Site slices: sign-in, project/document CRUD, saves/sync/conflicts, library/search/sources, revisions/export/restore, supported ChatGPT tools/review, atlas and enabled Wiki. Private access, costs and real Android usability verified; PC/worker not required. |
 | S6-01–S8-04 | deferred | Narration, audio editing/export, Windows companion/distribution and audio-specific reliability. Resume after S5-04 and explicit scope/cost/model review. General Site backups, access control and restore stay required in phases 1–5. |
 
-The Site has not been built/deployed or declared complete by this scope change.
+No Site is deployed or declared complete; the prepared foundation source is local only.
 Hosted identity/D1/R2/ChatGPT and actual Android Site use remain unverified. Desktop
 web testing remains relevant; Windows companion execution is not a current Site gate.
 No worker credentials, pairing, queue schema or tone player are required in the

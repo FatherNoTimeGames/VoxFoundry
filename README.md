@@ -23,6 +23,12 @@ The active preflight and feature order are in [TASKS](docs/TASKS.md) and
 [ROADMAP](docs/ROADMAP.md). The scope change does not authorize paid resources,
 model downloads, significant installs, public release or unsupported AI APIs.
 
+The first active [Site foundation](sites/studio/README.md) is now implemented locally:
+projects/documents, manual version-checked saves, revision history, non-destructive
+archive and project JSON export. **19 foundation component tests and ESM validation
+passed.** Real sign-in, hosted D1, browser interaction and actual Android remain
+unverified; this is not a live Site. Exact hosting configuration and costs remain gates.
+
 ## Planned Windows audio connection
 
 [Planned features](docs/PLANNED-FEATURES.md) preserves the Windows job/auth/upload,

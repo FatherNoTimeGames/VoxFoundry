@@ -1,5 +1,22 @@
 # Revised Phase 0 decisions, approvals and audit
 
+## Local Site foundation preparation — 2026-10-30
+
+The user's Continue authorizes the next Site-first batch. Exact lifecycle/binding
+tooling and account costs remain unavailable, so no resource is provisioned and no
+phase exit is claimed. Prepared a separate `sites/studio` native Worker ESM source
+slice with no install or new service: owner-authorized projects/documents, manual
+versioned saves/revisions, archive and bounded project export. This reuses the Sites
+native Worker contract already selected for the isolated source work; it does not
+adopt an external bridge, migrate old libraries or deploy the audio experiment.
+
+Local SQLite transactions test mutation/revision/replay integrity; platform sign-in
+and D1 are not established by those doubles. All 19 new component checks/build pass.
+Manual saves and in-memory draft warnings are deliberate first-slice limits, not a
+claim of S1-02 autosave/restoration. Keep S1-01 hosted acceptance and all phase reviews
+open. Read-only documentation access does not authorize paid hosting, significant
+dependencies, models or public publication. No Windows audio requirement is restored.
+
 ## Site first; Windows audio deferred — 2026-10-30
 
 The user explicitly asked to take the Windows audio connection out for now, list it

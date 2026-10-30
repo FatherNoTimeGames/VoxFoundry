@@ -1,0 +1,16 @@
+import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import {Script} from 'node:vm';
+const root=fileURLToPath(new URL('../',import.meta.url));
+const source=await readFile(root+'worker/index.js','utf8');
+const ui=await readFile(root+'worker/ui.js','utf8');
+const {JS}=await import(new URL('../worker/ui.js',import.meta.url));
+new Script(JS,{filename:'browser-app.js'});
+const marker="import {HTML, JS} from './ui.js';";
+if(!source.includes(marker))throw Error('Unexpected Worker import layout');
+const bundled=source.replace(marker,()=>ui.replaceAll('export const ','const '));
+const result=await import('data:text/javascript;base64,'+Buffer.from(bundled).toString('base64'));
+if(typeof result.default?.fetch!=='function')throw Error('Worker fetch export is missing');
+await mkdir(root+'dist/server',{recursive:true});
+await writeFile(root+'dist/server/index.js',bundled);
+console.log('Studio Worker and browser script validated; single-file ESM written. Hosting manifest, migrations and private deployment remain pending.');
