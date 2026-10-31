@@ -9,9 +9,10 @@ not completed. [Planned feature and resume criteria](PLANNED-FEATURES.md).
 
 ### Next Up (active; maximum five)
 
-1. **S0-02** — Obtain supported migration/lifecycle packaging assets or its exact
-   contract, then verify hosted acceptance after authorization. The binding format
-   and sign-in/storage/MCP documentation are now recorded. Worker access is deferred.
+1. **S0-02** — Generate/review initial migrations using the supported Drizzle tools
+   after dependency approval, obtain the lifecycle helper, then verify hosted acceptance
+   after authorization. Binding and migration-sidecar copy contracts are resolved;
+   sign-in/storage/MCP documentation is recorded. Worker access is deferred.
 2. **S0-D1** — Confirm intended-account limits/allowances and the approved hosting
    budget against the dated public terms before resource creation. No audio bridge is needed
    in the active design.
@@ -28,7 +29,7 @@ S1-01 remains incomplete pending private hosted auth/D1 and real mobile verifica
 This is safe local preparation, not completion of S0-09 or a live phase exit.
 Manual saves are implemented; S1-02 autosave/durable draft/session restoration is
 not complete. No R2 upload, MCP tools, Wiki, atlas or audio capability was added.
-Next unblocked work is to resolve exact supported lifecycle/binding tooling and the
+Next work is migration generation/review, supported lifecycle tooling and the
 account cost/configuration gate before provisioning; then validate this concrete slice
 on private Sites and real Android. See [foundation evidence](VALIDATION.md#site-foundation-local-slice--2026-10-30).
 
@@ -40,12 +41,23 @@ live acceptance work**, not because Sites identity/storage/MCP are undocumented.
 Required lifecycle/parser/starter assets are not available in this executor or the
 attempted skill-resource paths. Do not repeat guesses or create a resource to probe.
 S0-D1 has public-rate evidence; intended account applicability/budget remains pending.
+The newer pinned public-source follow-up below supersedes migration-copy unknowns.
 
 Binding follow-up (2026-10-31): the official Manage a site subpage resolved the
 manifest format; added `sites/studio/.openai/hosting.json` without a project ID and
 verified its build copy and fail-closed bundled server. This removes that specific
 blocker. Supported migration generation/discovery/packaging, lifecycle tooling and
 hosted acceptance remain unverified. No generator/framework packages were installed.
+
+Migration packaging follow-up (2026-10-31): read OpenAI's public `openai/sites` source
+at `7eb9d4b9cf93ad7e64aebc8a5ca70e29ec2cfb94`. The production plugin confirms the
+`drizzle/**` → `dist/.openai/drizzle/**` copy and stale-metadata replacement contract.
+Adapted the native build without installing Vite. **Four local contract checks passed**
+against the original official production hook; **19 foundation tests rerun, all passed**;
+ESM build passed. These fixtures prove file copying only, not valid migration history.
+The generator pins are `drizzle-kit@0.31.10` / `drizzle-orm@0.45.2`; neither is installed.
+Next requires separate dependency approval, then actual generation/schema review and
+local application checks. Lifecycle helper, account/budget and hosted/mobile gates stay open.
 
 ### Active dependency changes
 
@@ -54,7 +66,7 @@ hosted acceptance remain unverified. No generator/framework packages were instal
 | S0-I1 | done | Intended product identified as the installed OpenAI Sites plugin; this does not prove runtime integration. |
 | S0-I2 | deferred | Corrected legacy audio live-test reruns are preserved, but do not block Site work. |
 | S0-I3 | done | Current Sites identity/storage/MCP and primary product/cost documentation accessed; missing executor assets and later map/Wiki sources are separate gates. Old access failures remain historical. |
-| S0-02 | blocked | Binding format and identity/storage/MCP contract documented; supported migration/lifecycle packaging and live acceptance remain blocked/unverified. See the follow-up checkpoint. |
+| S0-02 | blocked | Binding, identity/storage/MCP and pinned migration-sidecar copy contracts documented; local copy checks pass. Generated/reviewed migration history, lifecycle helper and live acceptance remain pending. |
 | S0-03 | deferred | Existing audio transport experiments/tests preserved; no new audio implementation required now. |
 | S0-04 | review | Site/ChatGPT, enabled Wiki/maps, rights and hosting research; TTS/model/worker research deferred. |
 | S0-D1 | review | Site hosting/cost decision; depends on S0-02 and relevant S0-04 findings. |

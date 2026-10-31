@@ -1,8 +1,47 @@
 # Sites platform contract checkpoint — 2026-10-31
 
 Task S0-02: **documentation verified in part; exact hosting setup and live behavior
-remain blocked/unverified**. The follow-up adds binding/build metadata only; application
+remain blocked/unverified**. Follow-ups add binding/build metadata only; application
 routes, schema, environment, Site resources and credentials are unchanged. Audio stays deferred.
+
+## Follow-up: migration-sidecar packaging resolved
+
+Primary source O13 is OpenAI's public tooling repository, pinned to
+[`7eb9d4b9cf93ad7e64aebc8a5ca70e29ec2cfb94`](https://github.com/openai/sites/tree/7eb9d4b9cf93ad7e64aebc8a5ca70e29ec2cfb94).
+Unlike the earlier unavailable installed-helper paths, these GitHub reads succeeded.
+Actually accessed the production plugin README, package, `src/index.ts` and upstream
+test source, generator `src/index.ts`, D1 `drizzle.config.ts` / `db/schema.ts`, and
+the base template package. The upstream test source was inspected, not run as a suite.
+
+The [plugin README](https://github.com/openai/sites/blob/7eb9d4b9cf93ad7e64aebc8a5ca70e29ec2cfb94/packages/sites-vite-plugin/README.md)
+and [production hook](https://github.com/openai/sites/blob/7eb9d4b9cf93ad7e64aebc8a5ca70e29ec2cfb94/packages/sites-vite-plugin/src/index.ts)
+establish that builds replace `dist/.openai`, copy the required source hosting manifest,
+and recursively copy optional `drizzle/**` into `dist/.openai/drizzle/**`.
+This resolves the **copy/discovery location**, not hosted parser validation.
+`sites/studio/scripts/build.mjs` now follows that copy behavior in its native build.
+
+Executed the original pinned plugin's `closeBundle` hook directly with Node's native
+TypeScript support; no Vite installation/server was needed. Four disposable copy
+checks against Studio passed: SQL/journal/nested snapshot bytes match; no-Drizzle
+build removes stale files; missing manifest rejects; rebuild after failure restores
+current metadata only. Fixtures were explicitly marked copy-only, were deleted,
+and are not migration history. No local sign-in hook was invoked.
+
+The official [D1 config](https://github.com/openai/sites/blob/7eb9d4b9cf93ad7e64aebc8a5ca70e29ec2cfb94/packages/create-sites/templates/addons/d1/drizzle.config.ts)
+uses SQLite, `db/schema.ts` and output `./drizzle`; the generator pins
+`drizzle-kit@0.31.10` / `drizzle-orm@0.45.2` and adds `db:generate`.
+Those dependencies are absent. Their install has not been authorized, and neither
+CLI nor initializer ran. There is no generated application SQL/journal/snapshot;
+`schema.sql` remains the reviewed local test schema. Do not synthesize metadata.
+
+Remaining concrete steps: approve the pinned build tools before installing; map and
+generate the current schema; review SQL/metadata for ownership keys and constraints;
+apply only to a fresh local DB and run route/reopen checks against that generated
+schema. Then use the supported lifecycle helper after the separate account/budget
+and deployment gates. The public Vite plugin does not replace that helper or prove
+the native Worker deployment archive is accepted. No Site/D1 resource was created.
+
+Earlier migration-packaging unknowns below are historical where superseded here.
 
 ## Follow-up: manifest format resolved
 

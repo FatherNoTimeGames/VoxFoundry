@@ -1,4 +1,4 @@
-import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import {cp,mkdir,readFile,rm,stat,writeFile} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {Script} from 'node:vm';
 const root=fileURLToPath(new URL('../',import.meta.url));
@@ -21,7 +21,19 @@ const bundled=source.replace(marker,()=>ui.replaceAll('export const ','const '))
 const result=await import('data:text/javascript;base64,'+Buffer.from(bundled).toString('base64'));
 if(typeof result.default?.fetch!=='function')throw Error('Worker fetch export is missing');
 await mkdir(root+'dist/server',{recursive:true});
+// Match the production packaging contract in @openai/sites-vite-plugin 0.2.0
+// (openai/sites@7eb9d4b9): replace metadata, then copy optional Drizzle sidecars.
+// This copies reviewed generated files; it never invents SQL, snapshots or journals.
+await rm(root+'dist/.openai',{recursive:true,force:true});
 await mkdir(root+'dist/.openai',{recursive:true});
 await writeFile(root+'dist/server/index.js',bundled);
 await writeFile(root+'dist/.openai/hosting.json',manifestText);
-console.log('Studio ESM and documented binding manifest prepared. Supported migration packaging, Site registration and private deployment remain pending; this is not a deployable archive.');
+let hasDrizzle=false;
+try {
+  await stat(root+'drizzle');
+  hasDrizzle=true;
+} catch(error) {
+  if(error.code!=='ENOENT')throw error;
+}
+if(hasDrizzle)await cp(root+'drizzle',root+'dist/.openai/drizzle',{recursive:true});
+console.log('Studio ESM and binding manifest prepared; '+(hasDrizzle?'Drizzle sidecars copied (not validated or applied).':'no generated Drizzle migrations present.')+' Migration generation/review, Site registration and private deployment remain pending; this is not a deployable archive.');

@@ -19,10 +19,17 @@ Detailed asset access, source compatibility and remaining gates are in
 | O10 | https://learn.chatgpt.com/docs/sites/data-and-connections | Read 2026-10-31. Storage/sign-in product guidance, not migration metadata. |
 | O11 | https://learn.chatgpt.com/docs/sites/creating-a-site | Read 2026-10-31. Creation workflow guidance, not a missing-helper replacement. |
 | O12 | https://learn.chatgpt.com/docs/sites/publishing-and-sharing | Read 2026-10-31. Publication/audience workflow guidance, not a verified deployment. |
+| O13 | https://github.com/openai/sites/tree/7eb9d4b9cf93ad7e64aebc8a5ca70e29ec2cfb94 | Read 2026-10-31 through GitHub connector: pinned tree; production plugin README/package/source/tests; generator source, D1 config/schema template and base package. Plugin 0.2.0 copy contract checked locally; no full Vite suite, generator install or hosted application. |
 
 Follow-up resolved the manifest format through O9. Other readable starter scripts
 were inspected without execution. Package-page/registry requests failed; no package
 or mirrored source was installed or treated as authority.
+
+Later O13 reads succeeded independently of npm access. The exact production source
+blob executed in the disposable hook check was `82176b5d77758dc9f17cb81fc01953b3783c8b77`
+(Git blob SHA; SHA-256 `f10a92f5b202b36d61374bbbb8e12487818dbed06b21336b86c5e5b8e5d19d2a`).
+Source is MIT-licensed per the package metadata. It was read/reviewed and held only
+in scratch; no dependency package, upstream full suite or simulated sign-in was run.
 
 Installed Sites storage, identity, MCP, troubleshooting and starter-package resources
 were also read. Named lifecycle helper and starter Drizzle-config reads failed;

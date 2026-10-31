@@ -17,8 +17,8 @@ playback is required for Site preflight or completion. Real Android Site usabili
 remains required; Android audio playback/download is part of the deferred feature.
 
 **Status:** no Site is deployed or declared complete. Sites documentation establishes
-D1/R2, ChatGPT sign-in and authenticated MCP support; actual hosted behavior, exact
-binding/migration setup, costs and real Android use still require verification.
+D1/R2, ChatGPT sign-in and authenticated MCP support; actual hosted behavior,
+migration generation/application, costs and real Android use still require verification.
 The active preflight and feature order are in [TASKS](docs/TASKS.md) and
 [ROADMAP](docs/ROADMAP.md). The scope change does not authorize paid resources,
 model downloads, significant installs, public release or unsupported AI APIs.
@@ -27,8 +27,9 @@ The first active [Site foundation](sites/studio/README.md) is now implemented lo
 projects/documents, manual version-checked saves, revision history, non-destructive
 archive and project JSON export. **19 foundation component tests and ESM validation
 passed.** Real sign-in, hosted D1, browser interaction and actual Android remain
-unverified; this is not a live Site. The binding format is now confirmed; migration/
-lifecycle packaging and account-specific cost applicability remain gates.
+unverified; this is not a live Site. Binding and migration-sidecar copy formats are
+now confirmed, with four local packaging contract checks passed. Generated migration
+history, lifecycle packaging and account-specific cost applicability remain gates.
 
 ## Planned Windows audio connection
 

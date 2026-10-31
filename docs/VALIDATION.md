@@ -1,5 +1,54 @@
 # Revised Phase 0 validation ledger
 
+## Pinned migration packaging contract — 2026-10-31
+
+Read official `openai/sites` at `7eb9d4b9cf93ad7e64aebc8a5ca70e29ec2cfb94` through
+the GitHub connector (O13). Actual accessed files and immutable links are in the
+[contract checkpoint](research/sites-platform-contract.md#follow-up-migration-sidecar-packaging-resolved).
+This supersedes earlier **migration-copy location** unknowns; lifecycle helper,
+generated history and hosted parser/application behavior remain unverified.
+
+Adapted the native build to replace `dist/.openai` and recursively copy optional
+`drizzle/` into its documented sidecar location. The builder does not generate or
+claim to validate migration metadata. Current source has no `drizzle/` history;
+`schema.sql` is still used only by local component tests. No runtime route/schema changes.
+
+**Executed with existing Node v24.19.0, no dependency install:**
+
+```sh
+cd sites/studio
+node --test --test-isolation=none tests/foundation.test.mjs
+node scripts/build.mjs
+```
+
+**19 foundation tests passed, 0 failed, 0 skipped; ESM/browser-script build passed.**
+The earlier audio experiment's original 25 and reviewed 29 component results were
+not rerun or reclassified; they remain separate from these active Site tests.
+
+**Four separate packaging contract checks passed, 0 failed, 0 skipped** in disposable
+directories. Executed the original official plugin's production `closeBundle` hook
+directly with native TypeScript support and compared it with the Studio build:
+
+1. SQL, journal and nested snapshot fixture bytes copy identically.
+2. Missing optional Drizzle input succeeds and stale sidecars are removed.
+3. Missing manifest causes both builders to reject.
+4. Rebuilding after that failure reconstructs only current metadata.
+
+The scratch command was `node /workspace/work/sites-packaging-contract/check.mjs`;
+the official source blob matched Git SHA `82176b5d77758dc9f17cb81fc01953b3783c8b77`
+and SHA-256 `f10a92f5b202b36d61374bbbb8e12487818dbed06b21336b86c5e5b8e5d19d2a`.
+Copy fixtures were marked deliberately non-migration data and deleted afterward.
+The initial harness attempt to spawn Node failed with `EPERM` before comparison;
+the completed run used in-process module imports, without permission/environment changes.
+This was not the upstream Vite/Vitest suite, a dev server or an authentication test.
+
+No generator, Drizzle migration application, lifecycle archive, Site deployment,
+hosted auth/D1/R2/MCP, real browser, Windows or actual Android test ran. No resource,
+credential, model, significant dependency or charge was introduced. Next local step
+requires separate approval for the pinned Drizzle tools, then actual schema generation,
+review and fresh-local-DB application checks. Account/budget and deployment gates
+also remain. Phase 0 and Site completion remain incomplete.
+
 ## Binding-format follow-up — 2026-10-31
 
 The official Manage a site subpage (O9) resolved the minimal binding format that

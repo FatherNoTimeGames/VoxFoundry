@@ -7,7 +7,8 @@ the local Python audio experiment remain separate, deferred research.
 Binding follow-up (2026-10-31): the authoritative [Manage a site page](https://learn.chatgpt.com/docs/sites/managing-a-site)
 resolved the manifest format. `.openai/hosting.json` now contains the documented
 text-only bindings without a project ID; registration has not occurred. The build
-validates/copies it. Migration packaging and lifecycle execution remain unverified.
+validates/copies it. The migration-sidecar copy contract is now also resolved from
+pinned official tooling; generation, lifecycle execution and hosted acceptance remain unverified.
 
 ## Working slice implemented in source
 
@@ -38,6 +39,9 @@ No audio-proof code is imported. No significant dependency installation is neede
 `schema.sql` describes a new isolated D1 database. `scripts/build.mjs` syntax-checks
 the browser script, bundles the UI into the Worker and checks the single ESM entrypoint.
 The build also copies the checked source manifest into `dist/.openai/hosting.json`.
+It replaces `dist/.openai` each time and recursively copies optional `drizzle/` into
+`dist/.openai/drizzle/`, following the official production plugin's contract. No
+generated migrations are present yet; the build never makes a journal or snapshot.
 No SQL schema changes occur during requests. Do not apply this schema to the existing
 manuscript or audio-proof databases or seed it with a source snapshot of user data.
 
@@ -62,7 +66,10 @@ node scripts/build.mjs
 ```
 
 Executed on 2026-10-30: **19 tests passed, 0 failed, 0 skipped**; build/parse validation
-passed. Tests execute actual SQLite SQL through a local D1-shaped adapter. A file-backed
+passed. Rerun on 2026-10-31: **19 passed, 0 failed, 0 skipped; build passed**.
+Four separate disposable packaging checks against the pinned official production
+hook also passed; these check byte copying/stale cleanup, not valid migration history.
+Tests execute actual SQLite SQL through a local D1-shaped adapter. A file-backed
 test closes and reopens SQLite, then verifies saved content, revisions and replay
 receipts. It is not a restarted cloud D1 or independent device.
 
@@ -75,9 +82,13 @@ structure. Static HTML/JS checks do not prove accessibility or browser interacti
 
 ## Hosting gates and costs
 
-Nothing has been provisioned or deployed. The earlier manifest-format gap is resolved;
-the exact supported migration discovery/metadata and lifecycle packaging path still
-need verification. The lifecycle helper named by the skill is not materialized in this
+Nothing has been provisioned or deployed. Manifest and migration-sidecar copy formats
+are resolved. The official tooling pins `drizzle-kit@0.31.10` / `drizzle-orm@0.45.2`
+with SQLite schema input `db/schema.ts` and `./drizzle` output. Neither is installed;
+separate dependency approval is required before generation, SQL/metadata review and
+local application checks. No generated migration history exists and none was guessed.
+See the [pinned source and contract evidence](../../docs/research/sites-platform-contract.md).
+The lifecycle helper named by the skill is not materialized in this
 executor; reads of that helper through the skill provider failed. Some starter `.mjs`
 helpers are readable, but the required generator/framework packages cannot be resolved
 from this project and were not found in the inspected runtime. Nothing was installed.
@@ -105,8 +116,9 @@ migration mechanism and configure `OWNER_USER_ID`. Keep the Site owner-private.
 Package the exact verified source/commit with the Sites source workflow. A deployment
 must never silently attach this schema to an existing user library.
 
-`dist/server/index.js` plus the binding manifest are build output only, deliberately
-**not a deployable archive** without actual registration and verified migrations.
+`dist/server/index.js` plus the binding manifest and any copied sidecars are build
+output only, deliberately **not a deployable archive** without actual registration,
+generated/reviewed migrations and supported lifecycle packaging.
 The manifest has no guessed identity or runtime values; its optional project ID must
 come from Sites when registration is authorized. The sign-in routes
 `/signin-with-chatgpt`, `/signout-with-chatgpt` and `/callback` remain platform-owned.

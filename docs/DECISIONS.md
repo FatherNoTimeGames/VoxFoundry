@@ -1,5 +1,21 @@
 # Revised Phase 0 decisions, approvals and audit
 
+## Migration-copy contract resolved from pinned public source — 2026-10-31
+
+New primary evidence O13, OpenAI's `openai/sites` repository, resolves the sidecar
+copy contract without guessing more installed-helper paths. Reviewed pinned production
+source and ran its copy hook directly, not its dev authentication simulation. Adapted
+the native build and passed four local copy checks; all 19 foundation components
+and the build passed again. No migration metadata was fabricated or applied.
+
+The official generator pins Drizzle Kit 0.31.10 / ORM 0.45.2. They are not installed.
+The user's separate-approval requirement for significant dependencies remains in
+force; Continue authorizes this source/verification batch, not that install, resource
+creation or deployment. Actual generated history/schema review is the next local
+step after approval. The missing lifecycle helper is a different gate; the public
+plugin is not a substitute for supported source synchronization/archive handling.
+No environment repair, costs, audio work or phase exit. Publish only the review branch.
+
 ## Binding-format correction — 2026-10-31
 
 Further primary-source research found the official Manage a site subpage omitted
