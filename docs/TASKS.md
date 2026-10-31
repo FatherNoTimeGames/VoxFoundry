@@ -9,9 +9,9 @@ not completed. [Planned feature and resume criteria](PLANNED-FEATURES.md).
 
 ### Next Up (active; maximum five)
 
-1. **S0-02** — Obtain supported lifecycle/starter assets or the exact ESM binding/
-   migration schema; then verify hosted acceptance after authorization. Sign-in,
-   storage and MCP documentation is recorded. External worker access is deferred.
+1. **S0-02** — Obtain supported migration/lifecycle packaging assets or its exact
+   contract, then verify hosted acceptance after authorization. The binding format
+   and sign-in/storage/MCP documentation are now recorded. Worker access is deferred.
 2. **S0-D1** — Confirm intended-account limits/allowances and the approved hosting
    budget against the dated public terms before resource creation. No audio bridge is needed
    in the active design.
@@ -41,6 +41,12 @@ Required lifecycle/parser/starter assets are not available in this executor or t
 attempted skill-resource paths. Do not repeat guesses or create a resource to probe.
 S0-D1 has public-rate evidence; intended account applicability/budget remains pending.
 
+Binding follow-up (2026-10-31): the official Manage a site subpage resolved the
+manifest format; added `sites/studio/.openai/hosting.json` without a project ID and
+verified its build copy and fail-closed bundled server. This removes that specific
+blocker. Supported migration generation/discovery/packaging, lifecycle tooling and
+hosted acceptance remain unverified. No generator/framework packages were installed.
+
 ### Active dependency changes
 
 | ID | Status | Current scope / dependencies |
@@ -48,7 +54,7 @@ S0-D1 has public-rate evidence; intended account applicability/budget remains pe
 | S0-I1 | done | Intended product identified as the installed OpenAI Sites plugin; this does not prove runtime integration. |
 | S0-I2 | deferred | Corrected legacy audio live-test reruns are preserved, but do not block Site work. |
 | S0-I3 | done | Current Sites identity/storage/MCP and primary product/cost documentation accessed; missing executor assets and later map/Wiki sources are separate gates. Old access failures remain historical. |
-| S0-02 | blocked | Documentation reviewed; exact ESM binding/migration setup and live acceptance await supported lifecycle/parser assets or official schema. Hosted behavior remains unverified. See the 2026-10-31 checkpoint. |
+| S0-02 | blocked | Binding format and identity/storage/MCP contract documented; supported migration/lifecycle packaging and live acceptance remain blocked/unverified. See the follow-up checkpoint. |
 | S0-03 | deferred | Existing audio transport experiments/tests preserved; no new audio implementation required now. |
 | S0-04 | review | Site/ChatGPT, enabled Wiki/maps, rights and hosting research; TTS/model/worker research deferred. |
 | S0-D1 | review | Site hosting/cost decision; depends on S0-02 and relevant S0-04 findings. |

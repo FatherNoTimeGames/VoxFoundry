@@ -1,15 +1,53 @@
 # Sites platform contract checkpoint — 2026-10-31
 
 Task S0-02: **documentation verified in part; exact hosting setup and live behavior
-remain blocked/unverified**. This checkpoint changes no implementation, environment,
-Site, storage, access policy or credentials. Windows audio stays deferred.
+remain blocked/unverified**. The follow-up adds binding/build metadata only; application
+routes, schema, environment, Site resources and credentials are unchanged. Audio stays deferred.
+
+## Follow-up: manifest format resolved
+
+The separate official [Manage a site page](https://learn.chatgpt.com/docs/sites/managing-a-site)
+provides the missing binding example and permits a starter to omit identity before
+registration. Earlier research missed this subpage. The source now contains:
+
+```json
+{
+  "d1": "DB",
+  "r2": null
+}
+```
+
+This supersedes the **binding-format** unknowns in the original checkpoint below.
+The builder validates/copies this manifest, never generates a fake project ID, and
+still reports that the output is not a deployment archive. The change creates no
+Site or database and adds no migration metadata. Runtime application code is unchanged.
+Migration discovery/metadata and lifecycle packaging remain unresolved.
+
+Additional reads: the official Create a site, Data and connections and Publish and
+share subpages. They did not supply the needed migration packaging contract. The
+installed starter's `scripts/sites-env.mjs`, `scripts/run-framework.mjs` and
+`scripts/build-verified.sh` were readable, unlike the named lifecycle helper/config
+paths. These do not replace the missing migration/parser assets. Drizzle, Wrangler
+and Vinext were unavailable to the project; bounded runtime inspection found none.
+
+Search also surfaced package/mirror/issue results. They were not adopted as binding
+authority. The npm package page returned 403 and its registry endpoint was not
+accessible through the web tool; no package was downloaded or executed. No
+environment settings, proxy, policies or installed packages were changed.
+
+A bounded read of the public package metadata using the executor's inherited
+proxy/TLS configuration also failed with `URLError`. It downloaded no package and
+made no configuration change. This does not establish any package's provenance or
+authorize using a replacement deployment path.
+
+## Original checkpoint (binding-format gap superseded above)
 
 ## Documented contract and current source
 
 | Area | Accessed evidence | Implication for VoxFoundry | Still unverified |
 | --- | --- | --- | --- |
 | Identity | Installed Sites identity reference and starter README: private Sites authenticate visitors; server receives Site-scoped user ID/email; sign-in/out/callback are dispatch-owned; sign-in is top-level navigation. | `sites/studio` uses the stable ID, owner allowlist and same-origin writes. Its anchors use platform routes. Do not replace this with custom OAuth. | Actual account login/return, header stripping/injection and owner access on private Sites; Android session behavior. |
-| Structured data | Installed storage reference: declare a logical D1 binding, use `DB`, schema-only migrations, one SQL statement per prepare and batches for multiple statements. | The prepared text foundation expects `env.DB`; its mutation/revision/replay transactions are locally tested. No user-library migration is intended. | Exact ESM `d1` JSON structure, migration discovery/metadata, live D1 execution and durability/consistency. |
+| Structured data | Installed storage reference: logical D1, schema-only migrations, one statement per prepare and batches; follow-up resolves the binding format. | The prepared text foundation expects `env.DB`; its mutation/revision/replay transactions are locally tested. No user-library migration is intended. | Migration discovery/metadata, lifecycle packaging, live D1 execution and durability/consistency. |
 | Files | Installed storage reference: R2 server-side storage, normally `BUCKET`; unused bindings stay null. | Text-only foundation does not require R2 or uploads. Future file features must authorize reads/writes and bound uploads. | Actual R2 binding shape, private upload/download/retention; not required to test basic text editing. |
 | ChatGPT tools | Installed MCP reference: `mcp` capability and a stateless JSON-RPC `POST /mcp`; Sites authenticates callers; app enforces record permissions. | Supported route for future owner-authorized library/context tools. No MCP endpoint is implemented in the current slice. No external chat history or API credits are assumed. | Plugin creation/connection, usable tools in the intended account, actual owner identity and record isolation. |
 
@@ -62,14 +100,14 @@ binding into a guessed JSON value/type or synthesize migration metadata.
   with no next page. No existing Site identity was selected and no resource created.
   This does not identify the selected account's plan, budget or remaining allowances.
 
-The needed artifact is the supported Sites lifecycle/starter tooling **including its
-exact manifest parser and migration integration**, accessible to the selected
-executor, or equivalent official schema documentation. No runtime repair, plugin
-reinstallation, alternative platform or fabricated manifest was attempted.
+The needed artifact is supported Sites lifecycle/starter tooling **including its
+migration integration**, accessible to the selected executor, or equivalent official
+migration packaging documentation. The manifest format no longer needs guessing.
+No runtime repair, plugin reinstallation or alternative platform was attempted.
 
 ## Remaining acceptance and next action
 
-1. Obtain the exact supported binding/migration configuration and lifecycle assets.
+1. Obtain the supported migration configuration and lifecycle assets.
    Check `sites/studio/schema.sql` against that path; do not apply it to existing data.
 2. Resolve account/allowance applicability using [the dated cost findings](costs.md)
    and the intended account. The current tools do not expose plan-specific billing.
@@ -82,5 +120,5 @@ reinstallation, alternative platform or fabricated manifest was attempted.
 
 No live Site, D1/R2, browser, Android or MCP test ran. Existing 19 foundation tests
 were not rerun for this source-free research batch. S0-02 is not marked done;
-S0-07/S0-09 and Site completion remain open. This report prevents repeated source
-guessing: resume the blocked configuration step only with new tooling/schema evidence.
+S0-07/S0-09 and Site completion remain open. The follow-up above records the new
+binding evidence; remaining migration setup needs new tooling/schema evidence.

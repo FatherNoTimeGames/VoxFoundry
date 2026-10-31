@@ -1,5 +1,29 @@
 # Revised Phase 0 validation ledger
 
+## Binding-format follow-up — 2026-10-31
+
+The official Manage a site subpage (O9) resolved the minimal binding format that
+the previous review missed. Added the pre-registration manifest and updated the
+builder to validate/copy it. No project ID, runtime values or guessed migration
+metadata was added. Existing application, schema, tests and audio source are unchanged.
+
+**Executed:** `node scripts/build.mjs` from `sites/studio` passed. A Node artifact
+smoke check confirmed that built/source manifests match, identity remains absent,
+and the generated Worker returns 401 without identity and 503 without DB setup.
+These checks use Node Web APIs, not hosted Sites or D1. The 19 foundation component
+tests were not rerun for this build-metadata-only change; their prior results stand.
+
+Read official Create a site, Data and connections and Publish and share pages as
+well as O9. Some starter `.mjs` scripts were readable but do not supply the required
+migration integration. Project resolution and bounded runtime inspection found no
+Drizzle, Wrangler or Vinext tools available. No dependency was installed. npm page
+and registry reads failed through the web tool; no retrieved package was executed.
+
+No Site, database, file store, preview, login, MCP connection or deployment was
+created or tested. No environment repair/policy/proxy change occurred. The exact
+binding-format gap is closed; migration/lifecycle packaging, account applicability
+and private hosted/actual Android acceptance remain open. Phase 0 is incomplete.
+
 ## S0-02 documentation and tooling checkpoint — 2026-10-31
 
 Read current AGENTS/TASKS and confirmed a clean checkout. Re-read installed Sites

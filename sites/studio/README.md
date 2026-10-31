@@ -4,6 +4,11 @@ Status: **local implementation prepared; not registered, deployed or verified in
 browser or on real Android**. This is the active Site-first source. `../phase0` and
 the local Python audio experiment remain separate, deferred research.
 
+Binding follow-up (2026-10-31): the authoritative [Manage a site page](https://learn.chatgpt.com/docs/sites/managing-a-site)
+resolved the manifest format. `.openai/hosting.json` now contains the documented
+text-only bindings without a project ID; registration has not occurred. The build
+validates/copies it. Migration packaging and lifecycle execution remain unverified.
+
 ## Working slice implemented in source
 
 - Private-owner server authorization using Sites-supplied identity, plus same-origin
@@ -32,6 +37,7 @@ No audio-proof code is imported. No significant dependency installation is neede
 `worker/ui.js` contains essential HTML/CSS/browser JS; all requests stay same-origin.
 `schema.sql` describes a new isolated D1 database. `scripts/build.mjs` syntax-checks
 the browser script, bundles the UI into the Worker and checks the single ESM entrypoint.
+The build also copies the checked source manifest into `dist/.openai/hosting.json`.
 No SQL schema changes occur during requests. Do not apply this schema to the existing
 manuscript or audio-proof databases or seed it with a source snapshot of user data.
 
@@ -69,11 +75,13 @@ structure. Static HTML/JS checks do not prove accessibility or browser interacti
 
 ## Hosting gates and costs
 
-Nothing has been provisioned or deployed. The accessed Sites references document D1/R2
-and schema migrations but do not supply the exact ESM hosting binding/migration
-configuration needed here or account-specific pricing. The lifecycle helper named by
-the skill is not materialized in this executor; attempting to read that helper through
-the skill provider failed. Do not fabricate its path, a manifest schema or a project ID.
+Nothing has been provisioned or deployed. The earlier manifest-format gap is resolved;
+the exact supported migration discovery/metadata and lifecycle packaging path still
+need verification. The lifecycle helper named by the skill is not materialized in this
+executor; reads of that helper through the skill provider failed. Some starter `.mjs`
+helpers are readable, but the required generator/framework packages cannot be resolved
+from this project and were not found in the inspected runtime. Nothing was installed.
+Do not fabricate migration metadata, a helper path or a project ID.
 The supported template README was accessible and confirms top-level sign-in and
 separate local/hosted migration behavior. References are in the validation ledger.
 
@@ -97,9 +105,10 @@ migration mechanism and configure `OWNER_USER_ID`. Keep the Site owner-private.
 Package the exact verified source/commit with the Sites source workflow. A deployment
 must never silently attach this schema to an existing user library.
 
-`dist/server/index.js` is build output only. It is deliberately **not a deployable
-archive** without real identity, verified hosting bindings and migrations. No
-`.openai/hosting.json` with guessed fields or IDs is provided. The sign-in routes
+`dist/server/index.js` plus the binding manifest are build output only, deliberately
+**not a deployable archive** without actual registration and verified migrations.
+The manifest has no guessed identity or runtime values; its optional project ID must
+come from Sites when registration is authorized. The sign-in routes
 `/signin-with-chatgpt`, `/signout-with-chatgpt` and `/callback` remain platform-owned.
 
 ## Manual browser / actual Android checks (unrun)

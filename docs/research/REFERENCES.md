@@ -15,6 +15,14 @@ Detailed asset access, source compatibility and remaining gates are in
 | O6 | https://help.openai.com/en/articles/20001339-creating-and-using-chatgpt-sites | Read current page, including usage/FAQ and official guide/plugin links, 2026-10-31. |
 | O7 | https://help.openai.com/en/articles/20001547-hosting-a-plugin-with-chatgpt-sites | Read 2026-10-31. Product workflow evidence, not a working VoxFoundry plugin connection. |
 | O8 | https://developers.openai.com/showcase/idea-intake | Read 2026-10-31. Example prompt only; not the exact manifest schema. |
+| O9 | https://learn.chatgpt.com/docs/sites/managing-a-site | Read 2026-10-31 via the official developer URL. Exact minimal binding example resolved; source manifest added without registration. |
+| O10 | https://learn.chatgpt.com/docs/sites/data-and-connections | Read 2026-10-31. Storage/sign-in product guidance, not migration metadata. |
+| O11 | https://learn.chatgpt.com/docs/sites/creating-a-site | Read 2026-10-31. Creation workflow guidance, not a missing-helper replacement. |
+| O12 | https://learn.chatgpt.com/docs/sites/publishing-and-sharing | Read 2026-10-31. Publication/audience workflow guidance, not a verified deployment. |
+
+Follow-up resolved the manifest format through O9. Other readable starter scripts
+were inspected without execution. Package-page/registry requests failed; no package
+or mirrored source was installed or treated as authority.
 
 Installed Sites storage, identity, MCP, troubleshooting and starter-package resources
 were also read. Named lifecycle helper and starter Drizzle-config reads failed;

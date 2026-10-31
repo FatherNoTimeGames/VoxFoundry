@@ -1,5 +1,16 @@
 # Revised Phase 0 decisions, approvals and audit
 
+## Binding-format correction — 2026-10-31
+
+Further primary-source research found the official Manage a site subpage omitted
+from the earlier root-guide review. Its example resolves the manifest format;
+added the corresponding pre-registration source configuration and build copy, with
+no invented identity or runtime values. This corrects that previous blocker rather
+than claiming all migration/tooling issues resolved. The app and schema are unchanged.
+Build/artifact smoke checks passed; component tests were not rerun. Migration
+generation/packaging and actual Site verification still need supported tooling.
+No resources, installations, deployment, policy/environment repair or audio work.
+
 ## S0-02 contract checkpoint — 2026-10-31
 
 Continue was applied to the requested next task: read-only platform/configuration
