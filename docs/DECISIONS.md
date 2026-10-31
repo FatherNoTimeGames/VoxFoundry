@@ -1,5 +1,21 @@
 # Revised Phase 0 decisions, approvals and audit
 
+## S0-02 contract checkpoint — 2026-10-31
+
+Continue was applied to the requested next task: read-only platform/configuration
+verification, not more features or deployment. Recorded current Sites identity,
+storage and MCP references, public primary product/cost documentation and exact
+executor/asset access limits. No schema fields, account plan, installed MCP tool or
+runtime success was inferred. No VoxFoundry Site was found by title/slug in the
+read-only owner inventory; none was created to discover configuration.
+
+S0-02's remaining gate is supported lifecycle/parser/starter assets or authoritative
+exact binding/migration documentation, then actual private hosted acceptance after
+applicable authorization. Stop guessing source paths after this bounded review;
+resume only with new evidence. S0-D1 now has public dated pricing evidence and awaits
+intended account/budget applicability. No environment repair, hosting, significant
+dependency, model, service credential or public release was authorized or performed.
+
 ## Local Site foundation preparation — 2026-10-30
 
 The user's Continue authorizes the next Site-first batch. Exact lifecycle/binding

@@ -1,5 +1,32 @@
 # Reference registry
 
+## Sites-only contract review — 2026-10-31
+
+Current primary reads below supersede the older O2 unread/product-unidentified
+statements for the Sites contract. Earlier access failures remain historical and
+do not describe today's web-tool access. No hosted/device integration is established.
+Detailed asset access, source compatibility and remaining gates are in
+[sites-platform-contract.md](sites-platform-contract.md); dated prices are in
+[costs.md](costs.md).
+
+| ID | Primary source | Retrieval / confidence |
+| --- | --- | --- |
+| O5 | https://learn.chatgpt.com/docs/sites | Read 2026-10-31 through the official developer-guide redirect. High confidence in the accessed documentation, not account applicability or runtime results. |
+| O6 | https://help.openai.com/en/articles/20001339-creating-and-using-chatgpt-sites | Read current page, including usage/FAQ and official guide/plugin links, 2026-10-31. |
+| O7 | https://help.openai.com/en/articles/20001547-hosting-a-plugin-with-chatgpt-sites | Read 2026-10-31. Product workflow evidence, not a working VoxFoundry plugin connection. |
+| O8 | https://developers.openai.com/showcase/idea-intake | Read 2026-10-31. Example prompt only; not the exact manifest schema. |
+
+Installed Sites storage, identity, MCP, troubleshooting and starter-package resources
+were also read. Named lifecycle helper and starter Drizzle-config reads failed;
+no helper/parser source or exact ESM binding schema is claimed inspected. Executor
+skill inventory was empty while cloud skill/native-tool access succeeded. Do not
+confuse absent executor assets with absence of Sites capability in the account.
+
+No original byte-response hashes are assigned to these rendered web reads, and the
+public pages are mutable. Record dates and recheck before spending or adoption.
+
+## Earlier registry and retrieval history (preserved)
+
 Review date: 2026-10-29. Confidence describes evidence, not the reputation of a URL.
 An earlier attempt was blocked before execution by automatic review. On continuation,
 primary GitHub reads succeeded for O3/G2/M4; O1 and M2 requests reached the proxy and

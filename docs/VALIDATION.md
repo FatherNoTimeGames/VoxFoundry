@@ -1,5 +1,30 @@
 # Revised Phase 0 validation ledger
 
+## S0-02 documentation and tooling checkpoint — 2026-10-31
+
+Read current AGENTS/TASKS and confirmed a clean checkout. Re-read installed Sites
+main, storage, identity, MCP and troubleshooting references; starter `package.json`
+was accessible. Lifecycle helper and starter Drizzle-config reads failed. Executor
+skill inventory returned none, while cloud Sites resources and native tools work.
+Bounded filesystem checks found no lifecycle scripts/preview CLI in inspected locations.
+No dependency, runtime repair or substitute browser/platform was introduced.
+
+Accessed primary web sources O5–O8 via the supported web tool. This supersedes the
+old documentation-access failures for these pages, not for unread sources. Public
+terms now have a dated evidence record; selected-account applicability is unresolved.
+Do not treat template/example prose as the exact manifest/migration schema.
+Full contract/asset limits are in [the checkpoint](research/sites-platform-contract.md).
+
+Read-only owner Site inventory completed with no VoxFoundry title/slug match and no
+remaining page. No Site ID was selected, registered or changed; no other Site's
+source, database, environment values or credentials were read. No account plan can
+be inferred from that inventory. A plan question was requested for S0-D1 applicability.
+
+No implementation changed; no tests were rerun. The 19 foundation checks and earlier
+audio evidence retain their previously recorded scope. No actual login, hosted
+D1/R2, MCP connection, browser or Android check ran. S0-02 remains blocked on the
+specified setup/runtime evidence; no feasibility/phase exit or deployment is claimed.
+
 ## Site foundation local slice — 2026-10-30
 
 Prepared `sites/studio` independently of `sites/phase0` and the local application.
